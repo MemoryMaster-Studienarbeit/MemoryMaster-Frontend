@@ -10,7 +10,7 @@ const App: React.FC = () => {
     return (
         <ThemeContextProvider>
             <AppContainer>
-                <Sidebar isOpen={isSidebarOpen} toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
+                <Sidebar isOpen={isSidebarOpen} toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}/>
                 <MainContent isSidebarOpen={isSidebarOpen} />
             </AppContainer>
         </ThemeContextProvider>

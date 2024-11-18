@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const SidebarContainer = styled.div<{ isOpen: boolean }>`
     width: ${({ isOpen }) => (isOpen ? '20vw' : '50px')};
     height: 100vh;
-    transition: flex-direction 0.3s ease;
+    transition: width 0.3s ease;
     background-color: ${({ theme }) => theme.sidebarBackground};
     color: ${({ theme }) => theme.text};
     display: flex;
@@ -39,25 +39,40 @@ export const ToggleButton = styled.button`
     font-size: 1.5em;
     color: ${({ theme }) => theme.text};
     margin-bottom: 1em;
+    width: 50px;
 `;
 
 export const BurgerIcon = styled.span`
     display: inline-block;
     font-size: 1.5em;
+    padding: 0;
 `;
 
 export const SettingsContainer = styled.div<{ isOpen: boolean }>`
     display: flex;
-    flex-direction: ${({ isOpen }) => (isOpen ? 'column' : 'row')};
+    flex-direction: ${({isOpen}) => (isOpen ? 'row' : 'column')};
     align-items: center;
     justify-content: center;
-    margin-bottom: 1em;
-    margin-top: auto;
+    margin: auto 0 1em;
+    height: auto;
     width: 100%;
+    color: ${({theme}) => theme.text};
+    background-color: ${({theme}) => theme.sidebarBackground};
+    transition: flex-direction 1.5s;
+`;
+
+export const LogoutButton = styled.button`
+    background-color: ${({ theme }) => theme.buttonBackground};
     color: ${({ theme }) => theme.text};
-    background-color: ${({ theme }) => theme.sidebarBackground};
-    transition: flex-direction 0.3s backwards;
-    transform: rotate(90deg);
+    padding: 10px;
+    display: flex;
+    border: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    svg {
+        font-size: 30px;
+    }
 `;
 
 
