@@ -48,6 +48,40 @@ export const BurgerIcon = styled.span`
     padding: 0;
 `;
 
+export const DeckList = styled.ul`
+    list-style: none;
+    padding: 0;
+    margin: 0;
+`;
+
+export const DeckItem = styled.li<{ isSelected: boolean }>`
+    padding: 0.5em;
+    cursor: pointer;
+    background-color: ${({ isSelected, theme }) =>
+    isSelected ? theme.selectedBackground : 'transparent'};
+    color: ${({ theme }) => theme.text};
+    margin-bottom: 0.5em;
+    border-radius: 5px;
+
+    &:hover {
+        background-color: ${({ theme }) => theme.hoverBackground};
+    }
+`;
+
+export const AddDeckButton = styled.button`
+    margin-top: auto;
+    background-color: ${({ theme }) => theme.buttonBackground};
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5em;
+    cursor: pointer;
+
+    &:hover {
+        background-color: ${({ theme }) => theme.buttonHoverBackground};
+    }
+`;
+
 export const SettingsContainer = styled.div<{ isOpen: boolean }>`
     display: flex;
     flex-direction: ${({isOpen}) => (isOpen ? 'row' : 'column')};
