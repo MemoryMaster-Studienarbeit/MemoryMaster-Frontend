@@ -5,6 +5,8 @@ export const lightTheme = {
     sidebarBackground: '#f0f0f0',
     inputBackground: '#f0f0f0',
     toggleBackground: '#007bff',
+    isLight: true,
+    selectedBackground: 'cadetblue',
 };
 
 export const darkTheme = {
@@ -13,6 +15,8 @@ export const darkTheme = {
     sidebarBackground: '#444444',
     inputBackground: '#555',
     toggleBackground: '#0056b3',
+    isLight: false,
+    selectedBackground: 'cadetblue',
 };
 
 export type ThemeType = typeof lightTheme;

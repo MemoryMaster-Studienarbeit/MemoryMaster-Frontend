@@ -1,4 +1,10 @@
 import styled from 'styled-components';
+// @ts-ignore
+import plusDark from '../../images/plus-dark.svg';
+// @ts-ignore
+import plusLight from '../../images/plus-light.svg';
+// @ts-ignore
+import pluslightgreen from '../../images/plus-lightgreen.svg';
 
 export const SidebarContainer = styled.div<{ isOpen: boolean }>`
     width: ${({ isOpen }) => (isOpen ? '20vw' : '50px')};
@@ -9,6 +15,7 @@ export const SidebarContainer = styled.div<{ isOpen: boolean }>`
     display: flex;
     flex-direction: column;
     align-items: start;
+    padding: 0.5em;
 
     @media (max-width: 768px) {
         width: ${({ isOpen }) => (isOpen ? '75vw' : '50px')};
@@ -38,7 +45,8 @@ export const ToggleButton = styled.button`
     cursor: pointer;
     font-size: 1.5em;
     color: ${({ theme }) => theme.text};
-    margin-bottom: 1em;
+    margin-bottom: 0.5em;
+    padding: 0;
     width: 50px;
 `;
 
@@ -46,40 +54,79 @@ export const BurgerIcon = styled.span`
     display: inline-block;
     font-size: 1.5em;
     padding: 0;
+    margin: 0;
+    width: 30px;
+    height: 30px;
+
+    &:hover {
+        cursor: pointer;
+        color: cadetblue;
+        transform: scale(1.2);
+        transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+    }
+
 `;
 
 export const DeckList = styled.ul`
     list-style: none;
     padding: 0;
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    width: 90%;
+    padding-top: 10px;
 `;
 
 export const DeckItem = styled.li<{ isSelected: boolean }>`
-    padding: 0.5em;
+    padding: 0;
     cursor: pointer;
-    background-color: ${({ isSelected, theme }) =>
-    isSelected ? theme.selectedBackground : 'transparent'};
-    color: ${({ theme }) => theme.text};
+    color: ${({ isSelected, theme }) =>
+            isSelected ? theme.selectedBackground : theme.text};
     margin-bottom: 0.5em;
     border-radius: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     &:hover {
-        background-color: ${({ theme }) => theme.hoverBackground};
+        text-decoration: underline;
+        transform: translateY(-2px);
+        color: cadetblue;
+        transition: transform 0.2s ease-in-out;
     }
 `;
 
 export const AddDeckButton = styled.button`
-    margin-top: auto;
-    background-color: ${({ theme }) => theme.buttonBackground};
-    color: white;
     border: none;
     border-radius: 5px;
     padding: 0.5em;
     cursor: pointer;
+    background: url(${({ theme }) => theme.isLight ? plusDark : plusLight}) no-repeat center center;
+    scale: 140%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto 0 auto 0;
 
     &:hover {
-        background-color: ${({ theme }) => theme.buttonHoverBackground};
+        background-image: url("${pluslightgreen}");
+        transform: scale(1.5);
+        transition: transform 0.2s ease-in-out;
     }
+`;
+
+export const InnerSettingsContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+        transform: scale(1.2);
+        transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+    }
+    
 `;
 
 export const SettingsContainer = styled.div<{ isOpen: boolean }>`
@@ -105,8 +152,14 @@ export const LogoutButton = styled.button`
     justify-content: center;
     cursor: pointer;
     svg {
-        font-size: 30px;
+        font-size: 40px;
     }
+`;
+
+export const MyDecksTitle = styled.h3`
+    margin: 0.5em 0;
+    padding: 0;
+    cursor: default;
 `;
 
 
