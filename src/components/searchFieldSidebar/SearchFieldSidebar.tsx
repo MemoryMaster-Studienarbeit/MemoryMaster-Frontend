@@ -4,7 +4,7 @@ import { SearchInput } from './SearchFieldSidebar.styles';
 const SearchFieldSidebar: React.FC = () => {
 
     return (
-        <SearchInput type="search" placeholder="Karteikartendeck"></SearchInput>
+        <SearchInput type="search" placeholder="Search decks..."></SearchInput>
     );
 }
 

@@ -1,10 +1,20 @@
 import { useTheme } from '../../ThemeContext';
 import { DarkModeSwitch } from 'react-toggle-dark-mode';
-import { SidebarContainer, ToggleButton, BurgerIcon, Overlay, SettingsContainer, LogoutButton, DeckList, DeckItem, AddDeckButton } from './Sidebar.styles';
+import {
+    SidebarContainer,
+    ToggleButton,
+    BurgerIcon,
+    Overlay,
+    SettingsContainer,
+    LogoutButton,
+    DeckList,
+    DeckItem,
+    AddDeckButton,
+    MyDecksTitle, InnerSettingsContainer
+} from './Sidebar.styles';
 import SearchSidebar from "../searchFieldSidebar/SearchFieldSidebar";
 import {SearchSidebarContainer} from "../searchFieldSidebar/SearchFieldSidebar.styles";
-import { BiLogOut } from "react-icons/bi";
-import {useState} from "react";
+import {FC, useState} from "react";
 
 interface SidebarProps {
     isOpen: boolean;
@@ -12,7 +22,7 @@ interface SidebarProps {
     onSelectDeck: (deck: string) => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, onSelectDeck }) => {
+const Sidebar: FC<SidebarProps> = ({ isOpen, toggleSidebar, onSelectDeck }) => {
     const { isDarkMode, toggleTheme } = useTheme();
     const handleLogout = () => {
         console.log('Logging out...');
@@ -39,51 +49,44 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, onSelectDeck }
                 <ToggleButton onClick={toggleSidebar}>
                     <BurgerIcon>☰</BurgerIcon>
                 </ToggleButton>
-                <SearchSidebarContainer>
-                    {isOpen && <SearchSidebar/>}
-                </SearchSidebarContainer>
-
-                <h3>My Decks</h3>
-                <DeckList>
-                    {decks.map((deck, index) => (
-                        <DeckItem
-                            key={index}
-                            onClick={() => handleSelectDeck(deck)}
-                            isSelected={selectedDeck === deck}
-                        >
-                            {deck}
-                        </DeckItem>
-                    ))}
-                </DeckList>
-                <AddDeckButton onClick={handleAddDeck}>+ Add Deck</AddDeckButton>
-
+                <div style={{display: "flex", flexDirection: "column",width: "100%", alignItems: "center"}}>
+                    {isOpen && (
+                        <div style={{display: "flex", flexDirection: "column", width: "90%", justifyContent: "center"}}>
+                            <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
+                                <MyDecksTitle>Decks</MyDecksTitle>
+                                <AddDeckButton onClick={handleAddDeck}></AddDeckButton>
+                            </div>
+                            <SearchSidebarContainer>
+                                {isOpen && <SearchSidebar/>}
+                            </SearchSidebarContainer>
+                        </div>
+                    )}
+                    <DeckList>
+                        {decks.map((deck, index) => (
+                            <DeckItem
+                                key={index}
+                                onClick={() => handleSelectDeck(deck)}
+                                isSelected={selectedDeck === deck}
+                            >
+                                {deck}
+                            </DeckItem>
+                        ))}
+                    </DeckList>
+                </div>
                 <SettingsContainer isOpen={isOpen}>
-                    <LogoutButton onClick={handleLogout}>
-                        <BiLogOut/>
-                    </LogoutButton>
-                    <LogoutButton onClick={handleLogout}>
-                        <BiLogOut/>
-                    </LogoutButton>
-                    <DarkModeSwitch
-                        style={{padding: "10px"}}
-                        moonColor={"white"}
-                        sunColor={"#faba44"}
-                        checked={isDarkMode}
-                        onChange={toggleTheme}
-                        size={30}
-                    />
-                    <DarkModeSwitch
-                        style={{padding: "10px"}}
-                        moonColor={"white"}
-                        sunColor={"#faba44"}
-                        checked={isDarkMode}
-                        onChange={toggleTheme}
-                        size={30}
-                    />
+                    <InnerSettingsContainer>
+                        <DarkModeSwitch
+                            style={{padding: "10px", width: "40%"}}
+                            moonColor={"white"}
+                            sunColor={"#faba44"}
+                            checked={isDarkMode}
+                            onChange={toggleTheme}
+                            size={50}
+
+                        />
+                    </InnerSettingsContainer>
                 </SettingsContainer>
-
             </SidebarContainer>
-
             {isOpen && (
                 <Overlay onClick={toggleSidebar}/>
             )}
