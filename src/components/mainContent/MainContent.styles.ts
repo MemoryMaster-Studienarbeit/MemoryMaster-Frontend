@@ -6,9 +6,8 @@ export const MainContentContainer = styled.div<{ isSidebarOpen: boolean }>`
     width: ${({ isSidebarOpen }) => (isSidebarOpen ? '80vw' : 'calc(100vw - 50px)')};
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     transition: width 0.3s ease;
-    height: 100vh;
+    height: 100%;
     background-color: ${({ theme }) => theme.background};
     color: ${({ theme }) => theme.text};
     

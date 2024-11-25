@@ -8,14 +8,13 @@ import pluslightgreen from '../../images/plus-lightgreen.svg';
 
 export const SidebarContainer = styled.div<{ isOpen: boolean }>`
     width: ${({ isOpen }) => (isOpen ? '20vw' : '50px')};
-    height: 100vh;
+    height: 100%;
     transition: width 0.3s ease;
     background-color: ${({ theme }) => theme.sidebarBackground};
     color: ${({ theme }) => theme.text};
     display: flex;
     flex-direction: column;
     align-items: start;
-    padding: 0.5em;
 
     @media (max-width: 768px) {
         width: ${({ isOpen }) => (isOpen ? '75vw' : '50px')};
@@ -69,13 +68,12 @@ export const BurgerIcon = styled.span`
 
 export const DeckList = styled.ul`
     list-style: none;
-    padding: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
     justify-content: start;
     width: 90%;
-    padding-top: 10px;
+    padding: 10px 0 0;
 `;
 
 export const DeckItem = styled.li<{ isSelected: boolean }>`

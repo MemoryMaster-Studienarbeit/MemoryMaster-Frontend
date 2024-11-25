@@ -7,6 +7,7 @@ export const lightTheme = {
     toggleBackground: '#007bff',
     isLight: true,
     selectedBackground: 'cadetblue',
+    cardBackground: '#f0f0f0',
 };
 
 export const darkTheme = {
@@ -17,6 +18,7 @@ export const darkTheme = {
     toggleBackground: '#0056b3',
     isLight: false,
     selectedBackground: 'cadetblue',
+    cardBackground: '#444444',
 };
 
 export type ThemeType = typeof lightTheme;
