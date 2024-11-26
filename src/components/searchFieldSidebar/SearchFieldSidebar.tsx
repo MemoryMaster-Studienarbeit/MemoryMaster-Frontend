@@ -1,10 +1,12 @@
-import React from 'react';
-import { SearchInput } from './SearchFieldSidebar.styles';
+import React, {ChangeEvent} from 'react';
+import {SearchInput} from "./SearchFieldSidebar.styles";
 
-const SearchFieldSidebar: React.FC = () => {
+const SearchFieldSidebar: React.FC<{
+    onSearchChange: (event: ChangeEvent<HTMLInputElement>) => void
+}> = ({onSearchChange}) => {
 
     return (
-        <SearchInput type="search" placeholder="Search decks..."></SearchInput>
+        <SearchInput type="search" placeholder="Search decks..." onChange={onSearchChange}></SearchInput>
     );
 }
 
