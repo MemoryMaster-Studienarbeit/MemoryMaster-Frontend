@@ -9,8 +9,7 @@ export const CardsContainer = styled.div`
     padding: 20px;
     width: 90%;
     overflow-y: auto;
-
-    /* Dynamische Höhe, abhängig von den Karten */
+    
     flex: 1;
 `;
 
@@ -37,7 +36,7 @@ export const StartButton = styled.button`
     }
 `;
 
-export const Container = styled.div`
+export const MainDeckContainer = styled.div`
     display: flex;
     flex-direction: column; 
     align-items: center;

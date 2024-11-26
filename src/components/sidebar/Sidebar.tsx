@@ -1,19 +1,18 @@
 import {useTheme} from '../../ThemeContext';
-import {DarkModeSwitch} from 'react-toggle-dark-mode';
 import {
     SidebarContainer,
     ToggleButton,
     BurgerIcon,
     Overlay,
-    SettingsContainer,
     DeckList,
     DeckItem,
     AddDeckButton,
-    MyDecksTitle, InnerSettingsContainer
+    MyDecksTitle
 } from './Sidebar.styles';
 import SearchSidebar from "../searchFieldSidebar/SearchFieldSidebar";
 import {SearchSidebarContainer} from "../searchFieldSidebar/SearchFieldSidebar.styles";
 import React, {FC, useEffect, useState} from "react";
+import SidebarSettings from "../sidebarSettings/SidebarSettings";
 
 interface SidebarProps {
     isOpen: boolean;
@@ -37,7 +36,7 @@ const Sidebar: FC<SidebarProps> = ({isOpen, toggleSidebar, onSelectDeck}) => {
         if (!newDeckName) {
             return;
         }
-        setDecks([...decks, newDeckName]); // Neues Deck hinzufügen
+        setDecks([...decks, newDeckName]);
         setFilteredDecks([...decks, newDeckName]);
     };
 
@@ -66,21 +65,22 @@ const Sidebar: FC<SidebarProps> = ({isOpen, toggleSidebar, onSelectDeck}) => {
                 <ToggleButton onClick={toggleSidebar}>
                     <BurgerIcon>☰</BurgerIcon>
                 </ToggleButton>
-                <div style={{display: "flex", flexDirection: "column", width: "100%", alignItems: "center"}}>
-                    {isOpen && (
-                        <div style={{display: "flex", flexDirection: "column", width: "90%", justifyContent: "center"}}>
+                {isOpen && (
+                    <div style={{display: "flex", flexDirection: "column", width: "100%", alignItems: "center"}}>
+                        <div style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            width: "90%"
+                        }}>
                             <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
                                 <MyDecksTitle>Decks</MyDecksTitle>
                                 <AddDeckButton onClick={handleAddDeck}></AddDeckButton>
                             </div>
                             <SearchSidebarContainer>
-                                {isOpen && <SearchSidebar onSearchChange={handleSearch}/>}
+                                <SearchSidebar onSearchChange={handleSearch}/>
                             </SearchSidebarContainer>
                         </div>
-                    )}
-
-                    {isOpen && (
-                        filteredDecks.length === 0 && searchItem !== ''
+                        {filteredDecks.length === 0 && searchItem !== ''
                             ? <p>No decks found</p>
                             : <DeckList>
                                 {filteredDecks.map((deck, index) => (
@@ -93,21 +93,10 @@ const Sidebar: FC<SidebarProps> = ({isOpen, toggleSidebar, onSelectDeck}) => {
                                     </DeckItem>
                                 ))}
                             </DeckList>
-                    )}
-                </div>
-                <SettingsContainer isOpen={isOpen}>
-                    <InnerSettingsContainer>
-                        <DarkModeSwitch
-                            style={{padding: "10px", width: "40%"}}
-                            moonColor={"white"}
-                            sunColor={"#faba44"}
-                            checked={isDarkMode}
-                            onChange={toggleTheme}
-                            size={50}
-
-                        />
-                    </InnerSettingsContainer>
-                </SettingsContainer>
+                        }
+                    </div>
+                )}
+                <SidebarSettings isOpen={isOpen} isDarkMode={isDarkMode} toggleTheme={toggleTheme}/>
             </SidebarContainer>
             {isOpen && (
                 <Overlay onClick={toggleSidebar}/>

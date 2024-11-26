@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 
-import { Container, CardsContainer, Header, StartButton } from './CardsView.styles';
+import { MainDeckContainer, CardsContainer, Header, StartButton } from './CardsView.styles';
 
-import Card from './Card';
+import Card from '../card/Card';
 
 interface CardsViewProps {
     selectedDeck: string | null;
@@ -22,7 +22,7 @@ const CardsView: React.FC<CardsViewProps> = ({ selectedDeck }) => {
     }, [selectedDeck, flashcards]);
 
     return(
-        <Container>
+        <MainDeckContainer>
             <Header>{selectedDeck}</Header>
             <CardsContainer>
                 {currentCards.map((card, index) => (
@@ -31,7 +31,7 @@ const CardsView: React.FC<CardsViewProps> = ({ selectedDeck }) => {
                 <Card key={-1} card={"+"} />
             </CardsContainer>
             <StartButton>Start</StartButton>
-        </Container>
+        </MainDeckContainer>
     )
 }
 
