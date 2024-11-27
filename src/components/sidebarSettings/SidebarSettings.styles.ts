@@ -13,9 +13,9 @@ export const InnerSettingsContainer = styled.div`
     
 `;
 
-export const SettingsContainer = styled.div<{ isOpen: boolean }>`
+export const SettingsContainer = styled.div<{ $isSidebarOpen: boolean }>`
     display: flex;
-    flex-direction: ${({isOpen}) => (isOpen ? 'row' : 'column')};
+    flex-direction: ${(props) => (props.$isSidebarOpen ? 'row' : 'column')};
     align-items: center;
     justify-content: center;
     margin: auto 0 1em;

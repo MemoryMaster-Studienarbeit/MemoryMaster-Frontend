@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const CardContainer = styled.li`
+export const CardContainer = styled.button`
     width: 90%;
     height: 150px;
     display: flex;

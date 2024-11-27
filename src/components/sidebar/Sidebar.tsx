@@ -1,4 +1,4 @@
-import {useTheme} from '../../ThemeContext';
+import {useNavbar} from '../../ThemeContext';
 import {
     SidebarContainer,
     ToggleButton,
@@ -15,21 +15,20 @@ import React, {FC, useEffect, useState} from "react";
 import SidebarSettings from "../sidebarSettings/SidebarSettings";
 
 interface SidebarProps {
-    isOpen: boolean;
-    toggleSidebar: () => void;
     onSelectDeck: (deck: string) => void;
 }
 
-const Sidebar: FC<SidebarProps> = ({isOpen, toggleSidebar, onSelectDeck}) => {
-    const {isDarkMode, toggleTheme} = useTheme();
+const Sidebar: FC<SidebarProps> = ({ onSelectDeck }) => {
+    const { isSidebarOpen, toggleSidebar } = useNavbar();
     const [decks, setDecks] = useState<string[]>([]); // Liste der Decks
     const [searchItem, setSearchItem] = useState('') // Suchbegriff
     const [selectedDeck, setSelectedDeck] = useState<string | null>(null); // Aktuell ausgewähltes Deck
     const [filteredDecks, setFilteredDecks] = useState<string[]>([]); // Gefilterte Decks
 
     useEffect(() => {
+        if (!isSidebarOpen) setSearchItem('');
         filterDecks();
-    }, [decks, searchItem])
+    }, [decks, searchItem, toggleSidebar])
 
     const handleAddDeck = () => {
         const newDeckName = prompt('Enter Deck Name:');
@@ -61,11 +60,11 @@ const Sidebar: FC<SidebarProps> = ({isOpen, toggleSidebar, onSelectDeck}) => {
 
     return (
         <>
-            <SidebarContainer isOpen={isOpen}>
+            <SidebarContainer $isSidebarOpen={isSidebarOpen}>
                 <ToggleButton onClick={toggleSidebar}>
                     <BurgerIcon>☰</BurgerIcon>
                 </ToggleButton>
-                {isOpen && (
+                {isSidebarOpen && (
                     <div style={{display: "flex", flexDirection: "column", width: "100%", alignItems: "center"}}>
                         <div style={{
                             display: "flex",
@@ -87,7 +86,7 @@ const Sidebar: FC<SidebarProps> = ({isOpen, toggleSidebar, onSelectDeck}) => {
                                     <DeckItem
                                         key={index}
                                         onClick={() => handleSelectDeck(deck)}
-                                        isSelected={selectedDeck === deck}
+                                        $isSelected={selectedDeck === deck}
                                     >
                                         {deck}
                                     </DeckItem>
@@ -96,10 +95,10 @@ const Sidebar: FC<SidebarProps> = ({isOpen, toggleSidebar, onSelectDeck}) => {
                         }
                     </div>
                 )}
-                <SidebarSettings isOpen={isOpen} isDarkMode={isDarkMode} toggleTheme={toggleTheme}/>
+                <SidebarSettings />
             </SidebarContainer>
-            {isOpen && (
-                <Overlay onClick={toggleSidebar}/>
+            {isSidebarOpen && (
+                <Overlay/>
             )}
         </>
     );

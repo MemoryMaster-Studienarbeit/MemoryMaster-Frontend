@@ -6,8 +6,8 @@ import plusLight from '../../images/plus-light.svg';
 // @ts-ignore
 import pluslightgreen from '../../images/plus-lightgreen.svg';
 
-export const SidebarContainer = styled.div<{ isOpen: boolean }>`
-    width: ${({ isOpen }) => (isOpen ? '20vw' : '50px')};
+export const SidebarContainer = styled.div<{ $isSidebarOpen: boolean }>`
+    width: ${(props) => (props.$isSidebarOpen ? '20vw' : '50px')};
     height: 100%;
     transition: width 0.3s ease;
     background-color: ${({ theme }) => theme.sidebarBackground};
@@ -17,10 +17,10 @@ export const SidebarContainer = styled.div<{ isOpen: boolean }>`
     align-items: start;
 
     @media (max-width: 768px) {
-        width: ${({ isOpen }) => (isOpen ? '75vw' : '50px')};
+        width: ${(props) => (props.$isSidebarOpen ? '75vw' : '50px')};
         position: absolute;  // Position auf absolut setzen, damit sie über dem Content liegt
         z-index: 10;         // Höhere Z-Index, um über dem Hauptinhalt zu sein
-        box-shadow: ${({ isOpen }) => (isOpen ? '2px 0px 10px rgba(0,0,0,0.3)' : 'none')};  // Schatten hinzufügen, wenn geöffnet
+        box-shadow: ${(props) => (props.$isSidebarOpen ? '2px 0px 10px rgba(0,0,0,0.3)' : 'none')};  // Schatten hinzufügen, wenn geöffnet
     }
 `;
 
@@ -76,11 +76,11 @@ export const DeckList = styled.ul`
     padding: 10px 0 0;
 `;
 
-export const DeckItem = styled.li<{ isSelected: boolean }>`
+export const DeckItem = styled.li<{ $isSelected: boolean }>`
     padding: 0;
     cursor: pointer;
-    color: ${({ isSelected, theme }) =>
-            isSelected ? theme.selectedBackground : theme.text};
+    color: ${(props) =>
+            props.$isSelected ? props.theme.selectedBackground : props.theme.text};
     margin-bottom: 0.5em;
     border-radius: 5px;
     white-space: nowrap;
