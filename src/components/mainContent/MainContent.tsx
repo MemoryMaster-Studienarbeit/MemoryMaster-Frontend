@@ -3,6 +3,7 @@ import React, {useEffect} from 'react';
 import {MainContentContainer} from './MainContent.styles';
 import CardsView from '../cardsView/CardsView';
 import {useNavbar} from "../../ThemeContext";
+import AddCard from "../addCard/AddCard";
 
 interface MainContentProps {
     selectedDeck: string | null;
@@ -10,20 +11,24 @@ interface MainContentProps {
 
 const MainContent: React.FC<MainContentProps> = ({ selectedDeck }) => {
     const { isSidebarOpen } = useNavbar();
-    const [addCard, setAddCard] = React.useState(false);
+    const [addCardPage, setAddCardPage] = React.useState(false);
 
     const handleAdd = (id: number) => {
         console.log(id);
-        setAddCard(true);
+        if (id === -1){
+            setAddCardPage(true);
+        }
     }
+
+    useEffect(() => {
+        setAddCardPage(false);
+    }, [selectedDeck]);
 
     return (
         <MainContentContainer $isSidebarOpen={isSidebarOpen}>
-            {selectedDeck != null
+            {selectedDeck != null && !addCardPage
                 ? (<CardsView selectedDeck={selectedDeck} onAdd={handleAdd}/>)
-                : (<h2>Select a Deck</h2>)}
-            {addCard && <h2>Add Card</h2>}
-
+                : (addCardPage ? <AddCard /> : <h2>Select a Deck</h2>)}
 
         </MainContentContainer>
     );

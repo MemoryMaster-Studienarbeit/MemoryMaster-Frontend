@@ -21,7 +21,7 @@ export const Header = styled.h2`
 `;
 
 export const StartButton = styled.button`
-    background-color: #007bff;
+    background-color: ${({theme}) => theme.buttonBackground};
     color: #fff;
     padding: 10px 20px;
     margin: 20px 0;
@@ -32,7 +32,7 @@ export const StartButton = styled.button`
     transition: background-color 0.3s;
 
     &:hover {
-        background-color: #0056b3;
+        background-color: ${({theme}) => theme.buttonHover};
     }
 `;
 
