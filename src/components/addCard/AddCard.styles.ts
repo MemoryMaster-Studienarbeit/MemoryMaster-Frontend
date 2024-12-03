@@ -33,13 +33,14 @@ export const RadioButton = styled.label`
     justify-content: center;
     cursor: pointer;
     box-sizing: border-box;
+    border: 2px solid;
 
     &:hover {
-        border: 2px solid ${({theme}) => theme.radioButtonBorder};
+        border: 2px solid ${({theme}) => theme.primaryInputColor};
     }
 
     input[type="radio"]:checked + & {
-        border: 2px solid ${({theme}) => theme.radioButtonBorder};
+        border: 2px solid ${({theme}) => theme.alternativeSecondaryColor};
     }
 `;
 
@@ -51,7 +52,7 @@ export const RightOptionsContainer = styled.div`
 `
 
 export const PreviewOrAddCardButton = styled.button`
-    background-color: ${({theme}) => theme.buttonBackground};
+    background-color: ${({theme}) => theme.primaryInputColor};
     color: #fff;
     width: 100px;
     padding: 10px 10px;

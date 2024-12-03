@@ -78,7 +78,7 @@ const AddCard: React.FC = () => {
                             </RightOptionsContainer>
                         )}
                     </>
-                ) : (
+                ) : ( // TODO: Change the fuckin Emojis below to Icons from the images folder
                     <>
                         <ToggleModeButton onClick={toggleMode}>✒️</ToggleModeButton>
                         <PreviewOrAddCardButton onClick={addCardToDeck}>+</PreviewOrAddCardButton>

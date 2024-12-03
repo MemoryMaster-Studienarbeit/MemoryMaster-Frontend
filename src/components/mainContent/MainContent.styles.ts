@@ -10,10 +10,7 @@ export const MainContentContainer = styled.div<{ $isSidebarOpen: boolean }>`
     align-items: center;
     transition: width 0.3s ease;
     height: 100%;
-    background-color: ${({ theme }) => theme.background};
     color: ${({ theme }) => theme.text};
-    
-    // This is only for directly displaying text in the center of the page
     white-space: nowrap;
     overflow: hidden;
 
