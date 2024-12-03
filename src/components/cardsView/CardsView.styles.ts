@@ -20,22 +20,6 @@ export const Header = styled.h2`
     width: 100%;
 `;
 
-export const StartButton = styled.button`
-    background-color: ${({theme}) => theme.primaryInputColor};
-    color: #fff;
-    padding: 10px 20px;
-    margin: 20px 0;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-
-    &:hover {
-        background-color: ${({theme}) => theme.alternativePrimaryColor};
-    }
-`;
-
 export const MainDeckContainer = styled.div`
     display: flex;
     flex-direction: column; 

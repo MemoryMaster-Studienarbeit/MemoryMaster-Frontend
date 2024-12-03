@@ -8,12 +8,23 @@ interface FrontAndBackViewProps {
     FrontText: string;
     BackText: string;
 }
-// TODO: Fix this so the values are being retrieved right (Doing value = {...} just sets the value)
-export const FrontAndBackView: FC<FrontAndBackViewProps> = ({FrontText, BackText}) =>{
+
+export const FrontAndBackView: FC<FrontAndBackViewProps> = ({FrontText, BackText}) => {
     return (
         <FrontAndBackViewContainer>
-            <TextAreaInput type="text" placeholder="Vorderseite" width={"80%"} flex={"2"}></TextAreaInput>
-            <TextAreaInput type="text" placeholder="Rückseite" width={"80%"} flex={"2"}></TextAreaInput>
+            {(FrontText !== '' && BackText !== '') ? (
+                <>
+                    <TextAreaInput type="text" placeholder="Vorderseite" width={"80%"} flex={"2"}
+                                   value={FrontText}></TextAreaInput>
+                    <TextAreaInput type="text" placeholder="Rückseite" width={"80%"} flex={"2"}
+                                   value={BackText}></TextAreaInput>
+                </>
+            ) : (
+                <>
+                    <TextAreaInput type="text" placeholder="Vorderseite" width={"80%"} flex={"2"}></TextAreaInput>
+                    <TextAreaInput type="text" placeholder="Rückseite" width={"80%"} flex={"2"}></TextAreaInput>
+                </>
+            )}
         </FrontAndBackViewContainer>
     )
 }

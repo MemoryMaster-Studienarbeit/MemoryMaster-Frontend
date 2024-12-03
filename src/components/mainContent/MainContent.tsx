@@ -4,7 +4,6 @@ import {MainContentContainer} from './MainContent.styles';
 import CardsView from '../cardsView/CardsView';
 import {useNavbar} from "../../ThemeContext";
 import AddCard from "../addCard/AddCard";
-import {darkTheme} from "../../themes";
 
 interface MainContentProps {
     selectedDeck: string | null;

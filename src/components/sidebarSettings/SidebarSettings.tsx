@@ -14,7 +14,7 @@ const SidebarSettings: FC = () => {
                 <DarkModeSwitch
                     style={{padding: "10px", width: "40%"}}
                     moonColor={"white"}
-                    sunColor={"#faba44"}
+                    sunColor={"#eaac02"}
                     checked={isDarkMode}
                     onChange={toggleTheme}
                     size={50}
