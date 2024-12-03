@@ -10,7 +10,7 @@ export const SidebarContainer = styled.div<{ $isSidebarOpen: boolean }>`
     width: ${(props) => (props.$isSidebarOpen ? '20vw' : '50px')};
     height: 100%;
     transition: width 0.3s ease;
-    background-color: ${({ theme }) => theme.sidebarBackground};
+    background-color: ${({ theme }) => theme.quaternaryColor};
     color: ${({ theme }) => theme.text};
     display: flex;
     flex-direction: column;

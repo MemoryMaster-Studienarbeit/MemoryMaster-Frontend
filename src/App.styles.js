@@ -5,5 +5,4 @@ export const AppContainer = styled.div`
     flex-direction: row;
     height: 100vh;
     width: 100vw;
-    background-color: ${({ theme }) => theme.background};
 `;

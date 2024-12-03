@@ -22,20 +22,5 @@ export const SettingsContainer = styled.div<{ $isSidebarOpen: boolean }>`
     height: auto;
     width: 100%;
     color: ${({theme}) => theme.text};
-    background-color: ${({theme}) => theme.sidebarBackground};
     transition: flex-direction 1.5s;
-`;
-
-export const LogoutButton = styled.button`
-    background-color: ${({ theme }) => theme.buttonBackground};
-    color: ${({ theme }) => theme.text};
-    padding: 10px;
-    display: flex;
-    border: none;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    svg {
-        font-size: 40px;
-    }
 `;

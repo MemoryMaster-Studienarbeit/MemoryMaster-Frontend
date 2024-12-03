@@ -1,21 +1,19 @@
 import React, {FC} from 'react'
 
 import {
-    FrontAndBackViewContainer,
-    FrontTextArea,
-    BackTextArea
+    FrontAndBackViewContainer, TextAreaInput
 } from './FrontAndBackView.styles'
 
 interface FrontAndBackViewProps {
     FrontText: string;
     BackText: string;
 }
-
+// TODO: Fix this so the values are being retrieved right (Doing value = {...} just sets the value)
 export const FrontAndBackView: FC<FrontAndBackViewProps> = ({FrontText, BackText}) =>{
     return (
         <FrontAndBackViewContainer>
-            <FrontTextArea placeholder="Vorderseite" value={FrontText || ""}></FrontTextArea>
-            <BackTextArea placeholder="Rückseite" value={BackText || ""}></BackTextArea>
+            <TextAreaInput type="text" placeholder="Vorderseite" width={"80%"} flex={"2"}></TextAreaInput>
+            <TextAreaInput type="text" placeholder="Rückseite" width={"80%"} flex={"2"}></TextAreaInput>
         </FrontAndBackViewContainer>
     )
 }

@@ -12,22 +12,17 @@ export const SearchSidebarContainer = styled.div`
     width: 100%;
     margin: 0;
     color: ${({ theme }) => theme.text};
-    background-color: ${({ theme }) => theme.sidebarBackground};
 `;
 
 export const SearchInput = styled.input`
     width: 100%;
     padding: 0.5em;
     margin: 1em 0;
-    border: 1px solid ${({ theme }) => theme.text};
-    background-color: ${({ theme }) => theme.inputBackground};
+    border: none;
+    background-color: ${({ theme }) => theme.primaryInputColor};
     color: ${({ theme }) => theme.text};
     border-radius: 4px;
     font-size: 1em;
-
-    &::placeholder {
-        color: ${({ theme }) => theme.placeholder};
-    }
 
     &:focus {
         outline: none;

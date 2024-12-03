@@ -2,17 +2,16 @@ import React from 'react'
 
 import {
     FrontAndBackAiOptionsContainer,
-    FrontTextArea,
     LowerOptionsContainer,
     SelectOptionsContainer,
-    PromptExtrasContainer
 } from './FrontAndBackAiOptions.styles'
 import { SelectOption } from '../selectOption/SelectOption'
+import {TextAreaInput} from "../frontAndBackView/FrontAndBackView.styles";
 
 export const FrontAndBackAiOptions = () => {
     return (
         <FrontAndBackAiOptionsContainer>
-            <FrontTextArea placeholder="Vorderseite"></FrontTextArea>
+            <TextAreaInput type="text" placeholder="Vorderseite" width={"80%"} flex={"3"}></TextAreaInput>
             <LowerOptionsContainer>
                 <SelectOptionsContainer>
                     <SelectOption label={"Stil: "} options={[{ value: "einfach", text: "Einfach" },
@@ -23,8 +22,7 @@ export const FrontAndBackAiOptions = () => {
                                       { value: "normal", text: "Normal" },
                                       { value: "ausführlich", text: "Ausführlich" }]} />
                 </SelectOptionsContainer>
-                <PromptExtrasContainer type="text" placeholder="Extras zum Prompt">
-                </PromptExtrasContainer>
+                <TextAreaInput type="text" placeholder="Extras zum Prompt" width={"80%"} flex={"2"}></TextAreaInput>
             </LowerOptionsContainer>
         </FrontAndBackAiOptionsContainer>
     )

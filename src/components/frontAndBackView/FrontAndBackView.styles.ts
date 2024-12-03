@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const FrontAndBackViewContainer = styled.div`
-    width: calc(100% - 20px);
+    width: 60vw;
     height: 100%;
     margin: 10px;
     display: flex;
@@ -10,39 +10,28 @@ export const FrontAndBackViewContainer = styled.div`
     justify-content: center;
 `
 
-export const FrontTextArea = styled.textarea`
-    flex: 1;
+interface TextAreaProps {
+    width: string,
+    flex: string //TODO: Change this from flex to height
+}
+
+export const TextAreaInput = styled.input<TextAreaProps>`
+    flex: ${props => props.flex};
     align-content: center;
     justify-content: center;
     justify-items: center;
-    width: calc(100% - 10px);
+    width: ${props => props.width};
     border-radius: 10px;
-    border: 2px solid black;
     resize: none;
     font-size: 16px;
-    margin: 5px;
+    margin: 30px;
     text-align: center;
-    border: 2px solid ${({ theme }) => theme.text};
-    background-color: ${({ theme }) => theme.inputBackground};
-    color: ${({ theme }) => theme.text};
+    border: none;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+    background-color: ${({theme}) => theme.primaryInputColor};
+    color: ${({theme}) => theme.text};
 
     &::placeholder {
         text-align: center;
     }
-`
-export const BackTextArea = styled.textarea`
-    flex: 4;
-    align-content: center;
-    justify-content: center;
-    justify-items: center;
-    width: calc(100% - 10px);
-    border-radius: 10px;
-    border: 2px solid black;
-    resize: none;
-    font-size: 16px;
-    margin: 5px;
-    text-align: center;
-    border: 2px solid ${({ theme }) => theme.text};
-    background-color: ${({ theme }) => theme.inputBackground};
-    color: ${({ theme }) => theme.text};
-`
+`;

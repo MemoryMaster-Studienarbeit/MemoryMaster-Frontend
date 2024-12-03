@@ -1,30 +1,43 @@
-// themes.ts
+//@ts-ignore
+import backgroundLight from './images/background_light.svg';
+//@ts-ignore
+import backgroundDark from './images/background_dark.svg';
+
 export const lightTheme = {
-    background: '#ffffff',
-    text: '#000000',
-    sidebarBackground: '#f0f0f0',
-    inputBackground: '#f0f0f0',
-    toggleBackground: '#007bff',
     isLight: true,
-    selectedBackground: 'cadetblue',
-    cardBackground: '#f0f0f0',
-    buttonBackground: '#007bff',
-    buttonHover: '#0056b3',
-    radioButtonBorder: '#000000'
-};
+    backgroundImage: `url(${backgroundLight})`,
+    backgroundColor: '#f0f0f0',
+
+    primaryColor: '#f9cdad',
+    secondaryColor: '#fc9d9a',
+    tertiaryColor: '#fe4365',
+    quaternaryColor: '#c8c8a9',
+    quinaryColor: '#83af9b',
+
+    alternativePrimaryColor: '#0056b3',
+    alternativeSecondaryColor: '#6cb2ff',
+
+    primaryInputColor: '#eaeaea',
+
+    text: '#000000',
+}
 
 export const darkTheme = {
-    background: '#333333',
-    text: '#ffffff',
-    sidebarBackground: '#444444',
-    inputBackground: '#555',
-    toggleBackground: '#0056b3',
     isLight: false,
-    selectedBackground: 'cadetblue',
-    cardBackground: '#444444',
-    buttonBackground: '#007bff',
-    buttonHover: '#0056b3',
-    radioButtonBorder: '#fff'
+    backgroundImage: `url(${backgroundDark})`,
+    backgroundColor: '#333333',
+
+    primaryColor: '#00dffc',
+    secondaryColor: '#00b4cc',
+    tertiaryColor: '#008c9e',
+    quaternaryColor: '#005f6b',
+    quinaryColor: '#000000',
+
+    alternativePrimaryColor: '#0056b3',
+    alternativeSecondaryColor: '#6cb2ff',
+
+    primaryInputColor: '#333333',
+
+    text: '#ffffff',
 };
 
-export type ThemeType = typeof lightTheme;
