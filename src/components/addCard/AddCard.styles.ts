@@ -12,7 +12,7 @@ export const AddCardContainer = styled.div`
 export const UpperGeneralOptionsContainer= styled.div`
     display: flex;
     padding: 10px;
-    min-height: 45px;
+    height: fit-content;
     justify-content: space-between;
     width: calc(100% - 20px);
 `
@@ -26,62 +26,41 @@ export const LeftOptionsContainer = styled.div`
 
 export const RadioButton = styled.label`
     color: ${({theme}) => theme.text};
-    padding: 10px 10px;
+    padding: 5px 10px;
+    margin: 10px;
+    width: 150px;
+    height: 40px;
     font-size: 16px;
     border-radius: 5px;
     align-content: center;
     justify-content: center;
     cursor: pointer;
     box-sizing: border-box;
-    border: 2px solid;
 
     &:hover {
-        border: 2px solid ${({theme}) => theme.primaryInputColor};
+        background-color: ${({theme}) => theme.alternativePrimaryColor};
     }
 
     input[type="radio"]:checked + & {
-        border: 2px solid ${({theme}) => theme.alternativeSecondaryColor};
+        background-color: ${({theme}) => theme.alternativeSecondaryColor};
     }
 `;
 
 export const RightOptionsContainer = styled.div`
     display: flex;
     padding: 0;
+    height: fit-content;
     justify-content: flex-end;
     gap: 10px;
 `
 
-export const PreviewOrAddCardButton = styled.button`
-    background-color: ${({theme}) => theme.primaryInputColor};
-    color: #fff;
-    width: 100px;
-    padding: 10px 10px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-
-    &:hover {
-        background-color: ${({theme}) => theme.buttonHover};
-    }
-`;
-
 export const ToggleModeButton = styled.button`
-    border-radius: 5px;
-    font-size: 20px;
-    border: 2px solid ${({theme}) => theme.radioButtonBorder};
-    background-color: ${({theme}) => theme.background};
-    padding: 5px 10px;
+    background: none;
+    border: none;
+    margin: 10px;
     cursor: pointer;
-`
-
-export const BackButton = styled.button`
-    border-radius: 5px;
-    font-size: 16px;
-    color: ${({theme}) => theme.text};
-    border: 2px solid ${({theme}) => theme.radioButtonBorder};
-    background-color: ${({theme}) => theme.background};
-    padding: 5px 10px;
-    cursor: pointer; 
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
 `

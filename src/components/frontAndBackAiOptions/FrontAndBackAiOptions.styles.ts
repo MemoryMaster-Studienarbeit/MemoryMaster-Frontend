@@ -13,7 +13,7 @@ export const FrontAndBackAiOptionsContainer = styled.div`
 export const LowerOptionsContainer = styled.div`
     display: flex;
     flex: 1;
-    width: calc(100% - 20px);
+    width: 80%;
     height: 100%;
     padding: 10px;
     justify-content: space-between;

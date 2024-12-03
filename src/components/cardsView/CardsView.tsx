@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 
-import { MainDeckContainer, CardsContainer, Header, StartButton } from './CardsView.styles';
+import { MainDeckContainer, CardsContainer, Header } from './CardsView.styles';
 
 import Card from '../card/Card';
+import Button from '../button/Button';
 
 interface CardsViewProps {
     selectedDeck: string | null;
@@ -32,7 +33,7 @@ const CardsView: React.FC<CardsViewProps> = ({ selectedDeck, onAdd }) => {
                 ))}
                 <Card onCardClick={() => onAdd(-1)} key={-1} card={"+"} />
             </CardsContainer>
-            <StartButton onClick={() =>{console.log("Start")}}>Start</StartButton>
+            <Button onClick={() =>{console.log("Start")}} text={"Start"} />
         </MainDeckContainer>
     )
 }

@@ -19,6 +19,9 @@ export const lightTheme = {
 
     primaryInputColor: '#eaeaea',
 
+    primaryButtonColor: '#f9cdad',
+    secondaryButtonColor: '#fc9d9a',
+
     text: '#000000',
 }
 
@@ -37,6 +40,9 @@ export const darkTheme = {
     alternativeSecondaryColor: '#6cb2ff',
 
     primaryInputColor: '#333333',
+
+    primaryButtonColor: '#00dffc',
+    secondaryButtonColor: '#00b4cc',
 
     text: '#ffffff',
 };
