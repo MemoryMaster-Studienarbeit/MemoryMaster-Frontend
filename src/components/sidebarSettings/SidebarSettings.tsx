@@ -1,16 +1,15 @@
 import {DarkModeSwitch} from 'react-toggle-dark-mode';
 import {InnerSettingsContainer, SettingsContainer} from "./SidebarSettings.styles";
 import React, {FC} from "react";
+import {useNavbar, useTheme} from "../../ThemeContext";
 
-interface SidebarSettingsProps {
-    isOpen: boolean;
-    isDarkMode: boolean;
-    toggleTheme: () => void;
-}
 
-const SidebarSettings: FC<SidebarSettingsProps> = ({isOpen, isDarkMode, toggleTheme}) => {
+const SidebarSettings: FC = () => {
+    const { isSidebarOpen } = useNavbar();
+    const {isDarkMode, toggleTheme} = useTheme();
+
     return (
-        <SettingsContainer isOpen={isOpen}>
+        <SettingsContainer $isSidebarOpen={isSidebarOpen}>
             <InnerSettingsContainer>
                 <DarkModeSwitch
                     style={{padding: "10px", width: "40%"}}

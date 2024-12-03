@@ -8,6 +8,9 @@ export const lightTheme = {
     isLight: true,
     selectedBackground: 'cadetblue',
     cardBackground: '#f0f0f0',
+    buttonBackground: '#007bff',
+    buttonHover: '#0056b3',
+    radioButtonBorder: '#000000'
 };
 
 export const darkTheme = {
@@ -19,6 +22,9 @@ export const darkTheme = {
     isLight: false,
     selectedBackground: 'cadetblue',
     cardBackground: '#444444',
+    buttonBackground: '#007bff',
+    buttonHover: '#0056b3',
+    radioButtonBorder: '#fff'
 };
 
 export type ThemeType = typeof lightTheme;
