@@ -15,6 +15,8 @@ export const SidebarContainer = styled.div<{ $isSidebarOpen: boolean }>`
     display: flex;
     flex-direction: column;
     align-items: start;
+    padding: 0;
+    margin: 0;
 
     @media (max-width: 768px) {
         width: ${(props) => (props.$isSidebarOpen ? '75vw' : '50px')};
@@ -44,16 +46,12 @@ export const ToggleButton = styled.button`
     cursor: pointer;
     font-size: 1.5em;
     color: ${({ theme }) => theme.text};
-    margin-bottom: 0.5em;
-    padding: 0;
     width: 50px;
+    height: 50px;
 `;
 
 export const BurgerIcon = styled.span`
-    display: inline-block;
     font-size: 1.5em;
-    padding: 0;
-    margin: 0;
     width: 30px;
     height: 30px;
 
@@ -68,12 +66,12 @@ export const BurgerIcon = styled.span`
 
 export const DeckList = styled.ul`
     list-style: none;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
     justify-content: start;
-    width: 90%;
-    padding: 10px 0 0;
+    height: fit-content;
+    overflow-y: auto;
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 0;
 `;
 
 export const DeckItem = styled.li<{ $isSelected: boolean }>`
@@ -102,10 +100,8 @@ export const AddDeckButton = styled.button`
     cursor: pointer;
     background: url(${({ theme }) => theme.isLight ? plusDark : plusLight}) no-repeat center center;
     scale: 140%;
-    display: flex;
     align-items: center;
     justify-content: center;
-    margin: auto 0 auto 0;
 
     &:hover {
         background-image: url("${pluslightgreen}");
@@ -115,7 +111,9 @@ export const AddDeckButton = styled.button`
 `;
 
 export const MyDecksTitle = styled.h3`
-    margin: 0.5em 0;
+    align-content: center;
+    height: 40px;
+    margin: 0;
     padding: 0;
     cursor: default;
 `;

@@ -10,15 +10,16 @@ import {
     MyDecksTitle
 } from './Sidebar.styles';
 import SearchSidebar from "../searchFieldSidebar/SearchFieldSidebar";
-import {SearchSidebarContainer} from "../searchFieldSidebar/SearchFieldSidebar.styles";
 import React, {FC, useEffect, useState} from "react";
+import {useNavigate} from 'react-router-dom';
 import SidebarSettings from "../sidebarSettings/SidebarSettings";
 
 interface SidebarProps {
-    onSelectDeck: (deck: string) => void;
+    sessionId: string;
 }
 
-const Sidebar: FC<SidebarProps> = ({ onSelectDeck }) => {
+const Sidebar: FC<SidebarProps> = ({ sessionId }) => {
+    const navigate = useNavigate();
     const { isSidebarOpen, toggleSidebar } = useNavbar();
     const [decks, setDecks] = useState<string[]>([]); // Liste der Decks
     const [searchItem, setSearchItem] = useState('') // Suchbegriff
@@ -26,17 +27,59 @@ const Sidebar: FC<SidebarProps> = ({ onSelectDeck }) => {
     const [filteredDecks, setFilteredDecks] = useState<string[]>([]); // Gefilterte Decks
 
     useEffect(() => {
+        if (sessionId === 'uuid' || !isSidebarOpen) return;
+        if (!isSidebarOpen) setSearchItem('');
+        fetchDecks();
+    }, [isSidebarOpen, toggleSidebar]);
+
+    useEffect(() => {
         if (!isSidebarOpen) setSearchItem('');
         filterDecks();
-    }, [decks, searchItem, toggleSidebar])
+    }, [searchItem]);
 
-    const handleAddDeck = () => {
+    const fetchDecks = async () => {
+        await fetch(`http://45.81.232.169:8000/api/decks?uuid=${sessionId}`)
+            .then(response => response.text())
+            .then(responseText => {
+                const data = responseText.startsWith('{') || responseText.startsWith('[') ? JSON.parse(responseText) : [];
+                if (data === '"No decks found for the given session_id"') {
+                    return;
+                }
+                const deckNames = data.map((deck: { deck_name: string }) => deck.deck_name);
+                setDecks(deckNames);
+                setFilteredDecks(deckNames);
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+            });
+    };
+
+    const handleAddDeck = async () => {
         const newDeckName = prompt('Enter Deck Name:');
         if (!newDeckName) {
             return;
         }
-        setDecks([...decks, newDeckName]);
-        setFilteredDecks([...decks, newDeckName]);
+        const addDeck = async () => {
+            await fetch(`http://45.81.232.169:8000/api/deck?uuid=${sessionId}&deck_name=${newDeckName}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.text())
+                .then(responseText => {
+                    if (responseText === '"Deck already exists"') {
+                        alert('Deck already exists');
+                        return;
+                    }
+                    setDecks([...decks, newDeckName]);
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                });
+        }
+        await addDeck();
+        fetchDecks();
     };
 
     const filterDecks = () => {
@@ -48,14 +91,10 @@ const Sidebar: FC<SidebarProps> = ({ onSelectDeck }) => {
         setFilteredDecks(filteredDecks);
     }
 
-    const handleSelectDeck = (deck: string) => {
-        setSelectedDeck(deck);
-        onSelectDeck(deck); // Informiere die Main Content Area über das ausgewählte Deck
-    };
-
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         const searchTerm = e.target.value.toLowerCase()
         setSearchItem(searchTerm);
+
     };
 
     return (
@@ -65,19 +104,13 @@ const Sidebar: FC<SidebarProps> = ({ onSelectDeck }) => {
                     <BurgerIcon>☰</BurgerIcon>
                 </ToggleButton>
                 {isSidebarOpen && (
-                    <div style={{display: "flex", flexDirection: "column", width: "100%", alignItems: "center"}}>
-                        <div style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            width: "90%"
-                        }}>
-                            <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
+                    <>
+                        <div style={{ width: "calc(100% - 20px)", padding: "10px" }}>
+                            <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between", marginBottom: "10px"}}>
                                 <MyDecksTitle>Decks</MyDecksTitle>
                                 <AddDeckButton onClick={handleAddDeck}></AddDeckButton>
                             </div>
-                            <SearchSidebarContainer>
-                                <SearchSidebar onSearchChange={handleSearch}/>
-                            </SearchSidebarContainer>
+                            <SearchSidebar onSearchChange={handleSearch}/>
                         </div>
                         {filteredDecks.length === 0 && searchItem !== ''
                             ? <p>No decks found</p>
@@ -85,7 +118,7 @@ const Sidebar: FC<SidebarProps> = ({ onSelectDeck }) => {
                                 {filteredDecks.map((deck, index) => (
                                     <DeckItem
                                         key={index}
-                                        onClick={() => handleSelectDeck(deck)}
+                                        onClick={() => navigate(`/${sessionId}/${deck}`)}
                                         $isSelected={selectedDeck === deck}
                                     >
                                         {deck}
@@ -93,7 +126,7 @@ const Sidebar: FC<SidebarProps> = ({ onSelectDeck }) => {
                                 ))}
                             </DeckList>
                         }
-                    </div>
+                    </>
                 )}
                 <SidebarSettings />
             </SidebarContainer>
