@@ -3,35 +3,47 @@ import React, {useEffect, useState} from 'react';
 import { MainDeckContainer, CardsContainer, Header } from './CardsView.styles';
 
 import Card from '../card/Card';
+import { Card as CardType } from '../../types/Cards';
 import Button from '../button/Button';
+import {useParams, useNavigate} from "react-router-dom";
 
-interface CardsViewProps {
-    selectedDeck: string | null;
-    onAdd: (id: number) => void;
+interface CardViewProps {
+    onLoad: (sessionId: string, deckName?: string) => void;
 }
 
-const CardsView: React.FC<CardsViewProps> = ({ selectedDeck, onAdd }) => {
-    const [flashcards, setFlashcards] = useState<{ deck: string; cards: string[] }[]>([
-        {deck: 'Math', cards: ['Card 1', 'Card 2']},
-        {deck: 'Science', cards: ['Card A', 'Card B', 'Card C', 'Card D']},
-        {deck: 'Science 2', cards: ['Card A2', 'Card B2', 'Card C2', 'Card D2', 'Card E2', 'Card F2', 'Card G2',
-                'Card B2', 'Card C2', 'Card D2', 'Card E2', 'Card F2', 'Card G2']},
-    ]);
-    const [currentCards, setCurrentCards] = useState<string[]>([]);
+const CardsView: React.FC<CardViewProps> = ({onLoad}) => {
+    const navigate = useNavigate();
+    const { sessionId } = useParams<{ sessionId: string }>();
+    const { deckName } = useParams<{ deckName: string }>();
+    onLoad(sessionId || "", deckName);
+    const [flashcards, setFlashcards] = useState<{ deckName: string; cards: CardType[] }>();
 
     useEffect(() => {
-        const deck = flashcards.find((d) => d.deck === selectedDeck);
-        setCurrentCards(deck ? deck.cards : []);
-    }, [selectedDeck, flashcards]);
+        fetchDeck();
+    }, [deckName]);
+
+    const fetchDeck = async () => {
+        await fetch(`http://45.81.232.169:8000/api/deck?uuid=${sessionId}&deck_name=${deckName}`)
+            .then(response => response.json())
+            .then(data => {
+                setFlashcards({ deckName: data.deck_name, cards: data.cards.map((card: any) => (
+                        { uuid: card.uuid, front: card.card_front, back: card.card_back })) }
+                );
+                console.log('Deck fetch successful:', data);
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+            });
+    }
 
     return(
         <MainDeckContainer>
-            <Header>{selectedDeck}</Header>
+            <Header>{deckName}</Header>
             <CardsContainer>
-                {currentCards.map((card, index) => (
-                    <Card onCardClick={() => onAdd(index)} key={index} card={card} />
+                {flashcards?.cards.map((card, index) => (
+                    <Card key={card.uuid} card={card.front} onClick={() => {console.log(`Navigating to card view`)}}/>
                 ))}
-                <Card onCardClick={() => onAdd(-1)} key={-1} card={"+"} />
+                <Card key={-1} card={"+"} onClick={() => { navigate(`/${sessionId}/${deckName}/add`); }} />
             </CardsContainer>
             <Button onClick={() =>{console.log("Start")}} text={"Start"} />
         </MainDeckContainer>

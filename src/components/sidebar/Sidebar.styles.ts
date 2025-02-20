@@ -78,8 +78,10 @@ export const DeckItem = styled.li<{ $isSelected: boolean }>`
     padding: 0;
     cursor: pointer;
     color: ${(props) =>
-            props.$isSelected ? props.theme.selectedBackground : props.theme.text};
+            props.$isSelected ? props.theme.alternativeSecondaryColor : props.theme.text};
+    transform: ${(props) => (props.$isSelected ? 'translateX(5px) scale(1.1)' : 'none')};
     margin-bottom: 0.5em;
+    width: fit-content;
     border-radius: 5px;
     white-space: nowrap;
     overflow: hidden;
@@ -87,7 +89,7 @@ export const DeckItem = styled.li<{ $isSelected: boolean }>`
 
     &:hover {
         text-decoration: underline;
-        transform: translateY(-2px);
+        transform: translateX(5px) scale(1.1);
         color: cadetblue;
         transition: transform 0.2s ease-in-out;
     }

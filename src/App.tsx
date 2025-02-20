@@ -5,20 +5,29 @@ import MainContent from './components/mainContent/MainContent';
 import NotFound from './components/notFound/NotFound';
 import Sidebar from './components/sidebar/Sidebar';
 import { ThemeContextProvider } from "./ThemeContext";
+import CardsView from "./components/cardsView/CardsView";
+import AddCard from "./components/addCard/AddCard";
 
 
 const App: React.FC = () => {
     const [sessionId, setSessionId] = useState('uuid');
+    const [deckName, setDeckName] = useState('');
+    const setSidebarInfos = (sessionId: string, deckName: any) => {
+        setSessionId(sessionId);
+        setDeckName(deckName || '');
+    }
     return (
         <ThemeContextProvider>
             <AppContainer>
                 <BrowserRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
-                    <Sidebar sessionId={sessionId} />
+                    <Sidebar sessionId={sessionId} selectedDeckName={deckName}/>
                     <Routes>
                         <Route path="/" element={<MainContent onLoad={setSessionId}/>} />
-                        <Route path="/:sessionId" element={<MainContent onLoad={setSessionId}/>}>
-                            <Route path=":deckName" element={<MainContent onLoad={setSessionId}/>} />
-                        </Route>
+                        <Route path="/:sessionId" element={<MainContent onLoad={setSessionId}/>}/>
+                        <Route path="/:sessionId/:deckName" element={<CardsView onLoad={setSidebarInfos}/>}
+                        />
+                        <Route path="/:sessionId/:deckName/add" element={<AddCard onLoad={setSidebarInfos} />} />
+                        <Route path="/:sessionId/:deckName/edit/cardId" element={<CardsView onLoad={setSessionId}/>} />
                         <Route path="*" element={<NotFound />} />
                     </Routes>
                 </BrowserRouter>

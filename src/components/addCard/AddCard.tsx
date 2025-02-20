@@ -20,8 +20,17 @@ import penFillLight from '../../images/pen-fill-light.svg';
 import robotDark from '../../images/robot-dark.svg';
 // @ts-ignore
 import robotLight from '../../images/robot-light.svg';
+import {useNavigate, useParams} from "react-router-dom";
 
-const AddCard: React.FC = () => {
+interface AddCardProps {
+    onLoad: (sessionId: string, deckName?: string) => void,
+}
+
+const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
+    const navigate = useNavigate()
+    const {sessionId} = useParams<{ sessionId: string }>();
+    const {deckName} = useParams<{ deckName: string }>();
+    onLoad(sessionId || "", deckName);
     const [isManualMode, setIsManualMode] = useState(true);
     const [previewData, setPreviewData] = useState<string | null>(null);
     const [isPreviewMode, setIsPreviewMode] = useState(false);
@@ -53,8 +62,32 @@ const AddCard: React.FC = () => {
         // }
     };
 
-    const addCardToDeck = async () => {
-        console.log("Karte hinzufügefügt");
+    const addCardToDeck = () => {
+        const frontText = document.getElementById("FrontText")?.textContent;
+        console.log("FrontText:", frontText);
+        console.log(JSON.stringify({
+            uuid: sessionId?.toString(),
+            deck_name: deckName?.toString(),
+            card_front: "test front",
+            card_back: "test back"
+        }))
+        fetch(`http://45.81.232.169:8000/api/createCard`, {
+            method: "POST",
+            body: JSON.stringify({
+                uuid: sessionId?.toString(),
+                deck_name: deckName?.toString(),
+                card_front: "test front",
+                card_back: "test back"
+            }),
+            headers: {
+                "content-type": "application/json"
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Card created:", data);
+                navigate(`/${sessionId}/${deckName}`);
+            })
     }
 
     const handleBackFromPreview = () => {

@@ -14,14 +14,14 @@ export const FrontAndBackView: FC<FrontAndBackViewProps> = ({FrontText, BackText
         <FrontAndBackViewContainer>
             {(FrontText !== '' && BackText !== '') ? (
                 <>
-                    <TextAreaInput type="text" placeholder="Vorderseite" width={"80%"} flex={"2"}
+                    <TextAreaInput id={"FrontText"} type="text" placeholder="Vorderseite" width={"80%"} flex={"2"}
                                    value={FrontText}></TextAreaInput>
                     <TextAreaInput type="text" placeholder="Rückseite" width={"80%"} flex={"2"}
                                    value={BackText}></TextAreaInput>
                 </>
             ) : (
                 <>
-                    <TextAreaInput type="text" placeholder="Vorderseite" width={"80%"} flex={"2"}></TextAreaInput>
+                    <TextAreaInput id={"FrontText"} type="text" placeholder="Vorderseite" width={"80%"} flex={"2"}></TextAreaInput>
                     <TextAreaInput type="text" placeholder="Rückseite" width={"80%"} flex={"2"}></TextAreaInput>
                 </>
             )}

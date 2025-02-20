@@ -16,14 +16,14 @@ import SidebarSettings from "../sidebarSettings/SidebarSettings";
 
 interface SidebarProps {
     sessionId: string;
+    selectedDeckName: string;
 }
 
-const Sidebar: FC<SidebarProps> = ({ sessionId }) => {
+const Sidebar: FC<SidebarProps> = ({ sessionId, selectedDeckName }) => {
     const navigate = useNavigate();
     const { isSidebarOpen, toggleSidebar } = useNavbar();
     const [decks, setDecks] = useState<string[]>([]); // Liste der Decks
     const [searchItem, setSearchItem] = useState('') // Suchbegriff
-    const [selectedDeck, setSelectedDeck] = useState<string | null>(null); // Aktuell ausgewähltes Deck
     const [filteredDecks, setFilteredDecks] = useState<string[]>([]); // Gefilterte Decks
 
     useEffect(() => {
@@ -93,8 +93,7 @@ const Sidebar: FC<SidebarProps> = ({ sessionId }) => {
 
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         const searchTerm = e.target.value.toLowerCase()
-        setSearchItem(searchTerm);
-
+        setSearchItem(searchTerm)
     };
 
     return (
@@ -118,8 +117,10 @@ const Sidebar: FC<SidebarProps> = ({ sessionId }) => {
                                 {filteredDecks.map((deck, index) => (
                                     <DeckItem
                                         key={index}
-                                        onClick={() => navigate(`/${sessionId}/${deck}`)}
-                                        $isSelected={selectedDeck === deck}
+                                        onClick={() => {
+                                            navigate(`/${sessionId}/${deck}`);
+                                        }}
+                                        $isSelected={selectedDeckName === deck}
                                     >
                                         {deck}
                                     </DeckItem>
