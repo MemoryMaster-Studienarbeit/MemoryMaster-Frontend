@@ -39,6 +39,26 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
     const [selectedStyle, setSelectedStyle] = useState<string>();
     const [selectedLength, setSelectedLength] = useState<string>();
 
+    const [text, setText] = useState<string>('');
+    const [fileContent, setFileContent] = useState<File | undefined>(undefined);
+
+    const handleTextChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setText(event.target.value);
+    }
+
+    const handleFileChange = (file: File) => {
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                if (event.target?.result) {
+                    const newFile = new File([event.target.result], file.name, { type: file.type });
+                    setFileContent(newFile);
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+    };
+
     const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedMode(event.target.value);
     };
@@ -156,7 +176,7 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
             {!isPreviewMode ? (
                 <>
                     {isAiMode ? (
-                        <FrontAndBackAiOptions onStyleChange={handleSytleChange} onLengthChange={handleLengthChange}/>
+                        <FrontAndBackAiOptions onTextChange={handleTextChange} onStyleChange={handleSytleChange} onLengthChange={handleLengthChange}/>
                     ) : (
                         <FrontAndBackView FrontText={""} BackText={""}/>
                     )}

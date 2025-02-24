@@ -25,6 +25,7 @@ export const SelectOptionsContainer = styled.div`
     display: flex;
     flex: 1;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
+    align-content: center;
     gap: 10px;
 `
