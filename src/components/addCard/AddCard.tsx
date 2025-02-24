@@ -39,6 +39,9 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
     const [selectedStyle, setSelectedStyle] = useState<string>();
     const [selectedLength, setSelectedLength] = useState<string>();
 
+    const [frontText, setFrontText] = useState<string>('');
+    const [backText, setBackText] = useState<string>('');
+
     const [text, setText] = useState<string>('');
     const [fileContent, setFileContent] = useState<File | undefined>(undefined);
 
@@ -59,6 +62,14 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
         }
     };
 
+    const handleFrontTextChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setFrontText(event.target.value);
+    }
+
+    const handleBackTextChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setBackText(event.target.value);
+    }
+
     const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedMode(event.target.value);
     };
@@ -78,8 +89,9 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
     }
 
     // Vorschau laden
-    const handlePreview = async () => {
+    const handlePreview = () => {
         setIsPreviewMode(true);
+        console.log("Preview:", selectedMode, selectedStyle, selectedLength, text, fileContent);
         // try {
         //     const response = await fetch("/api/generate-card", {
         //         method: "POST",
@@ -99,21 +111,19 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
     };
 
     const addCardToDeck = () => {
-        const frontText = document.getElementById("FrontText")?.textContent;
-        console.log("FrontText:", frontText);
         console.log(JSON.stringify({
             uuid: sessionId,
             deck_name: deckName,
-            card_front: "test front",
-            card_back: "test back"
+            card_front: frontText,
+            card_back: backText
         }))
         fetch(`http://45.81.232.169:8000/api/createCard`, {
             method: "POST",
             body: JSON.stringify({
                 uuid: sessionId?.toString(),
                 deck_name: deckName?.toString(),
-                card_front: "test front",
-                card_back: "test back"
+                card_front: frontText,
+                card_back: backText
             }),
             headers: {
                 "content-type": "application/json"
