@@ -7,26 +7,27 @@ import {
 interface FrontAndBackViewProps {
     FrontText: string;
     BackText: string;
-    onFrontTextChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
-    onBackTextChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    onFrontTextChange: (value: React.ChangeEvent<HTMLInputElement>) => void;
+    onBackTextChange: (value: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const FrontAndBackView: FC<FrontAndBackViewProps> = ({FrontText, BackText}) => {
+export const FrontAndBackView: FC<FrontAndBackViewProps> = ({FrontText, BackText, onFrontTextChange, onBackTextChange}) => {
     return (
         <FrontAndBackViewContainer>
-            {(FrontText !== '' && BackText !== '') ? (
-                <>
-                    <TextAreaInput id={"FrontText"} type="text" placeholder="Vorderseite" width={"80%"} height={"40%"}
-                                   value={FrontText}></TextAreaInput>
-                    <TextAreaInput type="text" placeholder="Rückseite" width={"80%"} height={"40%"}
-                                   value={BackText}></TextAreaInput>
-                </>
-            ) : (
-                <>
-                    <TextAreaInput id={"FrontText"} type="text" placeholder="Vorderseite" width={"80%"} height={"40%"}></TextAreaInput>
-                    <TextAreaInput type="text" placeholder="Rückseite" width={"80%"} height={"40%"}></TextAreaInput>
-                </>
-            )}
+            <TextAreaInput
+                placeholder="Vorderseite"
+                onChange={(e) => onFrontTextChange(e)}
+                width={"80%"}
+                height={"40%"}
+                defaultValue={FrontText}
+            />
+            <TextAreaInput
+                placeholder="Rückseite"
+                onChange={(e) => onBackTextChange(e)}
+                width={"80%"}
+                height={"40%"}
+                defaultValue={BackText}
+            />
         </FrontAndBackViewContainer>
     )
 }

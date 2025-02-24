@@ -12,25 +12,39 @@ import { FileUploader } from 'react-drag-drop-files';
 import {TextAreaInput} from "../frontAndBackView/FrontAndBackView.styles";
 
 interface FrontAndBackAiOptionsProps {
-    onTextChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    onTextChange: (value: React.ChangeEvent<HTMLInputElement>) => void;
     onStyleChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
     onLengthChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+    onPromptExtrasChange: (value: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const FrontAndBackAiOptions: React.FC<FrontAndBackAiOptionsProps> = ({onTextChange, onStyleChange, onLengthChange}) => {
+export const FrontAndBackAiOptions: React.FC<FrontAndBackAiOptionsProps> = ({onTextChange, onStyleChange, onLengthChange, onPromptExtrasChange}) => {
     return (
         <FrontAndBackAiOptionsContainer>
             <TextAreaInput
-                type="text"
                 placeholder="Vorderseite"
+                onChange={e => onTextChange(e)}
                 width={"80%"}
                 height={"70%"}/>
             <LowerOptionsContainer>
                 <SelectOptionsContainer>
-                    <SelectOption label={"Stil: "} options={styleOptions} onChange={(event) => onStyleChange(event)} />
-                    <SelectOption label={"Länge: "} options={lengthOptions} onChange={(event) => onLengthChange(event)} />
+                    <SelectOption
+                        label={"Stil: "}
+                        options={styleOptions}
+                        onChange={(e) => onStyleChange(e)}
+                    />
+                    <SelectOption
+                        label={"Länge: "}
+                        options={lengthOptions}
+                        onChange={(e) => onLengthChange(e)}
+                    />
                 </SelectOptionsContainer>
-                <TextAreaInput type="text" placeholder="Extras zum Prompt" width={"80%"} height={"auto"}></TextAreaInput>
+                <TextAreaInput
+                    placeholder="Extras zum Prompt"
+                    onChange={e => onPromptExtrasChange(e)}
+                    width={"80%"}
+                    height={"auto"}
+                />
             </LowerOptionsContainer>
         </FrontAndBackAiOptionsContainer>
     )

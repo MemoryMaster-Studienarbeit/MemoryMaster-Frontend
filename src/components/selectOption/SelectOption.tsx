@@ -21,6 +21,7 @@ export const SelectOption: React.FC<SelectOptionProps> = ({ label, options, onCh
                         {option.text}
                     </option>
                 ))}
+                defaultValue={options[0].value}
             </Select>
         </Label>
     );
