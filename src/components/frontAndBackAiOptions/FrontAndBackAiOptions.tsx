@@ -6,21 +6,23 @@ import {
     SelectOptionsContainer,
 } from './FrontAndBackAiOptions.styles'
 import { SelectOption } from '../selectOption/SelectOption'
+import { styleOptions } from '../../constants/SelectOptions/StyleOptions';
+import { lengthOptions } from '../../constants/SelectOptions/LengthOptions';
 import {TextAreaInput} from "../frontAndBackView/FrontAndBackView.styles";
 
-export const FrontAndBackAiOptions = () => {
+interface FrontAndBackAiOptionsProps {
+    onStyleChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+    onLengthChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+}
+
+export const FrontAndBackAiOptions: React.FC<FrontAndBackAiOptionsProps> = ({onStyleChange, onLengthChange}) => {
     return (
         <FrontAndBackAiOptionsContainer>
             <TextAreaInput type="text" placeholder="Vorderseite" width={"80%"} flex={"3"}></TextAreaInput>
             <LowerOptionsContainer>
                 <SelectOptionsContainer>
-                    <SelectOption label={"Stil: "} options={[{ value: "einfach", text: "Einfach" },
-                        { value: "fortgeschritten", text: "Fortgeschritten" },
-                        { value: "professionell", text: "Professionell" },
-                        { value: "komplex", text: "Komplex/Technisch" }]} />
-                    <SelectOption label={"Länge: "} options={[{ value: "kurz", text: "Kurz und Knapp" },
-                                      { value: "normal", text: "Normal" },
-                                      { value: "ausführlich", text: "Ausführlich" }]} />
+                    <SelectOption label={"Stil: "} options={styleOptions} onChange={(event) => onStyleChange(event)} />
+                    <SelectOption label={"Länge: "} options={lengthOptions} onChange={(event) => onLengthChange(event)} />
                 </SelectOptionsContainer>
                 <TextAreaInput type="text" placeholder="Extras zum Prompt" width={"80%"} flex={"2"}></TextAreaInput>
             </LowerOptionsContainer>

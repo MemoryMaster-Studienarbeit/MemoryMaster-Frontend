@@ -31,13 +31,29 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
     const {sessionId} = useParams<{ sessionId: string }>();
     const {deckName} = useParams<{ deckName: string }>();
     onLoad(sessionId || "", deckName);
-    const [isManualMode, setIsManualMode] = useState(true);
+    const [isAiMode, setIsAiMode] = useState(true);
     const [previewData, setPreviewData] = useState<string | null>(null);
     const [isPreviewMode, setIsPreviewMode] = useState(false);
     const {isDarkMode} = useTheme();
+    const [selectedMode, setSelectedMode] = useState<string>();
+    const [selectedStyle, setSelectedStyle] = useState<string>();
+    const [selectedLength, setSelectedLength] = useState<string>();
+
+    const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSelectedMode(event.target.value);
+    };
+
+    const handleSytleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedStyle(event.target.value);
+        console.log("Style:", event.target.value, selectedStyle);
+    }
+
+    const handleLengthChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedLength(event.target.value);
+    }
 
     const toggleMode = () => {
-        setIsManualMode(!isManualMode);
+        setIsAiMode(!isAiMode);
         setIsPreviewMode(false);
     }
 
@@ -66,8 +82,8 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
         const frontText = document.getElementById("FrontText")?.textContent;
         console.log("FrontText:", frontText);
         console.log(JSON.stringify({
-            uuid: sessionId?.toString(),
-            deck_name: deckName?.toString(),
+            uuid: sessionId,
+            deck_name: deckName,
             card_front: "test front",
             card_back: "test back"
         }))
@@ -98,7 +114,7 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
     return (
         <AddCardContainer>
             <UpperGeneralOptionsContainer>
-                {isManualMode ? (
+                {isAiMode ? (
                     <>
                         <LeftOptionsContainer>
                             <ToggleModeButton onClick={toggleMode}>
@@ -108,10 +124,10 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
                             {!isPreviewMode && (
                                 <>
                                     <input type="radio" id="zusammenfassen" value="zusammenfassen" name="mode"
-                                           style={{display: 'none'}}/>
+                                           style={{display: 'none'}} onChange={handleRadioChange} defaultChecked/>
                                     <RadioButton htmlFor="zusammenfassen">Zusammenfassen</RadioButton>
                                     <input type="radio" id="neu_formulieren" value="neu_formulieren" name="mode"
-                                           style={{display: 'none'}}/>
+                                           style={{display: 'none'}} onChange={handleRadioChange} />
                                     <RadioButton htmlFor="neu_formulieren">Neu Formulieren</RadioButton>
                                 </>
                             )}
@@ -139,8 +155,8 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
             </UpperGeneralOptionsContainer>
             {!isPreviewMode ? (
                 <>
-                    {isManualMode ? (
-                        <FrontAndBackAiOptions/>
+                    {isAiMode ? (
+                        <FrontAndBackAiOptions onStyleChange={handleSytleChange} onLengthChange={handleLengthChange}/>
                     ) : (
                         <FrontAndBackView FrontText={""} BackText={""}/>
                     )}

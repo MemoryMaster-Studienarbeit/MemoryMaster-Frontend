@@ -26,5 +26,10 @@ export const MainDeckContainer = styled.div`
     align-items: center;
     justify-content: space-between; 
     width: 100%;
-    height: 100%; 
+    height: 100%;
+
+    @media (max-width: 768px) {
+        width: calc(100vw - 50px);
+        margin-left: 50px;
+    }
 `;
