@@ -9,9 +9,10 @@ interface SelectOptionProps {
     label: string;
     options: { value: string; text: string }[];
     onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+    selectedOption?: string;
 }
 
-export const SelectOption: React.FC<SelectOptionProps> = ({ label, options, onChange }) => {
+export const SelectOption: React.FC<SelectOptionProps> = ({ label, options, onChange, selectedOption }) => {
     return (
         <Label>
             {label}
@@ -21,7 +22,7 @@ export const SelectOption: React.FC<SelectOptionProps> = ({ label, options, onCh
                         {option.text}
                     </option>
                 ))}
-                defaultValue={options[0].value}
+                defaultValue={selectedOption}
             </Select>
         </Label>
     );

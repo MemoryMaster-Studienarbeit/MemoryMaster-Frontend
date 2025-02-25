@@ -8,7 +8,6 @@ import { ThemeContextProvider } from "./ThemeContext";
 import CardsView from "./components/cardsView/CardsView";
 import AddCard from "./components/addCard/AddCard";
 
-
 const App: React.FC = () => {
     const [sessionId, setSessionId] = useState('uuid');
     const [deckName, setDeckName] = useState('');

@@ -59,6 +59,7 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
     };
 
     const handleChange = (setter: React.Dispatch<React.SetStateAction<string>>) => {
+        console.log(setter);
         return (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
             setter(event.target.value);
         }
@@ -67,6 +68,9 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
     const toggleMode = () => {
         setIsAiMode(!isAiMode);
         setIsPreviewMode(false);
+        setSelectedStyle("einfach");
+        setSelectedLength("kurz");
+        setPromptExtras("");
     }
 
     // Vorschau laden
@@ -135,10 +139,14 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
                             {!isPreviewMode && (
                                 <>
                                     <input type="radio" id="zusammenfassen" value="zusammenfassen" name="mode"
-                                           style={{display: 'none'}} onChange={handleChange(setSelectedMode)} checked={selectedMode==="zusammenfassen"}/>
+                                           style={{display: 'none'}}
+                                           onChange={(e) => setSelectedMode(e.target.value)}
+                                           checked={selectedMode==="zusammenfassen"}/>
                                     <RadioButton htmlFor="zusammenfassen">Zusammenfassen</RadioButton>
                                     <input type="radio" id="neu_formulieren" value="neu_formulieren" name="mode"
-                                           style={{display: 'none'}} onChange={handleChange(setSelectedMode)} checked={selectedMode==="neu_formulieren"}/>
+                                           style={{display: 'none'}}
+                                           onChange={(e) => setSelectedMode(e.target.value)}
+                                           checked={selectedMode==="neu_formulieren"}/>
                                     <RadioButton htmlFor="neu_formulieren">Neu Formulieren</RadioButton>
                                 </>
                             )}
@@ -168,15 +176,15 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
                 <>
                     {isAiMode ? (
                         <FrontAndBackAiOptions
-                            onTextChange={handleChange(setText)}
-                            onStyleChange={handleChange(setSelectedStyle)}
-                            onLengthChange={handleChange(setSelectedLength)}
-                            onPromptExtrasChange={handleChange(setPromptExtras)}
+                            onTextChange={(e) => setText(e.target.value)}
+                            onStyleChange={(e) => setSelectedStyle(e.target.value)}
+                            onLengthChange={(e) => setSelectedLength(e.target.value)}
+                            onPromptExtrasChange={(e) => setPromptExtras(e.target.value)}
                         />
                     ) : (
                         <FrontAndBackView
-                            onFrontTextChange={handleChange(setFrontText)}
-                            onBackTextChange={handleChange(setBackText)}
+                            onFrontTextChange={(e) => setFrontText(e.target.value)}
+                            onBackTextChange={(e) => setBackText(e.target.value)}
                             FrontText={""}
                             BackText={""}
                         />
@@ -184,8 +192,8 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
                 </>
             ) : (
                 <FrontAndBackView
-                    onFrontTextChange={handleChange(setFrontText)}
-                    onBackTextChange={handleChange(setBackText)}
+                    onFrontTextChange={(e) => setFrontText(e.target.value)}
+                    onBackTextChange={(e) => setBackText(e.target.value)}
                     FrontText={"KI generierter Inhalt"}
                     BackText={"KI generierter Inhalt"}
                 />

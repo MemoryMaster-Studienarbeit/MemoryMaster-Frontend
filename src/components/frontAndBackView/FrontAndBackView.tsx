@@ -7,8 +7,8 @@ import {
 interface FrontAndBackViewProps {
     FrontText: string;
     BackText: string;
-    onFrontTextChange: (value: React.ChangeEvent<HTMLInputElement>) => void;
-    onBackTextChange: (value: React.ChangeEvent<HTMLInputElement>) => void;
+    onFrontTextChange: (value: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    onBackTextChange: (value: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 export const FrontAndBackView: FC<FrontAndBackViewProps> = ({FrontText, BackText, onFrontTextChange, onBackTextChange}) => {

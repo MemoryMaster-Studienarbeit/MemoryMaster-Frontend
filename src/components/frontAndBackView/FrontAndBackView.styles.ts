@@ -15,10 +15,9 @@ interface TextAreaProps {
     height: string //TODO: Change this from flex to height
 }
 
-export const TextAreaInput = styled.input<TextAreaProps>`
+export const TextAreaInput = styled.textarea<TextAreaProps>`
     align-content: center;
     justify-content: center;
-    justify-items: center;
     width: ${props => props.width};
     height: ${props => props.height};
     border-radius: 10px;
@@ -26,12 +25,8 @@ export const TextAreaInput = styled.input<TextAreaProps>`
     font-size: 16px;
     margin: 20px;
     text-align: center;
-    border: none;
+    overflow: auto;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
     background-color: ${({theme}) => theme.primaryInputColor};
     color: ${({theme}) => theme.text};
-
-    &::placeholder {
-        text-align: center;
-    }
 `;
