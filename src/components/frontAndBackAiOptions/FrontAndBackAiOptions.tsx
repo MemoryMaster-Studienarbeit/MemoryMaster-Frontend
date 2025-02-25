@@ -16,11 +16,13 @@ interface FrontAndBackAiOptionsProps {
     onStyleChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
     onLengthChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
     onPromptExtrasChange: (value: React.ChangeEvent<HTMLTextAreaElement>) => void;
-    selectedStyle?: string;
-    selectedLength?: string;
+    text: string;
+    promptExtras: string;
+    selectedStyle: string;
+    selectedLength: string;
 }
 
-export const FrontAndBackAiOptions: React.FC<FrontAndBackAiOptionsProps> = ({onTextChange, onStyleChange, onLengthChange, onPromptExtrasChange, selectedStyle, selectedLength}) => {
+export const FrontAndBackAiOptions: React.FC<FrontAndBackAiOptionsProps> = ({onTextChange, onStyleChange, onLengthChange, onPromptExtrasChange, text, promptExtras, selectedStyle, selectedLength}) => {
     return (
         <FrontAndBackAiOptionsContainer>
             <TextAreaInput
@@ -28,6 +30,7 @@ export const FrontAndBackAiOptions: React.FC<FrontAndBackAiOptionsProps> = ({onT
                 onChange={e => onTextChange(e)}
                 width={"80%"}
                 height={"70%"}
+                defaultValue={text}
             />
             <LowerOptionsContainer>
                 <SelectOptionsContainer>
@@ -49,7 +52,7 @@ export const FrontAndBackAiOptions: React.FC<FrontAndBackAiOptionsProps> = ({onT
                     onChange={e => onPromptExtrasChange(e)}
                     width={"80%"}
                     height={"auto"}
-                    defaultValue={""}
+                    defaultValue={promptExtras}
                 />
             </LowerOptionsContainer>
         </FrontAndBackAiOptionsContainer>

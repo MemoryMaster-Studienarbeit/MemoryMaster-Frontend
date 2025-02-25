@@ -16,13 +16,12 @@ export const SelectOption: React.FC<SelectOptionProps> = ({ label, options, onCh
     return (
         <Label>
             {label}
-            <Select onChange={onChange}>
+            <Select onChange={onChange} value={selectedOption}>
                 {options.map((option, index) => (
                     <option key={index} value={option.value}>
                         {option.text}
                     </option>
                 ))}
-                defaultValue={selectedOption}
             </Select>
         </Label>
     );

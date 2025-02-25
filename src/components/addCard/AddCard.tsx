@@ -41,7 +41,6 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
     const [selectedStyle, setSelectedStyle] = useState<string>("einfach");
     const [selectedLength, setSelectedLength] = useState<string>("kurz");
     const [promptExtras, setPromptExtras] = useState<string>("");
-
     const [text, setText] = useState<string>('');
     const [fileContent, setFileContent] = useState<File | undefined>(undefined);
 
@@ -71,6 +70,7 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
         setSelectedStyle("einfach");
         setSelectedLength("kurz");
         setPromptExtras("");
+        setText("");
     }
 
     // Vorschau laden
@@ -124,6 +124,7 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
     const handleBackFromPreview = () => {
         setIsPreviewMode(false);
         setPreviewData(null);
+        console.log("Preview:", selectedMode, selectedStyle, selectedLength, promptExtras, text, fileContent);
     };
 
     return (
@@ -180,6 +181,10 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
                             onStyleChange={(e) => setSelectedStyle(e.target.value)}
                             onLengthChange={(e) => setSelectedLength(e.target.value)}
                             onPromptExtrasChange={(e) => setPromptExtras(e.target.value)}
+                            text={text}
+                            promptExtras={promptExtras}
+                            selectedStyle={selectedStyle}
+                            selectedLength={selectedLength}
                         />
                     ) : (
                         <FrontAndBackView
