@@ -12,7 +12,7 @@ export const FrontAndBackViewContainer = styled.div`
 
 interface TextAreaProps {
     width: string,
-    height: string //TODO: Change this from flex to height
+    height: string
 }
 
 export const TextAreaInput = styled.textarea<TextAreaProps>`

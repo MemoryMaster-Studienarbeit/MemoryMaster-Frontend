@@ -44,7 +44,7 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
     const [text, setText] = useState<string>('');
     const [fileContent, setFileContent] = useState<File | undefined>(undefined);
 
-    const handleFileChange = (file: File) => {
+    const handleFileChange = (file: File | undefined) => {
         if (file) {
             const reader = new FileReader();
             reader.onload = (event) => {
@@ -56,13 +56,6 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
             reader.readAsArrayBuffer(file);
         }
     };
-
-    const handleChange = (setter: React.Dispatch<React.SetStateAction<string>>) => {
-        console.log(setter);
-        return (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-            setter(event.target.value);
-        }
-    }
 
     const toggleMode = () => {
         setIsAiMode(!isAiMode);
@@ -181,6 +174,7 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
                             onStyleChange={(e) => setSelectedStyle(e.target.value)}
                             onLengthChange={(e) => setSelectedLength(e.target.value)}
                             onPromptExtrasChange={(e) => setPromptExtras(e.target.value)}
+                            onFileChange={handleFileChange}
                             text={text}
                             promptExtras={promptExtras}
                             selectedStyle={selectedStyle}

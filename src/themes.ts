@@ -23,6 +23,7 @@ export const lightTheme = {
     secondaryButtonColor: '#fc9d9a',
 
     text: '#000000',
+    dashedBorder: '#808080',
 }
 
 export const darkTheme = {
@@ -45,5 +46,6 @@ export const darkTheme = {
     secondaryButtonColor: '#00b4cc',
 
     text: '#ffffff',
+    dashedBorder: '#808080',
 };
 
