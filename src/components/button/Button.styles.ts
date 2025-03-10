@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 
-export const StyledButton = styled.button`
-    background-color: ${({theme}) => theme.primaryButtonColor};
+interface ButtonProps {
+    color?: string;
+}
+
+export const StyledButton = styled.button<ButtonProps>`
+    background-color: ${({ color, theme }) => color ? theme[color] : theme.primaryButtonColor};
     color: ${({theme}) => theme.text};
     padding: 10px 10px;
     margin: 10px;

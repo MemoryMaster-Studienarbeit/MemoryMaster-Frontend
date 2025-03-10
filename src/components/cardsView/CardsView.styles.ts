@@ -16,6 +16,7 @@ export const CardsContainer = styled.div`
 export const Header = styled.h2`
     text-align: center;
     font-size: 24px;
+    color: ${({theme}) => theme.text};
     margin-bottom: 20px;
     width: 100%;
 `;

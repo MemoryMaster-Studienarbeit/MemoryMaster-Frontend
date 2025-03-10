@@ -7,12 +7,13 @@ import {
     DeckList,
     DeckItem,
     AddDeckButton,
-    MyDecksTitle
+    MyDecksTitle, AddDeckContainer, AddDeckForm, DeckNameInput, ButtonContainer, AddDeckHeader
 } from './Sidebar.styles';
 import SearchSidebar from "../searchFieldSidebar/SearchFieldSidebar";
 import React, {FC, useEffect, useState} from "react";
 import {useNavigate} from 'react-router-dom';
 import SidebarSettings from "../sidebarSettings/SidebarSettings";
+import Button from "../button/Button";
 
 interface SidebarProps {
     sessionId: string;
@@ -22,9 +23,11 @@ interface SidebarProps {
 const Sidebar: FC<SidebarProps> = ({ sessionId, selectedDeckName }) => {
     const navigate = useNavigate();
     const { isSidebarOpen, toggleSidebar } = useNavbar();
-    const [decks, setDecks] = useState<string[]>([]); // Liste der Decks
-    const [searchItem, setSearchItem] = useState('') // Suchbegriff
-    const [filteredDecks, setFilteredDecks] = useState<string[]>([]); // Gefilterte Decks
+    const [openAddDeck, setOpenAddDeck] = useState(false);
+    const [decks, setDecks] = useState<string[]>([]);
+    const [searchItem, setSearchItem] = useState('')
+    const [filteredDecks, setFilteredDecks] = useState<string[]>([]);
+    const [newDeckName, setNewDeckName] = useState('');
 
     useEffect(() => {
         if (sessionId === 'uuid' || !isSidebarOpen) return;
@@ -55,8 +58,8 @@ const Sidebar: FC<SidebarProps> = ({ sessionId, selectedDeckName }) => {
     };
 
     const handleAddDeck = async () => {
-        const newDeckName = prompt('Enter Deck Name:');
-        if (!newDeckName) {
+        setOpenAddDeck(false)
+        if (newDeckName === '') {
             return;
         }
         const addDeck = async () => {
@@ -80,7 +83,8 @@ const Sidebar: FC<SidebarProps> = ({ sessionId, selectedDeckName }) => {
         }
         await addDeck();
         fetchDecks();
-    };
+        setNewDeckName('');
+    }
 
     const filterDecks = () => {
         if (searchItem === '') {
@@ -107,7 +111,7 @@ const Sidebar: FC<SidebarProps> = ({ sessionId, selectedDeckName }) => {
                         <div style={{ width: "calc(100% - 20px)", padding: "10px" }}>
                             <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between", marginBottom: "10px"}}>
                                 <MyDecksTitle>Decks</MyDecksTitle>
-                                <AddDeckButton onClick={handleAddDeck}></AddDeckButton>
+                                <AddDeckButton onClick={() => setOpenAddDeck(true)}></AddDeckButton>
                             </div>
                             <SearchSidebar onSearchChange={handleSearch}/>
                         </div>
@@ -133,6 +137,20 @@ const Sidebar: FC<SidebarProps> = ({ sessionId, selectedDeckName }) => {
             </SidebarContainer>
             {isSidebarOpen && (
                 <Overlay/>
+            )}
+            {openAddDeck && ( //TODO: warnung bei gleichem Decknamen
+                <AddDeckContainer>
+                    <AddDeckForm>
+                        <>
+                            <AddDeckHeader>Add a new Deck</AddDeckHeader>
+                            <DeckNameInput placeholder="Deck Name" id="newDeckName" value={newDeckName} onChange={(e) => setNewDeckName(e.target.value)} />
+                        </>
+                        <ButtonContainer>
+                            <Button onClick={() => setOpenAddDeck(false)} text={"Cancel"} />
+                            <Button onClick={() => handleAddDeck()} text={"Add Deck"} color={"alternativeSecondaryColor"}/>
+                        </ButtonContainer>
+                    </AddDeckForm>
+                </AddDeckContainer>
             )}
         </>
     );

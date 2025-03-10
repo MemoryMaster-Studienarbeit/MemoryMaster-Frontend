@@ -5,6 +5,10 @@ import plusDark from '../../images/plus-dark.svg';
 import plusLight from '../../images/plus-light.svg';
 // @ts-ignore
 import pluslightgreen from '../../images/plus-lightgreen.svg';
+// @ts-ignore
+import xDark from '../../images/x-icon-dark.svg';
+// @ts-ignore
+import xLight from '../../images/x-icon-light.svg';
 
 export const SidebarContainer = styled.div<{ $isSidebarOpen: boolean }>`
     width: ${(props) => (props.$isSidebarOpen ? '20vw' : '50px')};
@@ -17,6 +21,7 @@ export const SidebarContainer = styled.div<{ $isSidebarOpen: boolean }>`
     align-items: start;
     padding: 0;
     margin: 0;
+    z-index: 2;
 
     @media (max-width: 768px) {
         width: ${(props) => (props.$isSidebarOpen ? '75vw' : '50px')};
@@ -120,5 +125,74 @@ export const MyDecksTitle = styled.h3`
     cursor: default;
 `;
 
+export const AddDeckContainer = styled.div`
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); // Halbtransparentes Overlay
+    z-index: 1; // Muss unter der Sidebar, aber über dem Main Content sein
+
+    @media (max-width: 768px) {
+        z-index: 15; 
+    }
+`;
+
+export const AddDeckForm = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    height: 200px;
+    z-index: 20;
+    border-radius: 10px;
+    background-color: ${(props) => props.theme.backgroundColor};
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+`;
+
+export const DeckNameInput = styled.input`
+    width: calc(100% - 40px);
+    padding: 10px;
+    margin: 10px;
+    border: none;
+    background-color: ${({theme}) => theme.primaryInputColor};
+    color: ${({theme}) => theme.text};
+    border-radius: 4px;
+    font-size: 1em;
+
+    &:focus {
+        outline: none;
+    }
+
+    &::-webkit-search-cancel-button {
+        -webkit-appearance: none;
+        height: 20px;
+        width: 20px;
+        background: url(${({theme}) => theme.isLight ? xDark : xLight}) no-repeat center center;
+
+        &:hover {
+            cursor: pointer;
+        }
+`;
+
+export const ButtonContainer = styled.div`
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+`;
+
+export const AddDeckHeader = styled.h3`
+    text-align: center;
+    color: ${({theme}) => theme.text};
+    margin: 10px;
+    width: 100%;
+`;
 
 
