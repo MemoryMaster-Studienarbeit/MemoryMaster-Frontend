@@ -9,6 +9,8 @@ import pluslightgreen from '../../images/plus-lightgreen.svg';
 import xDark from '../../images/x-icon-dark.svg';
 // @ts-ignore
 import xLight from '../../images/x-icon-light.svg';
+// @ts-ignore
+import warning from '../../images/warning-circle.svg';
 
 export const SidebarContainer = styled.div<{ $isSidebarOpen: boolean }>`
     width: ${(props) => (props.$isSidebarOpen ? '20vw' : '50px')};
@@ -195,4 +197,24 @@ export const AddDeckHeader = styled.h3`
     width: 100%;
 `;
 
+export const WarningMessage = styled.p`
+    height: fit-content;
+    margin: 5px
+`;
 
+export const WarningIcon = styled.span`
+    display: block;
+    width: 30px;
+    height: 30px;
+    background: url(${warning}) no-repeat center center;
+    transition: background-color 0.3s ease, background-image 0.3s ease;
+    cursor: pointer;
+`;
+
+export const WarningContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: red;
+    margin: 0;
+`;

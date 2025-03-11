@@ -7,7 +7,14 @@ import {
     DeckList,
     DeckItem,
     AddDeckButton,
-    MyDecksTitle, AddDeckContainer, AddDeckForm, DeckNameInput, ButtonContainer, AddDeckHeader
+    MyDecksTitle,
+    AddDeckContainer,
+    AddDeckForm,
+    DeckNameInput,
+    ButtonContainer,
+    AddDeckHeader,
+    WarningContainer,
+    WarningIcon, WarningMessage
 } from './Sidebar.styles';
 import SearchSidebar from "../searchFieldSidebar/SearchFieldSidebar";
 import React, {FC, useEffect, useState} from "react";
@@ -28,6 +35,7 @@ const Sidebar: FC<SidebarProps> = ({ sessionId, selectedDeckName }) => {
     const [searchItem, setSearchItem] = useState('')
     const [filteredDecks, setFilteredDecks] = useState<string[]>([]);
     const [newDeckName, setNewDeckName] = useState('');
+    const [isWarning, setIsWarning] = useState(false);
 
     useEffect(() => {
         if (sessionId === 'uuid' || !isSidebarOpen) return;
@@ -39,6 +47,12 @@ const Sidebar: FC<SidebarProps> = ({ sessionId, selectedDeckName }) => {
         if (!isSidebarOpen) setSearchItem('');
         filterDecks();
     }, [searchItem]);
+
+    const handleDeckNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const name = e.target.value;
+        setNewDeckName(name);
+        setIsWarning(decks.includes(name));
+    };
 
     const fetchDecks = async () => {
         await fetch(`http://45.81.232.169:8000/api/decks?uuid=${sessionId}`)
@@ -143,11 +157,17 @@ const Sidebar: FC<SidebarProps> = ({ sessionId, selectedDeckName }) => {
                     <AddDeckForm>
                         <>
                             <AddDeckHeader>Add a new Deck</AddDeckHeader>
-                            <DeckNameInput placeholder="Deck Name" id="newDeckName" value={newDeckName} onChange={(e) => setNewDeckName(e.target.value)} />
+                            <DeckNameInput placeholder="Deck Name" id="newDeckName" value={newDeckName} onChange={handleDeckNameChange} />
                         </>
+                        {isWarning && (
+                            <WarningContainer>
+                                <WarningIcon/>
+                                <WarningMessage>This deckname is already in use!</WarningMessage>
+                            </WarningContainer>
+                        )}
                         <ButtonContainer>
-                            <Button onClick={() => setOpenAddDeck(false)} text={"Cancel"} />
-                            <Button onClick={() => handleAddDeck()} text={"Add Deck"} color={"alternativeSecondaryColor"}/>
+                            <Button onClick={() => {setOpenAddDeck(false); setNewDeckName(''); setIsWarning(false)}} text={"Cancel"} />
+                            <Button onClick={() => handleAddDeck()} text={"Add Deck"} color={"alternativeSecondaryColor"} disabled={isWarning} />
                         </ButtonContainer>
                     </AddDeckForm>
                 </AddDeckContainer>

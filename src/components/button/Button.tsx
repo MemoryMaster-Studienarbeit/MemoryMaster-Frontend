@@ -6,11 +6,12 @@ interface ButtonProps {
     onClick: () => void;
     text: string;
     color?: string;
+    disabled?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({onClick, text, color}) => {
+const Button: React.FC<ButtonProps> = ({onClick, text, color, disabled}) => {
     return (
-        <StyledButton onClick={onClick} color={color}>{text}</StyledButton>
+        <StyledButton onClick={onClick} color={color} disabled={disabled}>{text}</StyledButton>
     )
 }
 
