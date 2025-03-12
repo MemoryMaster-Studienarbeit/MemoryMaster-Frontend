@@ -35,6 +35,7 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
     const [previewData, setPreviewData] = useState<string | null>(null);
     const [isPreviewMode, setIsPreviewMode] = useState(false);
     const {isDarkMode} = useTheme();
+    const [isLoadingScreen, setIsLoadingScreen] = useState(false);
     const [frontText, setFrontText] = useState<string>("");
     const [backText, setBackText] = useState<string>("");
     const [selectedMode, setSelectedMode] = useState<string>("zusammenfassen"); // zusammenfassen oder neu formulieren
@@ -69,19 +70,29 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
     }
 
     const PromptExtras = () => {
-        return `Bitte tu mir das ${selectedMode}. Der Text soll ${selectedLength} und ${selectedStyle} sein. 
-            Zusätzliche Infos zum Prompt: ${promptExtras}`;
+        return `Bitte tu mir das ${selectedMode}. Der Text soll ${selectedLength} und ${selectedStyle} sein. Zusätzliche Infos zum Prompt: ${promptExtras}`;
     }
 
     // Vorschau laden
     const handlePreview = async () => {
         console.log("Preview:", selectedMode, selectedStyle, selectedLength, promptExtras, text, fileContent);
+        setIsLoadingScreen(true);
         await generateCard()
+        setIsLoadingScreen(false);
         setIsPreviewMode(true);
     };
 
     const generateCard = async () => {
         const appendingPrompt = PromptExtras();
+        console.log(JSON.stringify({
+            text: text,
+            appending_prompt_template: appendingPrompt,
+            ai_model: "",
+            file: {
+                file_type: fileType,
+                file_content: fileContent ? await fileContent.text() : ""
+            }
+        }))
         await fetch(`http://45.81.232.169:8000/api/createCard?uuid=${sessionId}&deck_name=${deckName}`, {
             method: "POST",
             body: JSON.stringify({
@@ -102,7 +113,7 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
                 console.log("Card created:", data);
                 navigate(`/${sessionId}/${deckName}`);
             })
-        generateCard()
+        await generateCard()
 
         setFrontText(text)
 
