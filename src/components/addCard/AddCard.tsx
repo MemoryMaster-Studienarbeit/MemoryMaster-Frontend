@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {
     AddCardContainer,
@@ -32,7 +32,7 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
     const {deckName} = useParams<{ deckName: string }>();
     onLoad(sessionId || "", deckName);
     const [isAiMode, setIsAiMode] = useState(true);
-    const [previewData, setPreviewData] = useState<string | null>(null);
+    const [previewCard, setPreviewCard] = useState<string | null>(null);
     const [isPreviewMode, setIsPreviewMode] = useState(false);
     const {isDarkMode} = useTheme();
     const [isLoadingScreen, setIsLoadingScreen] = useState(false);
@@ -46,13 +46,18 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
     const [fileContent, setFileContent] = useState<File | undefined>(undefined);
     const [fileType, setFileType] = useState<string>("");
 
+    useEffect(() => {
+
+    }, []);
+
     const handleFileChange = (file: File | undefined) => {
         if (file) {
             setFileType(file.type)
             const reader = new FileReader();
             reader.onload = (event) => {
                 if (event.target?.result) {
-                    const newFile = new File([event.target.result], file.name, { type: file.type });
+                    const base64String = btoa(String.fromCharCode(...new Uint8Array(event.target.result as ArrayBuffer)));
+                    const newFile = new File([base64String], file.name, { type: file.type });
                     setFileContent(newFile);
                 }
             };
@@ -70,7 +75,8 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
     }
 
     const PromptExtras = () => {
-        return `Bitte tu mir das ${selectedMode}. Der Text soll ${selectedLength} und ${selectedStyle} sein. Zusätzliche Infos zum Prompt: ${promptExtras}`;
+        const mode = selectedMode === "zusammenfassen" ? "zusammenfassen" : "neu formulieren";
+        return `Bitte tu mir das ${mode}. Der Text soll ${selectedLength} und ${selectedStyle} sein. Zusätzliche Infos zum Prompt: ${promptExtras}`;
     }
 
     // Vorschau laden
@@ -93,7 +99,7 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
                 file_content: fileContent ? await fileContent.text() : ""
             }
         }))
-        await fetch(`http://45.81.232.169:8000/api/createCard?uuid=${sessionId}&deck_name=${deckName}`, {
+        await fetch(`http://45.81.232.169:8000/api/generateCard?uuid=${sessionId}&deck_name=${deckName}`, {
             method: "POST",
             body: JSON.stringify({
                 text: text,
@@ -105,48 +111,58 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
                 }
             }),
             headers: {
-                "content-type": "application/json"
+                "Content-Type": "application/json"
             }
         })
             .then(response => response.json())
             .then(data => {
                 console.log("Card created:", data);
-                navigate(`/${sessionId}/${deckName}`);
+                setPreviewCard(data.uuid);
+                setFrontText(data.card_front)
+                setBackText(data.card_back)
             })
-        await generateCard()
-
-        setFrontText(text)
 
     }
 
-    const addCardToDeck = () => {
+    const addCardToDeck = async () => {
         console.log(JSON.stringify({
             uuid: sessionId,
             deck_name: deckName,
             card_front: frontText,
             card_back: backText
         }))
-        fetch(`http://45.81.232.169:8000/api/createCard?uuid=${sessionId}&deck_name=${deckName}`, {
-            method: "POST",
-            body: JSON.stringify({
-                card_front: frontText,
-                card_back: backText
-            }),
+        if (!previewCard) {
+            await fetch(`http://45.81.232.169:8000/api/createCard?uuid=${sessionId}&deck_name=${deckName}`, {
+                method: "POST",
+                body: JSON.stringify({
+                    card_front: frontText,
+                    card_back: backText
+                }),
+                headers: {
+                    "content-type": "application/json"
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Card created:", data);
+                })
+        }
+        navigate(`/${sessionId}/${deckName}`);
+    }
+
+    const handleBackFromPreview = async () => {
+        setIsPreviewMode(false);
+        await fetch(`http://45.81.232.169:8000/api/card?session_uuid=${sessionId}&deck_name=${deckName}&card_uuid=${previewCard}`, {
+            method: "DELETE",
             headers: {
-                "content-type": "application/json"
+                "Content-Type": "application/json"
             }
         })
             .then(response => response.json())
             .then(data => {
-                console.log("Card created:", data);
-                navigate(`/${sessionId}/${deckName}`);
+                console.log(data, ": ", previewCard);
             })
-    }
-
-    const handleBackFromPreview = () => {
-        setIsPreviewMode(false);
-        setPreviewData(null);
-        console.log("Preview:", selectedMode, selectedStyle, selectedLength, promptExtras, text, fileContent);
+        setPreviewCard(null);
     };
 
     return (
