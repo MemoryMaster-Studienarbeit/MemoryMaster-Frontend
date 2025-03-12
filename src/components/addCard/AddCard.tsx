@@ -11,6 +11,7 @@ import {
 import FrontAndBackView from "../frontAndBackView/FrontAndBackView";
 import FrontAndBackAiOptions from "../frontAndBackAiOptions/FrontAndBackAiOptions";
 import Button from "../button/Button";
+import Spinner from "../spinner/Spinner";
 import {useTheme} from "../../ThemeContext";
 // @ts-ignore
 import penFillDark from '../../images/pen-fill-dark.svg';
@@ -35,7 +36,7 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
     const [previewCard, setPreviewCard] = useState<string | null>(null);
     const [isPreviewMode, setIsPreviewMode] = useState(false);
     const {isDarkMode} = useTheme();
-    const [isLoadingScreen, setIsLoadingScreen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [frontText, setFrontText] = useState<string>("");
     const [backText, setBackText] = useState<string>("");
     const [selectedMode, setSelectedMode] = useState<string>("zusammenfassen"); // zusammenfassen oder neu formulieren
@@ -82,9 +83,9 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
     // Vorschau laden
     const handlePreview = async () => {
         console.log("Preview:", selectedMode, selectedStyle, selectedLength, promptExtras, text, fileContent);
-        setIsLoadingScreen(true);
+        setIsLoading(true);
         await generateCard()
-        setIsLoadingScreen(false);
+        setIsLoading(false);
         setIsPreviewMode(true);
     };
 
@@ -166,83 +167,86 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
     };
 
     return (
-        <AddCardContainer>
-            <UpperGeneralOptionsContainer>
-                {isAiMode ? (
-                    <>
-                        <LeftOptionsContainer>
-                            <ToggleModeButton onClick={toggleMode}>
-                                <img src={isDarkMode ? robotDark : robotLight} alt="Robot Icon"
-                                     style={{width: "30px", height: "30px"}}/>
-                            </ToggleModeButton>
-                            {!isPreviewMode && (
-                                <>
-                                    <input type="radio" id="zusammenfassen" value="zusammenfassen" name="mode"
-                                           style={{display: 'none'}}
-                                           onChange={(e) => setSelectedMode(e.target.value)}
-                                           checked={selectedMode==="zusammenfassen"}/>
-                                    <RadioButton htmlFor="zusammenfassen">Zusammenfassen</RadioButton>
-                                    <input type="radio" id="neu_formulieren" value="neu_formulieren" name="mode"
-                                           style={{display: 'none'}}
-                                           onChange={(e) => setSelectedMode(e.target.value)}
-                                           checked={selectedMode==="neu_formulieren"}/>
-                                    <RadioButton htmlFor="neu_formulieren">Neu Formulieren</RadioButton>
-                                </>
+        <>
+            <AddCardContainer>
+                <UpperGeneralOptionsContainer>
+                    {isAiMode ? (
+                        <>
+                            <LeftOptionsContainer>
+                                <ToggleModeButton onClick={toggleMode}>
+                                    <img src={isDarkMode ? robotDark : robotLight} alt="Robot Icon"
+                                         style={{width: "30px", height: "30px"}}/>
+                                </ToggleModeButton>
+                                {!isPreviewMode && (
+                                    <>
+                                        <input type="radio" id="zusammenfassen" value="zusammenfassen" name="mode"
+                                               style={{display: 'none'}}
+                                               onChange={(e) => setSelectedMode(e.target.value)}
+                                               checked={selectedMode==="zusammenfassen"}/>
+                                        <RadioButton htmlFor="zusammenfassen">Zusammenfassen</RadioButton>
+                                        <input type="radio" id="neu_formulieren" value="neu_formulieren" name="mode"
+                                               style={{display: 'none'}}
+                                               onChange={(e) => setSelectedMode(e.target.value)}
+                                               checked={selectedMode==="neu_formulieren"}/>
+                                        <RadioButton htmlFor="neu_formulieren">Neu Formulieren</RadioButton>
+                                    </>
+                                )}
+                            </LeftOptionsContainer>
+                            {isPreviewMode ? (
+                                <RightOptionsContainer>
+                                    <Button onClick={handleBackFromPreview} text={"Zurück"}/>
+                                    <Button onClick={addCardToDeck} text={"+"}/>
+                                </RightOptionsContainer>
+                            ) : (
+                                <RightOptionsContainer>
+                                    <Button onClick={handlePreview} text={"Vorschau"}/>
+                                </RightOptionsContainer>
                             )}
-                        </LeftOptionsContainer>
-                        {isPreviewMode ? (
-                            <RightOptionsContainer>
-                                <Button onClick={handleBackFromPreview} text={"Zurück"}/>
-                                <Button onClick={addCardToDeck} text={"+"}/>
-                            </RightOptionsContainer>
+                        </>
+                    ) : (
+                        <>
+                            <ToggleModeButton onClick={toggleMode}>
+                                <img src={isDarkMode ? penFillDark : penFillLight} alt="Pen Icon"
+                                     style={{width: "25px", height: "25px"}}/>
+                            </ToggleModeButton>
+                            <Button onClick={addCardToDeck} text={"+"}/>
+                        </>
+                    )}
+                </UpperGeneralOptionsContainer>
+                {!isPreviewMode ? (
+                    <>
+                        {isAiMode ? (
+                            <FrontAndBackAiOptions
+                                onTextChange={(e) => setText(e.target.value)}
+                                onStyleChange={(e) => setSelectedStyle(e.target.value)}
+                                onLengthChange={(e) => setSelectedLength(e.target.value)}
+                                onPromptExtrasChange={(e) => setPromptExtras(e.target.value)}
+                                onFileChange={handleFileChange}
+                                text={text}
+                                promptExtras={promptExtras}
+                                selectedStyle={selectedStyle}
+                                selectedLength={selectedLength}
+                            />
                         ) : (
-                            <RightOptionsContainer>
-                                <Button onClick={handlePreview} text={"Vorschau"}/>
-                            </RightOptionsContainer>
+                            <FrontAndBackView
+                                onFrontTextChange={(e) => setFrontText(e.target.value)}
+                                onBackTextChange={(e) => setBackText(e.target.value)}
+                                FrontText={""}
+                                BackText={""}
+                            />
                         )}
                     </>
                 ) : (
-                    <>
-                        <ToggleModeButton onClick={toggleMode}>
-                            <img src={isDarkMode ? penFillDark : penFillLight} alt="Pen Icon"
-                                 style={{width: "25px", height: "25px"}}/>
-                        </ToggleModeButton>
-                        <Button onClick={addCardToDeck} text={"+"}/>
-                    </>
+                    <FrontAndBackView
+                        onFrontTextChange={(e) => setFrontText(e.target.value)}
+                        onBackTextChange={(e) => setBackText(e.target.value)}
+                        FrontText={frontText}
+                        BackText={backText}
+                    />
                 )}
-            </UpperGeneralOptionsContainer>
-            {!isPreviewMode ? (
-                <>
-                    {isAiMode ? (
-                        <FrontAndBackAiOptions
-                            onTextChange={(e) => setText(e.target.value)}
-                            onStyleChange={(e) => setSelectedStyle(e.target.value)}
-                            onLengthChange={(e) => setSelectedLength(e.target.value)}
-                            onPromptExtrasChange={(e) => setPromptExtras(e.target.value)}
-                            onFileChange={handleFileChange}
-                            text={text}
-                            promptExtras={promptExtras}
-                            selectedStyle={selectedStyle}
-                            selectedLength={selectedLength}
-                        />
-                    ) : (
-                        <FrontAndBackView
-                            onFrontTextChange={(e) => setFrontText(e.target.value)}
-                            onBackTextChange={(e) => setBackText(e.target.value)}
-                            FrontText={""}
-                            BackText={""}
-                        />
-                    )}
-                </>
-            ) : (
-                <FrontAndBackView
-                    onFrontTextChange={(e) => setFrontText(e.target.value)}
-                    onBackTextChange={(e) => setBackText(e.target.value)}
-                    FrontText={frontText}
-                    BackText={backText}
-                />
-            )}
-        </AddCardContainer>
+            </AddCardContainer>
+            {isLoading? <Spinner/> : ""}
+        </>
     );
 }
 
