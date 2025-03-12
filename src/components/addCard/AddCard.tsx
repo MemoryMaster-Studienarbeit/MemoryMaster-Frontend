@@ -43,9 +43,11 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
     const [promptExtras, setPromptExtras] = useState<string>("");
     const [text, setText] = useState<string>('');
     const [fileContent, setFileContent] = useState<File | undefined>(undefined);
+    const [fileType, setFileType] = useState<string>("");
 
     const handleFileChange = (file: File | undefined) => {
         if (file) {
+            setFileType(file.type)
             const reader = new FileReader();
             reader.onload = (event) => {
                 if (event.target?.result) {
@@ -66,27 +68,45 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
         setText("");
     }
 
+    const PromptExtras = () => {
+        return `Bitte tu mir das ${selectedMode}. Der Text soll ${selectedLength} und ${selectedStyle} sein. 
+            Zusätzliche Infos zum Prompt: ${promptExtras}`;
+    }
+
     // Vorschau laden
-    const handlePreview = () => {
-        setIsPreviewMode(true);
+    const handlePreview = async () => {
         console.log("Preview:", selectedMode, selectedStyle, selectedLength, promptExtras, text, fileContent);
-        // try {
-        //     const response = await fetch("/api/generate-card", {
-        //         method: "POST",
-        //         headers: {"Content-Type": "application/json"},
-        //         body: JSON.stringify({prompt: "Dein Prompt hier"}),
-        //     });
-        //
-        //     if (response.ok) {
-        //         const data = await response.json();
-        //         setPreviewData(data.content); // KI-generierter Inhalt
-        //     } else {
-        //         console.error("Fehler beim Abrufen der Vorschau.");
-        //     }
-        // } catch (error) {
-        //     console.error("Fehler:", error);
-        // }
+        await generateCard()
+        setIsPreviewMode(true);
     };
+
+    const generateCard = async () => {
+        const appendingPrompt = PromptExtras();
+        await fetch(`http://45.81.232.169:8000/api/createCard?uuid=${sessionId}&deck_name=${deckName}`, {
+            method: "POST",
+            body: JSON.stringify({
+                text: text,
+                appending_prompt_template: appendingPrompt,
+                ai_model: "",
+                file: {
+                    file_type: fileType,
+                    file_content: fileContent ? await fileContent.text() : ""
+                }
+            }),
+            headers: {
+                "content-type": "application/json"
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Card created:", data);
+                navigate(`/${sessionId}/${deckName}`);
+            })
+        generateCard()
+
+        setFrontText(text)
+
+    }
 
     const addCardToDeck = () => {
         console.log(JSON.stringify({
@@ -95,11 +115,9 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
             card_front: frontText,
             card_back: backText
         }))
-        fetch(`http://45.81.232.169:8000/api/createCard`, {
+        fetch(`http://45.81.232.169:8000/api/createCard?uuid=${sessionId}&deck_name=${deckName}`, {
             method: "POST",
             body: JSON.stringify({
-                uuid: sessionId?.toString(),
-                deck_name: deckName?.toString(),
                 card_front: frontText,
                 card_back: backText
             }),
@@ -193,8 +211,8 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
                 <FrontAndBackView
                     onFrontTextChange={(e) => setFrontText(e.target.value)}
                     onBackTextChange={(e) => setBackText(e.target.value)}
-                    FrontText={"KI generierter Inhalt"}
-                    BackText={"KI generierter Inhalt"}
+                    FrontText={frontText}
+                    BackText={backText}
                 />
             )}
         </AddCardContainer>
