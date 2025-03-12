@@ -5,7 +5,6 @@ import {
     BurgerIcon,
     Overlay,
     DeckList,
-    DeckItem,
     AddDeckButton,
     MyDecksTitle,
     AddDeckContainer,
@@ -20,6 +19,7 @@ import SearchSidebar from "../searchFieldSidebar/SearchFieldSidebar";
 import React, {FC, useEffect, useState} from "react";
 import {useNavigate} from 'react-router-dom';
 import SidebarSettings from "../sidebarSettings/SidebarSettings";
+import DeckItem from "../deckItem/DeckItem";
 import Button from "../button/Button";
 
 interface SidebarProps {
@@ -114,6 +114,25 @@ const Sidebar: FC<SidebarProps> = ({ sessionId, selectedDeckName }) => {
         setSearchItem(searchTerm)
     };
 
+    const handleDeleteDeck = async (deckName: string) => {
+        console.log(deckName);
+        const deleteDeck = async () => {
+            await fetch(`http://45.81.232.169:8000/api/deck?uuid=${sessionId}&deck_name=${deckName}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.text())
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                });
+        }
+        await deleteDeck();
+        fetchDecks()
+        navigate(`/${sessionId}`);
+    }
+
     return (
         <>
             <SidebarContainer $isSidebarOpen={isSidebarOpen}>
@@ -138,10 +157,10 @@ const Sidebar: FC<SidebarProps> = ({ sessionId, selectedDeckName }) => {
                                         onClick={() => {
                                             navigate(`/${sessionId}/${deck}`);
                                         }}
-                                        $isSelected={selectedDeckName === deck}
-                                    >
-                                        {deck}
-                                    </DeckItem>
+                                        onDelete={(deckName) => handleDeleteDeck(deckName)}
+                                        isSelected={selectedDeckName === deck}
+                                        deckName={deck}
+                                    />
                                 ))}
                             </DeckList>
                         }
