@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-import { MainDeckContainer, CardsContainer, Header } from './CardsView.styles';
+import { MainDeckContainer, CardsContainer, Header } from './CardsOverview.styles';
 
 import Card from '../card/Card';
 import { Card as CardType } from '../../types/Cards';
@@ -11,7 +11,7 @@ interface CardViewProps {
     onLoad: (sessionId: string, deckName?: string) => void;
 }
 
-const CardsView: React.FC<CardViewProps> = ({onLoad}) => {
+const CardsOverview: React.FC<CardViewProps> = ({onLoad}) => {
     const navigate = useNavigate();
     const { sessionId } = useParams<{ sessionId: string }>();
     const { deckName } = useParams<{ deckName: string }>();
@@ -40,8 +40,8 @@ const CardsView: React.FC<CardViewProps> = ({onLoad}) => {
         <MainDeckContainer>
             <Header>{deckName}</Header>
             <CardsContainer>
-                {flashcards?.cards.map((card, index) => (
-                    <Card key={card.uuid} card={card.front} onClick={() => {console.log(`Navigating to card view`)}}/>
+                {flashcards?.cards.map((card) => (
+                    <Card key={card.uuid} card={card.front} onClick={() => {console.log(`Navigating to card view of: ${card.uuid}`); navigate(`/${sessionId}/${deckName}/${card.uuid}`)}}/>
                 ))}
                 <Card key={-1} card={"+"} onClick={() => { navigate(`/${sessionId}/${deckName}/add`); }} />
             </CardsContainer>
@@ -50,4 +50,4 @@ const CardsView: React.FC<CardViewProps> = ({onLoad}) => {
     )
 }
 
-export default CardsView;
+export default CardsOverview;

@@ -5,8 +5,10 @@ import MainContent from './components/mainContent/MainContent';
 import NotFound from './components/notFound/NotFound';
 import Sidebar from './components/sidebar/Sidebar';
 import { ThemeContextProvider } from "./ThemeContext";
-import CardsView from "./components/cardsView/CardsView";
+import CardsOverview from "./components/cardsOverview/CardsOverview";
 import AddCard from "./components/addCard/AddCard";
+import CardView from "./components/cardView/CardView";
+import EditCard from "./components/editCard/EditCard";
 
 const App: React.FC = () => {
     const [sessionId, setSessionId] = useState('uuid');
@@ -23,10 +25,11 @@ const App: React.FC = () => {
                     <Routes>
                         <Route path="/" element={<MainContent onLoad={setSessionId}/>} />
                         <Route path="/:sessionId" element={<MainContent onLoad={setSessionId}/>}/>
-                        <Route path="/:sessionId/:deckName" element={<CardsView onLoad={setSidebarInfos}/>}
+                        <Route path="/:sessionId/:deckName" element={<CardsOverview onLoad={setSidebarInfos}/>}
                         />
                         <Route path="/:sessionId/:deckName/add" element={<AddCard onLoad={setSidebarInfos} />} />
-                        <Route path="/:sessionId/:deckName/edit/cardId" element={<CardsView onLoad={setSessionId}/>} />
+                        <Route path="/:sessionId/:deckName/:cardId" element={<CardView onLoad={setSidebarInfos} />} />
+                        <Route path="/:sessionId/:deckName/edit/:cardId" element={<EditCard onLoad={setSidebarInfos} />} />
                         <Route path="*" element={<NotFound />} />
                     </Routes>
                 </BrowserRouter>

@@ -8,7 +8,11 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ card, onClick}) => {
-    return <CardContainer onClick={() => onClick()}>{card}</CardContainer>;
+    return (
+        <CardContainer onClick={() => onClick()}>
+            {card}
+        </CardContainer>
+    );
 }
 
 export default Card;

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 interface ButtonProps {
     color?: string;
+    width?: string;
 }
 
 export const StyledButton = styled.button<ButtonProps>`
@@ -14,7 +15,7 @@ export const StyledButton = styled.button<ButtonProps>`
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-    width: 120px;
+    width: ${({ width }) => width || '120px'};
     height: 40px;
 
     &:hover {
