@@ -38,7 +38,7 @@ const CardsOverview: React.FC<CardViewProps> = ({onLoad}) => {
 
     return(
         <MainDeckContainer>
-            <Header>{deckName}</Header>
+            <Header>Cards in {deckName}</Header>
             <CardsContainer>
                 {flashcards?.cards.map((card) => (
                     <Card key={card.card_uuid} card={card.card_front} onClick={() => {console.log(`Navigating to card view of: ${card.card_uuid}`); navigate(`/${sessionId}/${deckName}/${card.card_uuid}`)}}/>

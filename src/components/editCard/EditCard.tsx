@@ -23,7 +23,7 @@ const EditCard: React.FC<EditCardProps> = ({onLoad}) => {
 
     useEffect(() => {
         fetchDeck();
-    });
+    }, []);
 
     const fetchDeck = async () => {
         await fetch(`http://45.81.232.169:8000/api/deck?session_uuid=${sessionId}&deck_name=${deckName}`)

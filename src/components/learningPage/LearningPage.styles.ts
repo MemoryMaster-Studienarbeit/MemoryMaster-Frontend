@@ -16,3 +16,28 @@ export const LearningPageContainer = styled.div`
         margin-left: 50px;
     }
 `;
+
+export const LearningPageHeader = styled.h2`
+    text-align: center;
+    font-size: 24px;
+    color: ${({theme}) => theme.text};
+    margin-bottom: 20px;
+    width: 100%;
+`;
+
+export const LearningPageBody = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+`;
+
+export const LearningPageFooter = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 80%;
+    
+`;
