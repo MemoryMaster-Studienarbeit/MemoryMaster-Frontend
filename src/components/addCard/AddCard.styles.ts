@@ -6,7 +6,7 @@ export const AddCardContainer = styled.div`
     align-items: center;
     margin: 0;
     height: 100%;
-    width: calc(100% - 50px);
+    width: 100%;
 
     @media (max-width: 768px) {
         margin-left: 50px;

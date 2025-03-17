@@ -9,6 +9,7 @@ import CardsOverview from "./components/cardsOverview/CardsOverview";
 import AddCard from "./components/addCard/AddCard";
 import CardView from "./components/cardView/CardView";
 import EditCard from "./components/editCard/EditCard";
+import LearningPage from "./components/learningPage/LearningPage";
 
 const App: React.FC = () => {
     const [sessionId, setSessionId] = useState('uuid');
@@ -30,6 +31,7 @@ const App: React.FC = () => {
                         <Route path="/:sessionId/:deckName/add" element={<AddCard onLoad={setSidebarInfos} />} />
                         <Route path="/:sessionId/:deckName/:cardId" element={<CardView onLoad={setSidebarInfos} />} />
                         <Route path="/:sessionId/:deckName/edit/:cardId" element={<EditCard onLoad={setSidebarInfos} />} />
+                        <Route path="/:sessionId/:deckName/learn" element={<LearningPage onLoad={setSidebarInfos} />} />
                         <Route path="*" element={<NotFound />} />
                     </Routes>
                 </BrowserRouter>

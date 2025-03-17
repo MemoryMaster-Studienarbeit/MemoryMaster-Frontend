@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
+import {useNavigate, useParams} from "react-router-dom";
 
 import { EditCardContainer} from "./EditCard.styles";
 import {TextAreaInput} from "../frontAndBackView/FrontAndBackView.styles";
+
+import { Card as CardType } from '../../types/Cards';
 import Button from "../button/Button";
-import {useNavigate, useParams} from "react-router-dom";
 
 interface EditCardProps {
     onLoad: (sessionId: string, deckName?: string) => void;
@@ -15,19 +17,19 @@ const EditCard: React.FC<EditCardProps> = ({onLoad}) => {
     const { deckName } = useParams<{ deckName: string }>();
     const { cardId } = useParams<{ cardId: string }>();
     onLoad(sessionId || "", deckName);
-    const [flashcard, setFlashcard] = useState<{ deckName: string; card: any }>();
+    const [flashcard, setFlashcard] = useState<{ deckName: string; card: CardType }>();
     const [cardFront, setCardFront] = useState<string>("");
     const [cardBack, setCardBack] = useState<string>("");
 
     useEffect(() => {
         fetchDeck();
-    }, []);
+    });
 
     const fetchDeck = async () => {
-        await fetch(`http://45.81.232.169:8000/api/deck?uuid=${sessionId}&deck_name=${deckName}`)
+        await fetch(`http://45.81.232.169:8000/api/deck?session_uuid=${sessionId}&deck_name=${deckName}`)
             .then(response => response.json())
             .then(data => {
-                const card = data.cards.find((card: any) => card.uuid === cardId);
+                const card = data.cards.find((card: CardType) => card.card_uuid === cardId);
                 if (card) {
                     setFlashcard({ deckName: data.deck_name, card: card });
                     setCardFront(card.card_front);
@@ -44,7 +46,7 @@ const EditCard: React.FC<EditCardProps> = ({onLoad}) => {
         console.log(JSON.stringify({
             card_front: cardFront,
             card_back: cardBack,
-            card_uuid: flashcard?.card.uuid,
+            card_uuid: flashcard?.card.card_uuid,
             last_learned: flashcard?.card.last_learned,
             next_learned: flashcard?.card.next_learned,
         }));
@@ -53,7 +55,7 @@ const EditCard: React.FC<EditCardProps> = ({onLoad}) => {
             body: JSON.stringify({
                 card_front: cardFront,
                 card_back: cardBack,
-                card_uuid: flashcard?.card.uuid,
+                card_uuid: flashcard?.card.card_uuid,
                 last_learned: flashcard?.card.last_learned,
                 next_learned: flashcard?.card.next_learned,
             }),

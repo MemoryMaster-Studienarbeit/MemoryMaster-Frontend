@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
 
-export const MainContentContainer = styled.div<{ $isSidebarOpen: boolean }>`
+export const MainContentContainer = styled.div`
     display: flex;
-    width: ${( props ) => (props.$isSidebarOpen ? '80vw' : 'calc(100vw - 50px)')};
     flex-direction: column;
     align-items: center;
     transition: width 0.3s ease;
     height: 100%;
+    width: 100%;
     color: ${({ theme }) => theme.text};
     white-space: nowrap;
     overflow: hidden;

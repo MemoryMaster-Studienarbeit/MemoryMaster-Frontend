@@ -23,11 +23,11 @@ const CardsOverview: React.FC<CardViewProps> = ({onLoad}) => {
     }, [deckName]);
 
     const fetchDeck = async () => {
-        await fetch(`http://45.81.232.169:8000/api/deck?uuid=${sessionId}&deck_name=${deckName}`)
+        await fetch(`http://45.81.232.169:8000/api/deck?session_uuid=${sessionId}&deck_name=${deckName}`)
             .then(response => response.json())
             .then(data => {
-                setFlashcards({ deckName: data.deck_name, cards: data.cards.map((card: any) => (
-                        { uuid: card.uuid, front: card.card_front, back: card.card_back })) }
+                setFlashcards({ deckName: data.deck_name, cards: data.cards.map((card: CardType) => (
+                        { uuid: card.card_uuid, front: card.card_front, back: card.card_back })) }
                 );
                 console.log('Deck fetch successful:', data);
             })
@@ -41,11 +41,11 @@ const CardsOverview: React.FC<CardViewProps> = ({onLoad}) => {
             <Header>{deckName}</Header>
             <CardsContainer>
                 {flashcards?.cards.map((card) => (
-                    <Card key={card.uuid} card={card.front} onClick={() => {console.log(`Navigating to card view of: ${card.uuid}`); navigate(`/${sessionId}/${deckName}/${card.uuid}`)}}/>
+                    <Card key={card.card_uuid} card={card.card_front} onClick={() => {console.log(`Navigating to card view of: ${card.card_uuid}`); navigate(`/${sessionId}/${deckName}/${card.card_uuid}`)}}/>
                 ))}
                 <Card key={-1} card={"+"} onClick={() => { navigate(`/${sessionId}/${deckName}/add`); }} />
             </CardsContainer>
-            <Button onClick={() =>{console.log("Start")}} text={"Start"} />
+            <Button onClick={() =>{navigate(`/${sessionId}/${deckName}/learn`)}} text={"Start learning"} />
         </MainDeckContainer>
     )
 }

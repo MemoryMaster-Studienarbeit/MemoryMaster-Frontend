@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 
 import {MainContentContainer} from './MainContent.styles';
-import {useNavbar} from "../../ThemeContext";
 import {useNavigate, useParams} from "react-router-dom";
 
 interface MainContentProps {
@@ -9,7 +8,6 @@ interface MainContentProps {
 }
 
 const MainContent: React.FC<MainContentProps> = ({onLoad}) => {
-    const { isSidebarOpen } = useNavbar();
     const navigate = useNavigate();
     const { sessionId } = useParams<{ sessionId: string }>();
     onLoad(sessionId || "");
@@ -18,7 +16,7 @@ const MainContent: React.FC<MainContentProps> = ({onLoad}) => {
         console.log("Session ID:", sessionId);
         const validateOrCreateUUID = async () => {
             try {
-                const res = await fetch(`http://45.81.232.169:8000/api/uuid?uuid=${sessionId || "new"}`, {
+                const res = await fetch(`http://45.81.232.169:8000/api/uuid?session_uuid=${sessionId || "new"}`, {
                     method: "POST",
                 });
 
@@ -27,9 +25,9 @@ const MainContent: React.FC<MainContentProps> = ({onLoad}) => {
                     return;
                 }
 
-                const uuid = await res.text();
-                console.log("Backend Response:", uuid);
-                const validUUID = uuid.slice(1, -1);
+                const session_uuid = await res.text();
+                console.log("Backend Response:", session_uuid);
+                const validUUID = session_uuid.slice(1, -1);
 
                 if (sessionId !== validUUID) {
                     navigate(`/${validUUID}`, { replace: true });
@@ -39,10 +37,10 @@ const MainContent: React.FC<MainContentProps> = ({onLoad}) => {
             }
         };
         validateOrCreateUUID();
-    }, []);
+    }, [navigate, sessionId]);
 
     return (
-        <MainContentContainer $isSidebarOpen={isSidebarOpen}>
+        <MainContentContainer>
             <h2>Select one of your Decks</h2>
         </MainContentContainer>
     );

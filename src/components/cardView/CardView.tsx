@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {CardContainer} from "./CardView.styles";
 import {useNavigate, useParams} from "react-router-dom";
 
+import { Card as CardType } from '../../types/Cards';
 import {TextAreaInput} from "../frontAndBackView/FrontAndBackView.styles";
 import Button from "../button/Button";
 
@@ -19,13 +20,13 @@ const CardView: React.FC<CardViewProps> = ({onLoad}) => {
 
     useEffect(() => {
         fetchDeck();
-    }, []);
+    });
 
     const fetchDeck = async () => {
-        await fetch(`http://45.81.232.169:8000/api/deck?uuid=${sessionId}&deck_name=${deckName}`)
+        await fetch(`http://45.81.232.169:8000/api/deck?session_uuid=${sessionId}&deck_name=${deckName}`)
             .then(response => response.json())
             .then(data => {
-                const card = data.cards.find((cards: any) => cards.uuid === cardId);
+                const card = data.cards.find((cards: CardType) => cards.card_uuid === cardId);
                 console.log(card);
                 if (card) {
                     setFlashcard({ deckName: data.deck_name, card: card });
