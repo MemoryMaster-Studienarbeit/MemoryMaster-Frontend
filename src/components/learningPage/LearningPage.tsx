@@ -18,6 +18,8 @@ const LearningPage:React.FC<LearningPageProps> = ({onLoad}) => {
     onLoad(sessionId || "", deckName);
     const [flashcards, setFlashcards] = React.useState<{cards: CardType[] }>();
     const [flashcard, setFlashcard] = React.useState<{card: CardType }>();
+    const [currentCardIndex, setCurrentCardIndex] = React.useState<number>(0);
+    const [isFlipped, setIsFlipped] = React.useState<boolean>(false);
 
     useEffect(() => {
         fetchDeck().then(() => {
@@ -61,11 +63,12 @@ const LearningPage:React.FC<LearningPageProps> = ({onLoad}) => {
         if (flashcards === undefined) {
             return;
         }
-        const filteredCards: CardType[] = flashcards.cards.filter(card => card.next_learned <= new Date().toISOString());
+        const filteredCards: CardType[] = flashcards.cards.filter(card => !card.next_learned || card.next_learned <= new Date().toISOString());
         setFlashcards({ cards: filteredCards });
     }
 
     const updateCard = async (card: CardType) => {
+        console.log(JSON.stringify(card));
         await fetch(`http://45.81.232.169:8000/api/card?session_uuid=${sessionId}&deck_name=${deckName}`, {
             method: "PUT",
             body: JSON.stringify({card}),
@@ -77,9 +80,9 @@ const LearningPage:React.FC<LearningPageProps> = ({onLoad}) => {
     }
 
     const handleDifficultyClick = (difficulty: Difficulty) => {
-        if (!flashcard) return;
+        if (!flashcards?.cards[currentCardIndex]) return;
 
-        const updatedCard = updateCardAfterReview(flashcard.card, difficulty);
+        const updatedCard = updateCardAfterReview(flashcards?.cards[currentCardIndex], difficulty);
         setFlashcard({ card: updatedCard });
         updateCard(updatedCard);
     };
@@ -88,18 +91,28 @@ const LearningPage:React.FC<LearningPageProps> = ({onLoad}) => {
         <LearningPageContainer>
             <LearningPageHeader>Learning Page</LearningPageHeader>
             <LearningPageBody>
-                {flashcard && (
+                {flashcards?.cards[currentCardIndex] && (
                     <>
-                        <h2>{flashcard.card.card_front}</h2>
-                        <p>{flashcard.card.card_back}</p>
+                        <h2>{flashcards.cards[currentCardIndex].card_front}</h2>
+
+                        {isFlipped && (
+                            <p>{flashcards.cards[currentCardIndex].card_back}</p>
+                        )}
                     </>
                 )}
             </LearningPageBody>
             <LearningPageFooter>
-                <Button text="Sehr schwer" color="red" onClick={() => handleDifficultyClick("very_hard")} />
-                <Button text="Schwer" color="orange" onClick={() => handleDifficultyClick("hard")} />
-                <Button text="Gut" color="blue" onClick={() => handleDifficultyClick("good")} />
-                <Button text="Sehr gut" color="green" onClick={() => handleDifficultyClick("very_good")} />
+                {isFlipped && (
+                    <>
+                        <Button text="very hard" color="learnVeryHard" onClick={() => handleDifficultyClick("very_hard")} />
+                        <Button text="hard" color="learnHard" onClick={() => handleDifficultyClick("hard")} />
+                        <Button text="good" color="learnGood" onClick={() => handleDifficultyClick("good")} />
+                        <Button text="very good" color="learnVeryGood" onClick={() => handleDifficultyClick("very_good")} />
+                    </>
+                )}
+                {!isFlipped && (
+                    <Button text="Flip" onClick={() => setIsFlipped(!isFlipped)} />
+                )}
             </LearningPageFooter>
         </LearningPageContainer>
     );

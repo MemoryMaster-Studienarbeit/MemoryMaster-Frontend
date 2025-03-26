@@ -89,7 +89,10 @@ const EditCard: React.FC<EditCardProps> = ({onLoad}) => {
                 height={"50%"}
                 defaultValue={flashcard?.card.card_back}
             />
-            <Button onClick={handleSaveButtonClick} width={"200px"} text={"Bearbeitung speichern"}/>
+            <div>
+                <Button onClick={() => navigate(`/${sessionId}/${deckName}/${cardId}`)} width={"150px"} text={"Abbrechen"}/>
+                <Button onClick={handleSaveButtonClick} width={"200px"} text={"Bearbeitung speichern"}/>
+            </div>
         </EditCardContainer>
     );
 }

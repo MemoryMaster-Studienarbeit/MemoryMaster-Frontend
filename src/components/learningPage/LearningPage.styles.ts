@@ -31,6 +31,7 @@ export const LearningPageBody = styled.div`
     align-items: center;
     justify-content: center;
     width: 100%;
+    height: 100%;
 `;
 
 export const LearningPageFooter = styled.div`

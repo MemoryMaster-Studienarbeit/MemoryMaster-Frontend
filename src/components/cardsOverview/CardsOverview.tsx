@@ -16,7 +16,7 @@ const CardsOverview: React.FC<CardViewProps> = ({onLoad}) => {
     const { sessionId } = useParams<{ sessionId: string }>();
     const { deckName } = useParams<{ deckName: string }>();
     onLoad(sessionId || "", deckName);
-    const [flashcards, setFlashcards] = useState<{ deckName: string; cards: CardType[] }>();
+    const [flashcards, setFlashcards] = useState<{ cards: CardType[] }>();
 
     useEffect(() => {
         fetchDeck();
@@ -26,9 +26,7 @@ const CardsOverview: React.FC<CardViewProps> = ({onLoad}) => {
         await fetch(`http://45.81.232.169:8000/api/deck?session_uuid=${sessionId}&deck_name=${deckName}`)
             .then(response => response.json())
             .then(data => {
-                setFlashcards({ deckName: data.deck_name, cards: data.cards.map((card: CardType) => (
-                        { uuid: card.card_uuid, front: card.card_front, back: card.card_back })) }
-                );
+                setFlashcards({ cards: data.cards }                );
                 console.log('Deck fetch successful:', data);
             })
             .catch(error => {
@@ -45,7 +43,9 @@ const CardsOverview: React.FC<CardViewProps> = ({onLoad}) => {
                 ))}
                 <Card key={-1} card={"+"} onClick={() => { navigate(`/${sessionId}/${deckName}/add`); }} />
             </CardsContainer>
-            <Button onClick={() =>{navigate(`/${sessionId}/${deckName}/learn`)}} text={"Start learning"} />
+            {flashcards && flashcards.cards.length > 0 &&
+                <Button onClick={() =>{navigate(`/${sessionId}/${deckName}/learn`)}} text={"Start learning"} />
+            }
         </MainDeckContainer>
     )
 }

@@ -16,7 +16,7 @@ const CardView: React.FC<CardViewProps> = ({onLoad}) => {
     const { deckName } = useParams<{ deckName: string }>();
     const { cardId } = useParams<{ cardId: string }>();
     onLoad(sessionId || "", deckName);
-    const [flashcard, setFlashcard] = useState<{ deckName: string; card: any }>();
+    const [flashcard, setFlashcard] = useState<{ card: CardType }>();
 
     useEffect(() => {
         fetchDeck();
@@ -29,13 +29,29 @@ const CardView: React.FC<CardViewProps> = ({onLoad}) => {
                 const card = data.cards.find((cards: CardType) => cards.card_uuid === cardId);
                 console.log(card);
                 if (card) {
-                    setFlashcard({ deckName: data.deck_name, card: card });
+                    setFlashcard({ card: card });
                 }
-                console.log('Deck fetch successful, Card:', flashcard);
+                console.log('Deck fetch successful, Card:', card);
             })
             .catch(error => {
                 console.error('Fetch error:', error);
             });
+    }
+
+    const deleteCard = async () => {
+        await fetch(`http://45.81.232.169:8000/api/card?session_uuid=${sessionId}&deck_name=${deckName}&card_uuid=${cardId}`, {
+            method: "DELETE"
+        })
+            .then(response => response.json())
+            .then(data => {console.log("Card deleted: ", data)})
+            .catch(error => {
+                console.error('Fetch error: ', error);
+            });
+    }
+
+    const handleDeleteButtonClick = async () => {
+        await deleteCard();
+        navigate(`/${sessionId}/${deckName}`);
     }
 
     const handleEditButtonClick = () => {
@@ -56,7 +72,11 @@ const CardView: React.FC<CardViewProps> = ({onLoad}) => {
                 defaultValue={flashcard?.card.card_back}
                 disabled={true}
             />
-            <Button onClick={handleEditButtonClick} width={"150px"} text={"Karte Bearbeiten"}/>
+            <div>
+                <Button onClick={() => {navigate(`/${sessionId}/${deckName}`)}} width={"150px"} text={"Zurück zum Deck"}/>
+                <Button onClick={handleDeleteButtonClick} width={"150px"} text={"Karte Löschen"}/>
+                <Button onClick={handleEditButtonClick} width={"150px"} text={"Karte Bearbeiten"}/>
+            </div>
         </CardContainer>
     );
 }

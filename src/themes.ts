@@ -24,6 +24,11 @@ export const lightTheme = {
 
     text: '#000000',
     dashedBorder: '#808080',
+
+    learnVeryHard: '#ff0000',
+    learnHard: '#ff8000',
+    learnGood: '#ffff00',
+    learnVeryGood: '#80ff00',
 }
 
 export const darkTheme = {
@@ -47,5 +52,10 @@ export const darkTheme = {
 
     text: '#ffffff',
     dashedBorder: '#808080',
+
+    learnVeryHard: '#ff0000',
+    learnHard: '#ff8000',
+    learnGood: '#ffff00',
+    learnVeryGood: '#80ff00',
 };
 

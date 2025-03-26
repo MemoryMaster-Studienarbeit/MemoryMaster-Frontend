@@ -146,7 +146,7 @@ const Sidebar: FC<SidebarProps> = ({ sessionId, selectedDeckName }) => {
                             <SearchSidebar onSearchChange={handleSearch}/>
                         </div>
                         {filteredDecks.length === 0 && searchItem !== ''
-                            ? <p>No decks found</p>
+                            ? <p style={{margin: '10px'}}>No decks found</p>
                             : <DeckList>
                                 {filteredDecks.map((deck, index) => (
                                     <DeckItem
