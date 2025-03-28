@@ -26,8 +26,7 @@ const App: React.FC = () => {
                     <Routes>
                         <Route path="/" element={<MainContent onLoad={setSessionId}/>} />
                         <Route path="/:sessionId" element={<MainContent onLoad={setSessionId}/>}/>
-                        <Route path="/:sessionId/:deckName" element={<CardsOverview onLoad={setSidebarInfos}/>}
-                        />
+                        <Route path="/:sessionId/:deckName" element={<CardsOverview onLoad={setSidebarInfos}/>} />
                         <Route path="/:sessionId/:deckName/add" element={<AddCard onLoad={setSidebarInfos} />} />
                         <Route path="/:sessionId/:deckName/:cardId" element={<CardView onLoad={setSidebarInfos} />} />
                         <Route path="/:sessionId/:deckName/edit/:cardId" element={<EditCard onLoad={setSidebarInfos} />} />

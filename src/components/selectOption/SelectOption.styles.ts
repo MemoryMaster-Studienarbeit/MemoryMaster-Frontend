@@ -8,9 +8,10 @@ export const Label = styled.label`
     justify-content: center;
     justify-items: center;
     padding: 4px 4px;
+    overflow: hidden;
     background-color: ${({ theme }) => theme.primaryInputColor};
     color: ${({ theme }) => theme.text};
-    width: 16vw;
+    width: 165px;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
     
     &:hover {

@@ -27,6 +27,12 @@ export const LowerOptionsContainer = styled.div`
     justify-content: space-between;
     flex-direction: row;
     gap: 10px;
+    
+    @media (max-width: 768px) {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 `
 
 export const SelectOptionsContainer = styled.div`

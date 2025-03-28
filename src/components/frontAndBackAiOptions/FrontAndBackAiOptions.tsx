@@ -100,7 +100,7 @@ export const FrontAndBackAiOptions: React.FC<FrontAndBackAiOptionsProps> = ({
                 <TextAreaInput
                     placeholder="Extras zum Prompt"
                     onChange={e => onPromptExtrasChange(e)}
-                    width={"80%"}
+                    width={"60%"}
                     height={"auto"}
                     defaultValue={promptExtras}
                 />

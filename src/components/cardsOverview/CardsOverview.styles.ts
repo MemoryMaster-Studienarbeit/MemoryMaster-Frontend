@@ -21,6 +21,10 @@ export const Header = styled.h2`
     width: 100%;
 `;
 
+export const NoCards = styled.p`
+    color: ${({theme}) => theme.text};
+`;
+
 export const MainDeckContainer = styled.div`
     display: flex;
     flex-direction: column; 

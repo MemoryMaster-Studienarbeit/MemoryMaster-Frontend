@@ -34,6 +34,15 @@ export const LearningPageBody = styled.div`
     height: 100%;
 `;
 
+export const CardBackContainer = styled.div`
+    display: flex;
+    height: 100%;
+`;
+
+export const CardBack = styled.p`
+    color: ${({theme}) => theme.text};
+`;
+
 export const LearningPageFooter = styled.div`
     display: flex;
     justify-content: center;

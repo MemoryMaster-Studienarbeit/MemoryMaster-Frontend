@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-import { MainDeckContainer, CardsContainer, Header } from './CardsOverview.styles';
+import {MainDeckContainer, CardsContainer, Header, NoCards} from './CardsOverview.styles';
 
 import Card from '../card/Card';
 import { Card as CardType } from '../../types/Cards';
@@ -17,6 +17,7 @@ const CardsOverview: React.FC<CardViewProps> = ({onLoad}) => {
     const { deckName } = useParams<{ deckName: string }>();
     onLoad(sessionId || "", deckName);
     const [flashcards, setFlashcards] = useState<{ cards: CardType[] }>();
+    const [amountCardsToLearn, setAmountCardsToLearn] = useState<number>(0);
 
     useEffect(() => {
         fetchDeck();
@@ -26,8 +27,11 @@ const CardsOverview: React.FC<CardViewProps> = ({onLoad}) => {
         await fetch(`http://45.81.232.169:8000/api/deck?session_uuid=${sessionId}&deck_name=${deckName}`)
             .then(response => response.json())
             .then(data => {
-                setFlashcards({ cards: data.cards }                );
-                console.log('Deck fetch successful:', data);
+                setFlashcards({ cards: data.cards });
+                const now = new Date().toISOString()
+                const cardsToLearn: CardType[] = data.cards.filter((card: CardType) => !card.next_learned || card.next_learned <= now);
+                setAmountCardsToLearn(cardsToLearn.length);
+                console.log('Deck fetch successful');
             })
             .catch(error => {
                 console.error('Fetch error:', error);
@@ -43,8 +47,9 @@ const CardsOverview: React.FC<CardViewProps> = ({onLoad}) => {
                 ))}
                 <Card key={-1} card={"+"} onClick={() => { navigate(`/${sessionId}/${deckName}/add`); }} />
             </CardsContainer>
-            {flashcards && flashcards.cards.length > 0 &&
-                <Button onClick={() =>{navigate(`/${sessionId}/${deckName}/learn`)}} text={"Start learning"} />
+            {flashcards && flashcards.cards.length > 0 && amountCardsToLearn > 0
+                ? <Button onClick={() =>{navigate(`/${sessionId}/${deckName}/learn`)}} width={"auto"} text={`Start learning ${amountCardsToLearn} Cards`} />
+                : <NoCards>No Cards to learn</NoCards>
             }
         </MainDeckContainer>
     )

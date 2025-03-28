@@ -63,6 +63,9 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
                 }
             };
             reader.readAsArrayBuffer(file);
+        } else {
+            setFileContent(undefined);
+            setFrontText("");
         }
     };
 
@@ -118,7 +121,7 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
             .then(response => response.json())
             .then(data => {
                 console.log("Card created:", data);
-                setPreviewCard(data.uuid);
+                setPreviewCard(data.card_uuid);
                 setFrontText(data.card_front)
                 setBackText(data.card_back)
             })
@@ -154,10 +157,7 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
     const handleBackFromPreview = async () => {
         setIsPreviewMode(false);
         await fetch(`http://45.81.232.169:8000/api/card?session_uuid=${sessionId}&deck_name=${deckName}&card_uuid=${previewCard}`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json"
-            }
+            method: "DELETE"
         })
             .then(response => response.json())
             .then(data => {

@@ -151,6 +151,7 @@ const Sidebar: FC<SidebarProps> = ({ sessionId, selectedDeckName }) => {
                                 {filteredDecks.map((deck, index) => (
                                     <DeckItem
                                         key={index}
+                                        deckKey={index}
                                         onClick={() => {
                                             navigate(`/${sessionId}/${deck}`);
                                         }}

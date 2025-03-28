@@ -11,12 +11,12 @@ interface DeckItemProps {
     isSelected: boolean;
     onClick: () => void;
     onDelete: (deckName: string) => void;
-    key: number;
+    deckKey: number;
 }
 
-const DeckItem: React.FC<DeckItemProps> = ({deckName, isSelected, onClick, onDelete, key}) => {
+const DeckItem: React.FC<DeckItemProps> = ({deckName, isSelected, onClick, onDelete, deckKey}) => {
     return (
-        <ListItem key={key} onClick={onClick}>
+        <ListItem key={deckKey} onClick={onClick}>
             <ListItemContainer>
                 <DeckName $isSelected={isSelected}>{deckName}</DeckName>
                 {isSelected &&(
