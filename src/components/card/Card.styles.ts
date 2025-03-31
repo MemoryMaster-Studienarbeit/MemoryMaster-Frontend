@@ -17,6 +17,7 @@ export const CardContainer = styled.button`
     background-color: ${({ theme }) => theme.secondaryColor};
     color: ${({ theme }) => theme.text};
     border: none;
+    overflow: hidden;
 
     &:hover {
         transform: scale(1.05);

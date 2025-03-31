@@ -3,6 +3,8 @@ import styled from "styled-components";
 import xDark from '../../images/x-icon-dark.svg';
 // @ts-ignore
 import xLight from '../../images/x-icon-light.svg';
+// @ts-ignore
+import xRed from '../../images/x-icon-red.svg';
 
 export const ListItem = styled.li`
     display: flex;
@@ -17,12 +19,18 @@ export const ListItem = styled.li`
 `;
 
 export const DeleteButton = styled.button`
-    width: 10px;
+    width: 20px;
     height: 10px;
     padding: 10px;
     background: url(${({ theme }) => theme.isLight ? xDark : xLight}) no-repeat center center;
     border: none;
     cursor: pointer;
+
+    &:hover {
+        background-image: url("${xRed}");
+        transform: scale(1.5);
+        transition: transform 0.2s ease-in-out;
+    }
 `;
 
 export const ListItemContainer = styled.div`
@@ -35,12 +43,14 @@ export const ListItemContainer = styled.div`
 
 export const DeckName = styled.p<{ $isSelected: boolean }>`
     display: flex;
-    height: fit-content;
     cursor: pointer;
     color: ${(props) =>
             props.$isSelected ? props.theme.alternativeSecondaryColor : props.theme.text};
     transform: ${(props) => (props.$isSelected ? 'translateX(5px) scale(1.1)' : 'none')};
     margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     
     &:hover {
         text-decoration: underline;
