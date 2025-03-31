@@ -38,7 +38,7 @@ export const ListItemContainer = styled.div`
     margin: 0;
 `;
 
-export const DeckName = styled.p<{ $isSelected: boolean }>`
+export const DeckName = styled.div<{ $isSelected: boolean }>`
     display: flex;
     cursor: pointer;
     position: relative;

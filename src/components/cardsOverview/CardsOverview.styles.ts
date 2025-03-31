@@ -18,7 +18,10 @@ export const Header = styled.h2`
     font-size: 24px;
     color: ${({theme}) => theme.text};
     margin-bottom: 20px;
-    width: 100%;
+    width: 60%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 
 export const NoCards = styled.p`

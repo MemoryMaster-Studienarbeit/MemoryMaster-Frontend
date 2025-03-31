@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
-export const Label = styled.label`
+interface Props {
+    width?: string;
+    height?: string;
+}
+
+export const Label = styled.label<Props>`
     display: flex;
     border-radius: 5px;
     border: none;
@@ -11,7 +16,8 @@ export const Label = styled.label`
     overflow: hidden;
     background-color: ${({ theme }) => theme.primaryInputColor};
     color: ${({ theme }) => theme.text};
-    width: 165px;
+    width: ${({ width }) => (width ? `${width}` : '165px')};
+    height: ${({ height }) => (height ? `${height}` : 'auto')};
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
     
     &:hover {
