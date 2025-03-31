@@ -5,6 +5,8 @@ export const InnerSettingsContainer = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    padding: 0;
+    margin: 0;
 
     &:hover {
         transform: scale(1.2);
@@ -19,7 +21,7 @@ export const SettingsContainer = styled.div<{ $isSidebarOpen: boolean }>`
     align-items: center;
     justify-content: center;
     margin: auto 0 1em;
-    height: auto;
+    height: 100px;
     width: 100%;
     color: ${({theme}) => theme.text};
     transition: flex-direction 1.5s;

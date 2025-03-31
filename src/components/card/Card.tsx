@@ -4,11 +4,15 @@ import { CardContainer } from './Card.styles';
 
 interface CardProps {
     card: string;
-    onCardClick: () => void;
+    onClick: () => void;
 }
 
-const Card: React.FC<CardProps> = ({ card, onCardClick }) => {
-    return <CardContainer onClick={() => onCardClick()}>{card}</CardContainer>;
+const Card: React.FC<CardProps> = ({ card, onClick}) => {
+    return (
+        <CardContainer onClick={() => onClick()}>
+            {card}
+        </CardContainer>
+    );
 }
 
 export default Card;

@@ -16,8 +16,13 @@ export const CardsContainer = styled.div`
 export const Header = styled.h2`
     text-align: center;
     font-size: 24px;
+    color: ${({theme}) => theme.text};
     margin-bottom: 20px;
     width: 100%;
+`;
+
+export const NoCards = styled.p`
+    color: ${({theme}) => theme.text};
 `;
 
 export const MainDeckContainer = styled.div`
@@ -26,5 +31,10 @@ export const MainDeckContainer = styled.div`
     align-items: center;
     justify-content: space-between; 
     width: 100%;
-    height: 100%; 
+    height: 100%;
+
+    @media (max-width: 768px) {
+        width: calc(100vw - 50px);
+        margin-left: 50px;
+    }
 `;

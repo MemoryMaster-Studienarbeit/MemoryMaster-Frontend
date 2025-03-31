@@ -12,7 +12,7 @@ const SidebarSettings: FC = () => {
         <SettingsContainer $isSidebarOpen={isSidebarOpen}>
             <InnerSettingsContainer>
                 <DarkModeSwitch
-                    style={{padding: "10px", width: "40%"}}
+                    style={{padding: "10px", width: "50%"}}
                     moonColor={"white"}
                     sunColor={"#eaac02"}
                     checked={isDarkMode}

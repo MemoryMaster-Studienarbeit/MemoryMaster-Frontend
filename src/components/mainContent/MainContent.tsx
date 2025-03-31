@@ -1,35 +1,27 @@
 import React, {useEffect} from 'react';
 
 import {MainContentContainer} from './MainContent.styles';
-import CardsView from '../cardsView/CardsView';
-import {useNavbar} from "../../ThemeContext";
-import AddCard from "../addCard/AddCard";
+import {useNavigate, useParams} from "react-router-dom";
+import { validateOrCreateUUID } from '../../utils/uuid';
+
 
 interface MainContentProps {
-    selectedDeck: string | null;
+    onLoad: (sessionId: string) => void;
 }
 
-const MainContent: React.FC<MainContentProps> = ({ selectedDeck }) => {
-    const { isSidebarOpen } = useNavbar();
-    const [addCardPage, setAddCardPage] = React.useState(false);
-
-    const handleAdd = (id: number) => {
-        console.log(id);
-        if (id === -1){
-            setAddCardPage(true);
-        }
-    }
+const MainContent: React.FC<MainContentProps> = ({onLoad}) => {
+    const navigate = useNavigate();
+    const { sessionId } = useParams<{ sessionId: string }>();
+    onLoad(sessionId || "");
 
     useEffect(() => {
-        setAddCardPage(false);
-    }, [selectedDeck]);
+        console.log("Session ID:", sessionId);
+        void validateOrCreateUUID(sessionId, navigate);
+    }, [navigate, sessionId]);
 
     return (
-        <MainContentContainer $isSidebarOpen={isSidebarOpen}>
-            {selectedDeck != null && !addCardPage
-                ? (<CardsView selectedDeck={selectedDeck} onAdd={handleAdd}/>)
-                : (addCardPage ? <AddCard /> : <h2>Select a Deck</h2>)}
-
+        <MainContentContainer>
+            <h2>Select one of your Decks</h2>
         </MainContentContainer>
     );
 };

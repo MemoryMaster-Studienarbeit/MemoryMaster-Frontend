@@ -4,9 +4,13 @@ export const AddCardContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 5px;
+    margin: 0;
     height: 100%;
-    width: calc(100% - 10px);
+    width: 100%;
+
+    @media (max-width: 768px) {
+        margin-left: 50px;
+    }
 `;
 
 export const UpperGeneralOptionsContainer= styled.div`
@@ -28,7 +32,7 @@ export const RadioButton = styled.label`
     color: ${({theme}) => theme.text};
     padding: 5px 10px;
     margin: 10px;
-    width: 150px;
+    width: auto;
     height: 40px;
     font-size: 16px;
     border-radius: 5px;
