@@ -8,23 +8,20 @@ import xRed from '../../images/x-icon-red.svg';
 
 export const ListItem = styled.li`
     display: flex;
-    justify-content: space-between;
     padding: 0;
     margin-bottom: 0.5em;
     width: 100%;
     border-radius: 5px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 `;
 
 export const DeleteButton = styled.button`
-    width: 20px;
-    height: 10px;
-    padding: 10px;
-    background: url(${({ theme }) => theme.isLight ? xDark : xLight}) no-repeat center center;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
+    background: url(${({ theme }) => theme.isLight ? xDark : xLight}) no-repeat center center;
+    align-items: center;
+    justify-content: center;
+    width: 15px;
 
     &:hover {
         background-image: url("${xRed}");
@@ -35,26 +32,28 @@ export const DeleteButton = styled.button`
 
 export const ListItemContainer = styled.div`
     display: flex;
-    width: 100%;
+    flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    width: 100%;
     margin: 0;
 `;
 
-export const DeckName = styled.p<{ $isSelected: boolean }>`
+export const DeckName = styled.div<{ $isSelected: boolean }>`
     display: flex;
     cursor: pointer;
+    position: relative;
     color: ${(props) =>
             props.$isSelected ? props.theme.alternativeSecondaryColor : props.theme.text};
-    transform: ${(props) => (props.$isSelected ? 'translateX(5px) scale(1.1)' : 'none')};
+    transform: ${(props) => (props.$isSelected && window.innerWidth > 768 ? 'translateX(10px) scale(1.1)' : 'none')};
     margin: 0;
+    width: 70%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     
     &:hover {
         text-decoration: underline;
-        transform: translateX(5px) scale(1.1);
+        transform: translateX(10px) scale(1.1);
         color: cadetblue;
         transition: transform 0.2s ease-in-out;
     }

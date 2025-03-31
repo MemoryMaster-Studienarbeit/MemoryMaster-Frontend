@@ -4,7 +4,6 @@ import {
     AddCardContainer,
     UpperGeneralOptionsContainer,
     LeftOptionsContainer,
-    RadioButton,
     RightOptionsContainer,
     ToggleModeButton,
 } from './AddCard.styles';
@@ -12,6 +11,7 @@ import FrontAndBackView from "../frontAndBackView/FrontAndBackView";
 import FrontAndBackAiOptions from "../frontAndBackAiOptions/FrontAndBackAiOptions";
 import Button from "../button/Button";
 import Spinner from "../spinner/Spinner";
+import { aiModels } from '../../constants/SelectOptions/aiModels';
 import {useTheme} from "../../ThemeContext";
 // @ts-ignore
 import penFillDark from '../../images/pen-fill-dark.svg';
@@ -22,6 +22,7 @@ import robotDark from '../../images/robot-dark.svg';
 // @ts-ignore
 import robotLight from '../../images/robot-light.svg';
 import {useNavigate, useParams} from "react-router-dom";
+import SelectOption from "../selectOption/SelectOption";
 
 interface AddCardProps {
     onLoad: (sessionId: string, deckName?: string) => void,
@@ -40,6 +41,7 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
     const [frontText, setFrontText] = useState<string>("");
     const [backText, setBackText] = useState<string>("");
     const [selectedMode, setSelectedMode] = useState<string>("zusammenfassen"); // zusammenfassen oder neu formulieren
+    const [selectedModel, setSelectedModel] = useState<string>("llama3-8b-8192");
     const [selectedStyle, setSelectedStyle] = useState<string>("einfach");
     const [selectedLength, setSelectedLength] = useState<string>("kurz");
     const [promptExtras, setPromptExtras] = useState<string>("");
@@ -178,18 +180,14 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
                                          style={{width: "30px", height: "30px"}}/>
                                 </ToggleModeButton>
                                 {!isPreviewMode && (
-                                    <>
-                                        <input type="radio" id="zusammenfassen" value="zusammenfassen" name="mode"
-                                               style={{display: 'none'}}
-                                               onChange={(e) => setSelectedMode(e.target.value)}
-                                               checked={selectedMode==="zusammenfassen"}/>
-                                        <RadioButton htmlFor="zusammenfassen">Zusammenfassen</RadioButton>
-                                        <input type="radio" id="neu_formulieren" value="neu_formulieren" name="mode"
-                                               style={{display: 'none'}}
-                                               onChange={(e) => setSelectedMode(e.target.value)}
-                                               checked={selectedMode==="neu_formulieren"}/>
-                                        <RadioButton htmlFor="neu_formulieren">Neu Formulieren</RadioButton>
-                                    </>
+                                    <SelectOption
+                                        label={"AI Model: "}
+                                        options={aiModels}
+                                        onChange={(e) => setSelectedModel(e.target.value)}
+                                        selectedOption={selectedModel}
+                                        width={"250px"}
+                                        height={"40px"}
+                                    />
                                 )}
                             </LeftOptionsContainer>
                             {isPreviewMode ? (
