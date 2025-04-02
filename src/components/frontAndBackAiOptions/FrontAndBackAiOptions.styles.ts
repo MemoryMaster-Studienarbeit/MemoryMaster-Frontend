@@ -30,18 +30,23 @@ export const LowerOptionsContainer = styled.div`
     
     @media (max-width: 768px) {
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
     }
 `
 
 export const SelectOptionsContainer = styled.div`
     display: flex;
-    flex: 1;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-content: center;
     gap: 10px;
+
+    @media (max-width: 768px) {
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+    }
 `
 
 export const InteractButtonContainer = styled.div`

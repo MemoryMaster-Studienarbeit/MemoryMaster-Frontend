@@ -174,7 +174,7 @@ const Sidebar: FC<SidebarProps> = ({ sessionId, selectedDeckName }) => {
                     <AddDeckForm>
                         <>
                             <AddDeckHeader>Add a new Deck</AddDeckHeader>
-                            <DeckNameInput placeholder="Deck Name" id="newDeckName" value={newDeckName} onChange={handleDeckNameChange} />
+                            <DeckNameInput placeholder="Deck name" id="newDeckName" value={newDeckName} onChange={handleDeckNameChange} />
                         </>
                         {isWarning && (
                             <WarningContainer>
@@ -184,7 +184,7 @@ const Sidebar: FC<SidebarProps> = ({ sessionId, selectedDeckName }) => {
                         )}
                         <ButtonContainer>
                             <Button onClick={() => {setOpenAddDeck(false); setNewDeckName(''); setIsWarning(false)}} text={"Cancel"} />
-                            <Button onClick={() => handleAddDeck()} text={"Add Deck"} color={"alternativeSecondaryColor"} disabled={isWarning} />
+                            <Button onClick={() => handleAddDeck()} text={"Add deck"} color={"alternativeSecondaryColor"} disabled={isWarning} />
                         </ButtonContainer>
                     </AddDeckForm>
                 </AddDeckContainer>

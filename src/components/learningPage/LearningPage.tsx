@@ -11,9 +11,8 @@ import {
     LearningPageFooter,
     LearningPageHeader,
     CardBackContainer,
-    CardBack
+    CardBack, CardFront, CardFrontContainer
 } from "./LearningPage.styles";
-import {Header} from "../cardsOverview/CardsOverview.styles";
 
 interface LearningPageProps {
     onLoad: (sessionId: string, deckName?: string) => void
@@ -118,14 +117,15 @@ const LearningPage:React.FC<LearningPageProps> = ({onLoad}) => {
                     <LearningPageBody>
                     {shuffledCards?.cards[currentCardIndex] && (
                         <>
-                        <Header>{shuffledCards.cards[currentCardIndex].card_front}</Header>
-
-                        <CardBackContainer>
+                            <CardFrontContainer>
+                                <CardFront>{shuffledCards.cards[currentCardIndex].card_front}</CardFront>
+                            </CardFrontContainer>
                             {isFlipped &&
-                                <CardBack>{shuffledCards.cards[currentCardIndex].card_back}</CardBack>
+                                <CardBackContainer>
+                                    <CardBack>{shuffledCards.cards[currentCardIndex].card_back}</CardBack>
+                                </CardBackContainer>
                             }
-                        </CardBackContainer>
-                    </>
+                        </>
                     )}
                     </LearningPageBody>
                     <LearningPageFooter>

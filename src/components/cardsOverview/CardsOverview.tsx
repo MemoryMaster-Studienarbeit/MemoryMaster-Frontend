@@ -43,13 +43,13 @@ const CardsOverview: React.FC<CardViewProps> = ({onLoad}) => {
             <Header>Cards in {deckName}</Header>
             <CardsContainer>
                 {flashcards?.cards.map((card) => (
-                    <Card key={card.card_uuid} card={card.card_front} onClick={() => {console.log(`Navigating to card view of: ${card.card_uuid}`); navigate(`/${sessionId}/${deckName}/${card.card_uuid}`)}}/>
+                    <Card key={card.card_uuid} card={card.card_front} onClick={() => {console.log(`Navigating to card: ${card.card_uuid}`); navigate(`/${sessionId}/${deckName}/${card.card_uuid}`)}}/>
                 ))}
                 <Card key={-1} card={"+"} onClick={() => { navigate(`/${sessionId}/${deckName}/add`); }} />
             </CardsContainer>
             {flashcards && flashcards.cards.length > 0 && amountCardsToLearn > 0
                 ? <Button onClick={() =>{navigate(`/${sessionId}/${deckName}/learn`)}} width={"auto"} text={`Start learning ${amountCardsToLearn} Cards`} />
-                : <NoCards>No Cards to learn</NoCards>
+                : <NoCards>No more cards to learn 🎉</NoCards>
             }
         </MainDeckContainer>
     )

@@ -26,6 +26,7 @@ export const Header = styled.h2`
 
 export const NoCards = styled.p`
     color: ${({theme}) => theme.text};
+    font-size: 20px;
 `;
 
 export const MainDeckContainer = styled.div`

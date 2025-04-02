@@ -62,7 +62,8 @@ export const FrontAndBackAiOptions: React.FC<FrontAndBackAiOptionsProps> = ({
                             setFileContents([file]);
                         }
                     }}
-                    name="file" types={['txt', 'pdf', 'png', 'jpeg', 'jpg']}
+                    name="file"
+                    types={['txt', 'pdf', 'png', 'jpeg', 'jpg']}
                 >
                     <FileInputLabel htmlFor="file-input"/>
                 </FileUploader>
@@ -100,7 +101,7 @@ export const FrontAndBackAiOptions: React.FC<FrontAndBackAiOptionsProps> = ({
                 <TextAreaInput
                     placeholder="Extras zum Prompt"
                     onChange={e => onPromptExtrasChange(e)}
-                    width={"60%"}
+                    width={"80%"}
                     height={"auto"}
                     defaultValue={promptExtras}
                 />

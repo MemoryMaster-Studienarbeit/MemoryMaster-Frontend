@@ -30,6 +30,7 @@ interface AddCardProps {
 
 const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
     const navigate = useNavigate()
+    const theme = useTheme()
     const {sessionId} = useParams<{ sessionId: string }>();
     const {deckName} = useParams<{ deckName: string }>();
     onLoad(sessionId || "", deckName);
@@ -40,7 +41,6 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
     const [isLoading, setIsLoading] = useState(false);
     const [frontText, setFrontText] = useState<string>("");
     const [backText, setBackText] = useState<string>("");
-    const [selectedMode, setSelectedMode] = useState<string>("zusammenfassen"); // zusammenfassen oder neu formulieren
     const [selectedModel, setSelectedModel] = useState<string>("llama3-8b-8192");
     const [selectedStyle, setSelectedStyle] = useState<string>("einfach");
     const [selectedLength, setSelectedLength] = useState<string>("kurz");
@@ -81,13 +81,12 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
     }
 
     const PromptExtras = () => {
-        const mode = selectedMode === "zusammenfassen" ? "zusammenfassen" : "neu formulieren";
-        return `Bitte tu mir das ${mode}. Der Text soll ${selectedLength} und ${selectedStyle} sein. Zusätzliche Infos zum Prompt: ${promptExtras}`;
+        return `Der Text soll ${selectedLength} und ${selectedStyle} sein. Zusätzliche Infos zum Prompt: ${promptExtras}`;
     }
 
     // Vorschau laden
     const handlePreview = async () => {
-        console.log("Preview:", selectedMode, selectedStyle, selectedLength, promptExtras, text, fileContent);
+        console.log("Preview:", selectedStyle, selectedLength, promptExtras, text, fileContent);
         setIsLoading(true);
         await generateCard()
         setIsLoading(false);
@@ -99,7 +98,7 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
         console.log(JSON.stringify({
             text: text,
             appending_prompt_template: appendingPrompt,
-            ai_model: "",
+            ai_model: selectedModel,
             file: {
                 file_type: fileType,
                 file_content: fileContent ? await fileContent.text() : ""
@@ -110,7 +109,7 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
             body: JSON.stringify({
                 text: text,
                 appending_prompt_template: appendingPrompt,
-                ai_model: "",
+                ai_model: selectedModel,
                 file: {
                     file_type: fileType,
                     file_content: fileContent ? await fileContent.text() : ""
@@ -185,7 +184,7 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
                                         options={aiModels}
                                         onChange={(e) => setSelectedModel(e.target.value)}
                                         selectedOption={selectedModel}
-                                        width={"250px"}
+                                        width={"200px"}
                                         height={"40px"}
                                     />
                                 )}
@@ -197,7 +196,7 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
                                 </RightOptionsContainer>
                             ) : (
                                 <RightOptionsContainer>
-                                    <Button onClick={handlePreview} text={"Vorschau"}/>
+                                    <Button onClick={handlePreview} text={"Vorschau"} disabled={text === ""}/>
                                 </RightOptionsContainer>
                             )}
                         </>

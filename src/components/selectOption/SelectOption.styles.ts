@@ -8,7 +8,7 @@ interface Props {
 export const Label = styled.label<Props>`
     display: flex;
     border-radius: 5px;
-    border: none;
+    border: 1px solid gray;
     align-items: center;
     justify-content: center;
     justify-items: center;
@@ -22,6 +22,10 @@ export const Label = styled.label<Props>`
     
     &:hover {
         background-color: ${({ theme }) => theme.alternativeSecondaryColor};
+    }
+    
+    @media (max-width: 768px) {
+        width: auto;
     }
     
 `
