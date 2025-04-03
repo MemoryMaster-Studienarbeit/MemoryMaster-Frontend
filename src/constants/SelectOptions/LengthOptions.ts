@@ -1,5 +1,5 @@
 export const lengthOptions = [
-    { value: "kurz", text: "Kurz und Knapp" },
+    { value: "short", text: "Short" },
     { value: "normal", text: "Normal" },
-    { value: "ausführlich", text: "Ausführlich" }
+    { value: "detailed", text: "Detailed" }
 ];

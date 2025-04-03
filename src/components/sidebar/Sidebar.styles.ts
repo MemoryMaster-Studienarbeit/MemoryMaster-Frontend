@@ -142,7 +142,7 @@ export const DeckNameInput = styled.input`
     padding: 10px;
     margin: 10px;
     border: none;
-    background-color: ${({theme}) => theme.primaryInputColor};
+    background-color: ${({theme}) => theme.secondaryInputColor};
     color: ${({theme}) => theme.text};
     border-radius: 4px;
     font-size: 1em;

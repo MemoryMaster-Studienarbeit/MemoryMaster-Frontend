@@ -18,9 +18,12 @@ export const lightTheme = {
     alternativeSecondaryColor: '#6cb2ff',
 
     primaryInputColor: '#eaeaea',
+    secondaryInputColor: '#eaeaea',
 
     primaryButtonColor: '#f9cdad',
     secondaryButtonColor: '#fc9d9a',
+
+    buttonDisabled: '#d3d3d3',
 
     text: '#000000',
     dashedBorder: '#808080',
@@ -46,9 +49,12 @@ export const darkTheme = {
     alternativeSecondaryColor: '#6cb2ff',
 
     primaryInputColor: '#333333',
+    secondaryInputColor: '#464545',
 
     primaryButtonColor: '#00dffc',
     secondaryButtonColor: '#00b4cc',
+
+    buttonDisabled: '#555555',
 
     text: '#ffffff',
     dashedBorder: '#808080',

@@ -17,7 +17,7 @@ interface SelectOptionProps {
 export const SelectOption: React.FC<SelectOptionProps> = ({ label, options, onChange, selectedOption, width, height}) => {
     return (
         <Label width={width} height={height}>
-            {label}
+            {" " + label}
             <Select onChange={onChange} value={selectedOption}>
                 {options.map((option, index) => (
                     <option key={index} value={option.value}>

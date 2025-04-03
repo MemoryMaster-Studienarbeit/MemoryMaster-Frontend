@@ -8,7 +8,7 @@ interface Props {
 export const Label = styled.label<Props>`
     display: flex;
     border-radius: 5px;
-    border: none;
+    border: 1px solid gray;
     align-items: center;
     justify-content: center;
     justify-items: center;
@@ -24,6 +24,10 @@ export const Label = styled.label<Props>`
         background-color: ${({ theme }) => theme.alternativeSecondaryColor};
     }
     
+    @media (max-width: 768px) {
+        width: auto;
+    }
+    
 `
 
 export const Select = styled.select`
@@ -37,4 +41,11 @@ export const Select = styled.select`
     font-size: 16px;
     color: ${({ theme }) => theme.text};
     cursor: pointer;
+    text-align: center; /* Text zentrieren */
+
+    option {
+        background-color: ${({ theme }) => theme.primaryInputColor};
+        color: ${({ theme }) => theme.text};
+        text-align: center; /* Text in Optionen zentrieren */
+    }
 `

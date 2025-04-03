@@ -9,7 +9,7 @@ export const SearchInput = styled.input`
     padding: 0.5em;
     margin: 0;
     border: none;
-    background-color: ${({ theme }) => theme.primaryInputColor};
+    background-color: ${({ theme }) => theme.secondaryInputColor};
     color: ${({ theme }) => theme.text};
     border-radius: 4px;
     font-size: 1em;
