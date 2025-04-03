@@ -11,7 +11,7 @@ import {
     LearningPageFooter,
     LearningPageHeader,
     CardBackContainer,
-    CardBack, CardFront, CardFrontContainer
+    CardBack, CardFront, CardFrontContainer, Header
 } from "./LearningPage.styles";
 
 interface LearningPageProps {
@@ -143,7 +143,10 @@ const LearningPage:React.FC<LearningPageProps> = ({onLoad}) => {
                     </LearningPageFooter>
                 </>
             ) : (
-                <h1>No more cards to learn</h1>
+                <>
+                    <Header>No more cards to learn</Header>
+                    <Button onClick={() => navigate(`/${sessionId}/${deckName}`)} text={"Back to deck"}></Button>
+                </>
                 )
             }
         </LearningPageContainer>

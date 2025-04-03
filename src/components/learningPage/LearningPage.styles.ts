@@ -69,5 +69,8 @@ export const LearningPageFooter = styled.div`
     align-items: center;
     gap: 20px;
     width: 80%;
-    
+`;
+
+export const Header = styled.h1`
+    color: ${({theme}) => theme.text};
 `;

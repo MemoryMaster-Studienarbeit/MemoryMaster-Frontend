@@ -30,7 +30,6 @@ interface AddCardProps {
 
 const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
     const navigate = useNavigate()
-    const theme = useTheme()
     const {sessionId} = useParams<{ sessionId: string }>();
     const {deckName} = useParams<{ deckName: string }>();
     onLoad(sessionId || "", deckName);
@@ -81,7 +80,7 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
     }
 
     const PromptExtras = () => {
-        return `Der Text soll ${selectedLength} und ${selectedStyle} sein. Zusätzliche Infos zum Prompt: ${promptExtras}`;
+        return `return The text should be ${selectedLength} and ${selectedStyle}. Additional information for the prompt: ${promptExtras}`;
     }
 
     // Vorschau laden

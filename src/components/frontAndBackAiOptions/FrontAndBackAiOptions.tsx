@@ -86,13 +86,13 @@ export const FrontAndBackAiOptions: React.FC<FrontAndBackAiOptionsProps> = ({
             <LowerOptionsContainer>
                 <SelectOptionsContainer>
                     <SelectOption
-                        label={"Stil: "}
+                        label={"Style: "}
                         options={styleOptions}
                         onChange={(e) => onStyleChange(e)}
                         selectedOption={selectedStyle}
                     />
                     <SelectOption
-                        label={"Länge: "}
+                        label={"Length: "}
                         options={lengthOptions}
                         onChange={(e) => onLengthChange(e)}
                         selectedOption={selectedLength}
