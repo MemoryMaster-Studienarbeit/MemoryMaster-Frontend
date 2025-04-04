@@ -63,7 +63,7 @@ export const FrontAndBackAiOptions: React.FC<FrontAndBackAiOptionsProps> = ({
                         }
                     }}
                     name="file"
-                    types={['txt', 'pdf', 'png', 'jpeg', 'jpg']}
+                    types={['txt', 'pdf']}
                 >
                     <FileInputLabel htmlFor="file-input"/>
                 </FileUploader>
