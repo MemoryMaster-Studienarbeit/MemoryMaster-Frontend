@@ -1,6 +1,6 @@
 export const validateOrCreateUUID = async (sessionId: string | undefined, navigate: (path: string) => void) => {
     try {
-        const res = await fetch(`http://45.81.232.169:8000/api/uuid?session_uuid=${sessionId || "new"}`, {
+        const res = await fetch(`https://memorymaster.melonigemelone.de/api/uuid?session_uuid=${sessionId || "new"}`, {
             method: "POST",
         });
 
