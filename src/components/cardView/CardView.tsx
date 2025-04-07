@@ -23,7 +23,7 @@ const CardView: React.FC<CardViewProps> = ({onLoad}) => {
     }, []);
 
     const fetchDeck = async () => {
-        await fetch(`http://45.81.232.169:8000/api/deck?session_uuid=${sessionId}&deck_name=${deckName}`)
+        await fetch(`https://memorymaster.melonigemelone.de/api/deck?session_uuid=${sessionId}&deck_name=${deckName}`)
             .then(response => response.json())
             .then(data => {
                 const card = data.cards.find((cards: CardType) => cards.card_uuid === cardId);
@@ -39,7 +39,7 @@ const CardView: React.FC<CardViewProps> = ({onLoad}) => {
     }
 
     const deleteCard = async () => {
-        await fetch(`http://45.81.232.169:8000/api/card?session_uuid=${sessionId}&deck_name=${deckName}&card_uuid=${cardId}`, {
+        await fetch(`https://memorymaster.melonigemelone.de/api/card?session_uuid=${sessionId}&deck_name=${deckName}&card_uuid=${cardId}`, {
             method: "DELETE"
         })
             .then(response => response.json())

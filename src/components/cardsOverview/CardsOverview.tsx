@@ -26,7 +26,7 @@ const CardsOverview: React.FC<CardViewProps> = ({onLoad}) => {
     }, [deckName]);
 
     const fetchDeck = async () => {
-        await fetch(`http://45.81.232.169:8000/api/deck?session_uuid=${sessionId}&deck_name=${deckName}`)
+        await fetch(`https://memorymaster.melonigemelone.de/api/deck?session_uuid=${sessionId}&deck_name=${deckName}`)
             .then(response => response.json())
             .then(data => {
                 setFlashcards({ cards: data.cards });

@@ -55,7 +55,7 @@ const Sidebar: FC<SidebarProps> = ({ sessionId, selectedDeckName }) => {
     };
 
     const fetchDecks = async () => {
-        await fetch(`http://45.81.232.169:8000/api/decks?session_uuid=${sessionId}`)
+        await fetch(`https://memorymaster.melonigemelone.de/api/decks?session_uuid=${sessionId}`)
             .then(response => response.text())
             .then(responseText => {
                 const data = responseText.startsWith('{') || responseText.startsWith('[') ? JSON.parse(responseText) : [];
@@ -74,7 +74,7 @@ const Sidebar: FC<SidebarProps> = ({ sessionId, selectedDeckName }) => {
             return;
         }
         const addDeck = async () => {
-            await fetch(`http://45.81.232.169:8000/api/deck?session_uuid=${sessionId}&deck_name=${newDeckName}`, {
+            await fetch(`https://memorymaster.melonigemelone.de/api/deck?session_uuid=${sessionId}&deck_name=${newDeckName}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -114,7 +114,7 @@ const Sidebar: FC<SidebarProps> = ({ sessionId, selectedDeckName }) => {
     const handleDeleteDeck = async (deckName: string) => {
         console.log(deckName);
         const deleteDeck = async () => {
-            await fetch(`http://45.81.232.169:8000/api/deck?session_uuid=${sessionId}&deck_name=${deckName}`, {
+            await fetch(`https://memorymaster.melonigemelone.de/api/deck?session_uuid=${sessionId}&deck_name=${deckName}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
@@ -169,7 +169,7 @@ const Sidebar: FC<SidebarProps> = ({ sessionId, selectedDeckName }) => {
             {isSidebarOpen && (
                 <Overlay/>
             )}
-            {openAddDeck && ( //TODO: warnung bei gleichem Decknamen
+            {openAddDeck && (
                 <AddDeckContainer>
                     <AddDeckForm>
                         <>

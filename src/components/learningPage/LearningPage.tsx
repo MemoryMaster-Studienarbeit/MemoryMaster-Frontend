@@ -59,7 +59,7 @@ const LearningPage:React.FC<LearningPageProps> = ({onLoad}) => {
     };
 
     const fetchDeck = async () => {
-        await fetch(`http://45.81.232.169:8000/api/deck?session_uuid=${sessionId}&deck_name=${deckName}`)
+        await fetch(`https://memorymaster.melonigemelone.de/api/deck?session_uuid=${sessionId}&deck_name=${deckName}`)
             .then(response => response.json())
             .then(data => {
                 console.log(data);
@@ -88,7 +88,7 @@ const LearningPage:React.FC<LearningPageProps> = ({onLoad}) => {
     const updateCard = async (card: CardType) => {
         const jsonBody = JSON.stringify(card);
         console.log(jsonBody);
-        await fetch(`http://45.81.232.169:8000/api/card?session_uuid=${sessionId}&deck_name=${deckName}`, {
+        await fetch(`https://memorymaster.melonigemelone.de/api/card?session_uuid=${sessionId}&deck_name=${deckName}`, {
             method: "PUT",
             body: jsonBody,
             headers: {"Content-Type": "application/json", "accept": "application/json"},
