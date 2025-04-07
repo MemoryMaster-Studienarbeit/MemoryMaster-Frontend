@@ -103,7 +103,7 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
                 file_content: fileContent ? await fileContent.text() : ""
             }
         }))
-        await fetch(`http://45.81.232.169:8000/api/generateCard?session_uuid=${sessionId}&deck_name=${deckName}`, {
+        await fetch(`https://memorymaster.melonigemelone.de/api/generateCard?session_uuid=${sessionId}&deck_name=${deckName}`, {
             method: "POST",
             body: JSON.stringify({
                 text: text,
@@ -136,7 +136,7 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
             card_back: backText
         }))
         if (!previewCard) {
-            await fetch(`http://45.81.232.169:8000/api/createCard?session_uuid=${sessionId}&deck_name=${deckName}`, {
+            await fetch(`https://memorymaster.melonigemelone.de/api/createCard?session_uuid=${sessionId}&deck_name=${deckName}`, {
                 method: "POST",
                 body: JSON.stringify({
                     card_front: frontText,
@@ -156,7 +156,7 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
 
     const handleBackFromPreview = async () => {
         setIsPreviewMode(false);
-        await fetch(`http://45.81.232.169:8000/api/card?session_uuid=${sessionId}&deck_name=${deckName}&card_uuid=${previewCard}`, {
+        await fetch(`https://memorymaster.melonigemelone.de/api/card?session_uuid=${sessionId}&deck_name=${deckName}&card_uuid=${previewCard}`, {
             method: "DELETE"
         })
             .then(response => response.json())
