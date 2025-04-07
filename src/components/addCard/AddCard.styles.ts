@@ -24,31 +24,9 @@ export const LeftOptionsContainer = styled.div`
     display: flex;
     padding: 0;
     justify-content: flex-start;
-    align-content: center;
+    align-items: center;
     gap: 10px;
 `
-
-export const RadioButton = styled.label`
-    color: ${({theme}) => theme.text};
-    padding: 5px 10px;
-    margin: 10px;
-    width: auto;
-    height: 40px;
-    font-size: 16px;
-    border-radius: 5px;
-    align-content: center;
-    justify-content: center;
-    cursor: pointer;
-    box-sizing: border-box;
-
-    &:hover {
-        background-color: ${({theme}) => theme.alternativePrimaryColor};
-    }
-
-    input[type="radio"]:checked + & {
-        background-color: ${({theme}) => theme.alternativeSecondaryColor};
-    }
-`;
 
 export const RightOptionsContainer = styled.div`
     display: flex;

@@ -62,7 +62,8 @@ export const FrontAndBackAiOptions: React.FC<FrontAndBackAiOptionsProps> = ({
                             setFileContents([file]);
                         }
                     }}
-                    name="file" types={['txt', 'pdf', 'png', 'jpeg', 'jpg']}
+                    name="file"
+                    types={['txt', 'pdf']}
                 >
                     <FileInputLabel htmlFor="file-input"/>
                 </FileUploader>
@@ -85,13 +86,13 @@ export const FrontAndBackAiOptions: React.FC<FrontAndBackAiOptionsProps> = ({
             <LowerOptionsContainer>
                 <SelectOptionsContainer>
                     <SelectOption
-                        label={"Stil: "}
+                        label={"Style: "}
                         options={styleOptions}
                         onChange={(e) => onStyleChange(e)}
                         selectedOption={selectedStyle}
                     />
                     <SelectOption
-                        label={"Länge: "}
+                        label={"Length: "}
                         options={lengthOptions}
                         onChange={(e) => onLengthChange(e)}
                         selectedOption={selectedLength}
@@ -100,7 +101,7 @@ export const FrontAndBackAiOptions: React.FC<FrontAndBackAiOptionsProps> = ({
                 <TextAreaInput
                     placeholder="Extras zum Prompt"
                     onChange={e => onPromptExtrasChange(e)}
-                    width={"60%"}
+                    width={"80%"}
                     height={"auto"}
                     defaultValue={promptExtras}
                 />
