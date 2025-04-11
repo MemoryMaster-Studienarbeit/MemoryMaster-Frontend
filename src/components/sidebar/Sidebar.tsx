@@ -1,4 +1,4 @@
-import {useNavbar} from '../../ThemeContext';
+import {useNavbar, useTheme} from '../../ThemeContext';
 import {
     SidebarContainer,
     ToggleButton,
@@ -13,7 +13,7 @@ import {
     ButtonContainer,
     AddDeckHeader,
     WarningContainer,
-    WarningIcon, WarningMessage
+    WarningIcon, WarningMessage, TopContainer
 } from './Sidebar.styles';
 import SearchSidebar from "../searchFieldSidebar/SearchFieldSidebar";
 import React, {FC, useEffect, useState} from "react";
@@ -29,6 +29,7 @@ interface SidebarProps {
 
 const Sidebar: FC<SidebarProps> = ({ sessionId, selectedDeckName }) => {
     const navigate = useNavigate();
+    const { isDarkMode } = useTheme();
     const { isSidebarOpen, toggleSidebar } = useNavbar();
     const [openAddDeck, setOpenAddDeck] = useState(false);
     const [decks, setDecks] = useState<string[]>([]);
@@ -133,9 +134,21 @@ const Sidebar: FC<SidebarProps> = ({ sessionId, selectedDeckName }) => {
     return (
         <>
             <SidebarContainer $isSidebarOpen={isSidebarOpen}>
-                <ToggleButton onClick={toggleSidebar}>
-                    <BurgerIcon>☰</BurgerIcon>
-                </ToggleButton>
+                <TopContainer>
+                    <ToggleButton onClick={toggleSidebar}>
+                        <BurgerIcon>☰</BurgerIcon>
+                    </ToggleButton>
+                    {isSidebarOpen && (
+                        <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
+                            {isDarkMode ? <img src={require('../../images/logo_white.png')} alt="Logo" style={{ width: '50px', height: '50px', marginRight: '10px' }} />
+                                    : <img src={require('../../images/logo_black.png')} alt="Logo" style={{ width: '50px', height: '50px', marginRight: '10px' }} />
+                                }
+                            <MyDecksTitle>
+                                Memory Master - Alpha
+                            </MyDecksTitle>
+                        </div>
+                    )}
+                </TopContainer>
                 {isSidebarOpen && (
                     <>
                         <div style={{ width: "calc(100% - 20px)", padding: "10px" }}>
