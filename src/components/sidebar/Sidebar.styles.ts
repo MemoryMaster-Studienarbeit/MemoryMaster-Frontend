@@ -197,3 +197,11 @@ export const WarningContainer = styled.div`
     color: red;
     margin: 0;
 `;
+export const TopContainer = styled.div`
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+`;
