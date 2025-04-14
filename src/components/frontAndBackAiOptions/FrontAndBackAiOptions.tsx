@@ -44,7 +44,7 @@ export const FrontAndBackAiOptions: React.FC<FrontAndBackAiOptionsProps> = ({
     return (
         <FrontAndBackAiOptionsContainer>
             <TextAreaInput
-                placeholder="Worüber soll eine Karteikarte erstellt werden?"
+                placeholder="What is the content of the card?"
                 onChange={e => onTextChange(e)}
                 width={"80%"}
                 height={"70%"}
@@ -99,7 +99,7 @@ export const FrontAndBackAiOptions: React.FC<FrontAndBackAiOptionsProps> = ({
                     />
                 </SelectOptionsContainer>
                 <TextAreaInput
-                    placeholder="Extras zum Prompt"
+                    placeholder="Extras for the Prompt"
                     onChange={e => onPromptExtrasChange(e)}
                     width={"80%"}
                     height={"auto"}

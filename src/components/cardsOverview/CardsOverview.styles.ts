@@ -7,7 +7,7 @@ export const CardsContainer = styled.div`
     gap: 30px;
     justify-items: center;
     padding: 20px;
-    width: 90%;
+    width: calc(100% - 40px);
     overflow-y: auto;
     
     flex: 1;
@@ -18,7 +18,7 @@ export const Header = styled.h2`
     font-size: 24px;
     color: ${({theme}) => theme.text};
     margin-bottom: 20px;
-    width: 60%;
+    width: 70%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -27,6 +27,8 @@ export const Header = styled.h2`
 export const NoCards = styled.p`
     color: ${({theme}) => theme.text};
     font-size: 20px;
+    width: 60%;
+    padding: 10px;
 `;
 
 export const MainDeckContainer = styled.div`

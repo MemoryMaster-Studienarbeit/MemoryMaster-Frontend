@@ -102,7 +102,7 @@ const LearningPage:React.FC<LearningPageProps> = ({onLoad}) => {
         if (!shuffledCards?.cards[currentCardIndex]) return;
 
         const updatedCard = updateCardAfterReview(shuffledCards?.cards[currentCardIndex], difficulty);
-        updateCard(updatedCard);
+        void updateCard(updatedCard);
         setIsFlipped(false)
         const updatedFlashcards = shuffledCards.cards.filter((_, index) => index !== currentCardIndex);
         setShuffledCards({ cards: updatedFlashcards });
@@ -131,10 +131,10 @@ const LearningPage:React.FC<LearningPageProps> = ({onLoad}) => {
                     <LearningPageFooter>
                         {isFlipped && (
                             <>
-                                <Button text="very hard" color="learnVeryHard" onClick={() => handleDifficultyClick("very_hard")} />
-                                <Button text="hard" color="learnHard" onClick={() => handleDifficultyClick("hard")} />
-                                <Button text="good" color="learnGood" onClick={() => handleDifficultyClick("good")} />
-                                <Button text="very good" color="learnVeryGood" onClick={() => handleDifficultyClick("very_good")} />
+                                <Button text="very hard" color="learnVeryHard" onClick={() => handleDifficultyClick("very_hard")} width={"100px"} />
+                                <Button text="hard" color="learnHard" onClick={() => handleDifficultyClick("hard")} width={"100px"} />
+                                <Button text="good" color="learnGood" onClick={() => handleDifficultyClick("good")} width={"100px"} />
+                                <Button text="very good" color="learnVeryGood" onClick={() => handleDifficultyClick("very_good")} width={"100px"} />
                             </>
                         )}
                         {!isFlipped && (

@@ -8,7 +8,6 @@ export const CardContainer = styled.div`
     width: 100%;
     height: 100%;
     background-color: ${({theme}) => theme.cardBackground};
-    border-radius: 10px;
     box-shadow: 0 0 10px ${({theme}) => theme.shadow};
     
     @media (max-width: 768px) {

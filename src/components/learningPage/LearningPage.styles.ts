@@ -65,12 +65,16 @@ export const CardFront = styled.h3`
 
 export const LearningPageFooter = styled.div`
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 20px;
-    width: 80%;
+    width: 100%;
+
 `;
 
 export const Header = styled.h1`
     color: ${({theme}) => theme.text};
+    text-align: center;
+    width: calc(100% - 10px);
+    
 `;

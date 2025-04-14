@@ -94,15 +94,15 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
 
     const generateCard = async () => {
         const appendingPrompt = PromptExtras();
-        console.log(JSON.stringify({
-            text: text,
-            appending_prompt_template: appendingPrompt,
-            ai_model: selectedModel,
-            file: {
-                file_type: fileType,
-                file_content: fileContent ? await fileContent.text() : ""
-            }
-        }))
+        // console.log(JSON.stringify({
+        //     text: text,
+        //     appending_prompt_template: appendingPrompt,
+        //     ai_model: selectedModel,
+        //     file: {
+        //         file_type: fileType,
+        //         file_content: fileContent ? await fileContent.text() : ""
+        //     }
+        // }))
         await fetch(`https://memorymaster.melonigemelone.de/api/generateCard?session_uuid=${sessionId}&deck_name=${deckName}`, {
             method: "POST",
             body: JSON.stringify({
@@ -125,7 +125,9 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
                 setFrontText(data.card_front)
                 setBackText(data.card_back)
             })
-
+            .catch(error => {
+                console.error('Fetch error:', error);
+            });
     }
 
     const addCardToDeck = async () => {
@@ -190,12 +192,12 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
                             </LeftOptionsContainer>
                             {isPreviewMode ? (
                                 <RightOptionsContainer>
-                                    <Button onClick={handleBackFromPreview} text={"Zurück"}/>
-                                    <Button onClick={addCardToDeck} text={"+"}/>
+                                    <Button onClick={handleBackFromPreview} width={"60px"} text={"Back"}/>
+                                    <Button onClick={addCardToDeck} width={"60px"} text={"+"}/>
                                 </RightOptionsContainer>
                             ) : (
                                 <RightOptionsContainer>
-                                    <Button onClick={handlePreview} text={"Vorschau"} disabled={text === ""}/>
+                                    <Button onClick={handlePreview} width={"60px"} text={"Next"} disabled={text === ""}/>
                                 </RightOptionsContainer>
                             )}
                         </>
@@ -205,7 +207,7 @@ const AddCard: React.FC<AddCardProps> = ({onLoad}) => {
                                 <img src={isDarkMode ? penFillDark : penFillLight} alt="Pen Icon"
                                      style={{width: "25px", height: "25px"}}/>
                             </ToggleModeButton>
-                            <Button onClick={addCardToDeck} text={"+"}/>
+                            <Button onClick={addCardToDeck} width={"60px"} text={"+"}/>
                         </>
                     )}
                 </UpperGeneralOptionsContainer>
