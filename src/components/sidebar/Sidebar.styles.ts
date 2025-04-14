@@ -36,7 +36,7 @@ export const SidebarContainer = styled.div<{ $isSidebarOpen: boolean }>`
 export const Overlay = styled.div`
   // Nur auf kleinen Bildschirmen anzeigen
   @media (max-width: 768px) {
-    display: block;
+      display: block;
       position: fixed;
       top: 0;
       left: 0;
@@ -104,6 +104,18 @@ export const MyDecksTitle = styled.h3`
     margin: 0;
     padding: 0;
     cursor: default;
+    overflow-y: hidden;
+`;
+
+export const AppTitle = styled.h3`
+    align-content: center;
+    height: 40px;
+    margin: 0;
+    padding: 0;
+    cursor: default;
+    font-size: 10px;
+    font-style: italic;
+    overflow-y: hidden;
 `;
 
 export const AddDeckContainer = styled.div`
@@ -121,6 +133,21 @@ export const AddDeckContainer = styled.div`
     }
 `;
 
+export const OpenHelpContainer = styled.div`
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); // Halbtransparentes Overlay
+    z-index: 30; // Muss unter der Sidebar, aber über dem Main Content sein
+
+    @media (max-width: 768px) {
+        z-index: 30; 
+    }
+`;
+
 export const AddDeckForm = styled.div`
     display: flex;
     flex-direction: column;
@@ -128,8 +155,25 @@ export const AddDeckForm = styled.div`
     align-items: center;
     width: 300px;
     height: 200px;
-    z-index: 20;
+    z-index: 400;
     border-radius: 10px;
+    background-color: ${(props) => props.theme.backgroundColor};
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+`;
+
+export const HelpPage = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    height: fit-content;
+    font-size: 14px;
+    border-radius: 10px;
+    color: ${({theme}) => theme.text};
     background-color: ${(props) => props.theme.backgroundColor};
     position: absolute;
     top: 50%;

@@ -1,10 +1,18 @@
 import {DarkModeSwitch} from 'react-toggle-dark-mode';
-import {InnerSettingsContainer, SettingsContainer} from "./SidebarSettings.styles";
+import {InnerSettingsContainer, SettingsContainer, ToggleButton} from "./SidebarSettings.styles";
 import React, {FC} from "react";
 import {useNavbar, useTheme} from "../../ThemeContext";
 
+// @ts-ignore
+import helpLight from '../../images/question-circle-light.svg';
+// @ts-ignore
+import helpDark from '../../images/question-circle-dark.svg';
 
-const SidebarSettings: FC = () => {
+interface SidebarSettingsProps {
+    onHelpClick: () => void;
+}
+
+const SidebarSettings: FC<SidebarSettingsProps> = ({onHelpClick}) => {
     const { isSidebarOpen } = useNavbar();
     const {isDarkMode, toggleTheme} = useTheme();
 
@@ -19,6 +27,14 @@ const SidebarSettings: FC = () => {
                     onChange={toggleTheme}
                     size={50}
                 />
+            </InnerSettingsContainer>
+            <InnerSettingsContainer>
+                <ToggleButton onClick={onHelpClick}>
+                    {isDarkMode ? <img src={helpLight} alt="Help" />
+                        : <img src={helpDark} alt="Help"  />
+                    }
+                </ToggleButton>
+
             </InnerSettingsContainer>
         </SettingsContainer>
     )

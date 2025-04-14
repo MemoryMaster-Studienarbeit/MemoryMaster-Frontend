@@ -18,6 +18,12 @@
 .env.test.local
 .env.production.local
 
+misc.xml
+modules.xml
+Project_Default.xml
+vcs.xml
+MemoryMaster-Frontend.iml
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

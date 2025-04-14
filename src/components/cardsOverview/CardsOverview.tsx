@@ -21,8 +21,7 @@ const CardsOverview: React.FC<CardViewProps> = ({onLoad}) => {
     const [noCardsText, setNoCardsText] = useState<string>("");
 
     useEffect(() => {
-        fetchDeck();
-
+        void fetchDeck();
     }, [deckName]);
 
     const fetchDeck = async () => {
@@ -54,7 +53,7 @@ const CardsOverview: React.FC<CardViewProps> = ({onLoad}) => {
                     const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
                     const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
                     const timeString = `${days > 0 ? days + "d " : ""}${hours > 0 ? hours + "h " : ""}${minutes > 0 ? minutes + "min" : ""}${seconds > 0 ? seconds + "s" : ""}`;
-                    setNoCardsText(`All cards are already learned! Next card at: ${nextLearnedTime} (in ${timeString})`);
+                    setNoCardsText(`All cards are already learned! Next card at:  ${nextLearnedTime} (in ${timeString})`);
                 }
             })
             .catch(error => {

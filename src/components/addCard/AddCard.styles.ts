@@ -18,7 +18,7 @@ export const UpperGeneralOptionsContainer= styled.div`
     padding: 10px;
     height: fit-content;
     justify-content: space-between;
-    width: calc(100% - 20px);
+    width: calc(100% - 50px);
 `
 export const LeftOptionsContainer = styled.div`
     display: flex;
@@ -26,6 +26,7 @@ export const LeftOptionsContainer = styled.div`
     justify-content: flex-start;
     align-items: center;
     gap: 10px;
+    
 `
 
 export const RightOptionsContainer = styled.div`
@@ -39,7 +40,7 @@ export const RightOptionsContainer = styled.div`
 export const ToggleModeButton = styled.button`
     background: none;
     border: none;
-    margin: 10px;
+    margin: 0;
     cursor: pointer;
     width: 40px;
     height: 40px;
