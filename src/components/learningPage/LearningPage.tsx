@@ -109,6 +109,18 @@ const LearningPage:React.FC<LearningPageProps> = ({onLoad}) => {
         setCurrentCardIndex((prevIndex) => (prevIndex >= updatedFlashcards.length ? 0 : prevIndex));
     };
 
+    const formatInterval = (minutes: number): string => {
+        if (minutes < 60) {
+            return `${minutes} min`;
+        } else if (minutes < 1440) {
+            return `${Math.floor(minutes / 60)} h`;
+        } else if (minutes < 43200) {
+            return `${Math.floor(minutes / 1440)} d`;
+        } else {
+            return `${Math.floor(minutes / 43200)} mo`;
+        }
+    };
+
     return (
         <LearningPageContainer>
             {shuffledCards?.cards[currentCardIndex] ? (
@@ -131,10 +143,14 @@ const LearningPage:React.FC<LearningPageProps> = ({onLoad}) => {
                     <LearningPageFooter>
                         {isFlipped && (
                             <>
-                                <Button text="very hard" color="learnVeryHard" onClick={() => handleDifficultyClick("very_hard")} width={"100px"} />
-                                <Button text="hard" color="learnHard" onClick={() => handleDifficultyClick("hard")} width={"100px"} />
-                                <Button text="good" color="learnGood" onClick={() => handleDifficultyClick("good")} width={"100px"} />
-                                <Button text="very good" color="learnVeryGood" onClick={() => handleDifficultyClick("very_good")} width={"100px"} />
+                                <Button text={`very hard  (${formatInterval(INTERVALS["very_hard"][Math.min(shuffledCards.cards[currentCardIndex].stage, INTERVALS["very_hard"].length - 1)])})`}
+                                        color="learnVeryHard" onClick={() => handleDifficultyClick("very_hard")} width={"150px"} />
+                                <Button text={`hard (${formatInterval(INTERVALS["hard"][Math.min(shuffledCards.cards[currentCardIndex].stage, INTERVALS["hard"].length - 1)])})`}
+                                        color="learnHard" onClick={() => handleDifficultyClick("hard")} width={"150px"} />
+                                <Button text={`good (${formatInterval(INTERVALS["good"][Math.min(shuffledCards.cards[currentCardIndex].stage, INTERVALS["good"].length - 1)])})`}
+                                        color="learnGood" onClick={() => handleDifficultyClick("good")} width={"150px"} />
+                                <Button text={`very good (${formatInterval(INTERVALS["very_good"][Math.min(shuffledCards.cards[currentCardIndex].stage, INTERVALS["very_good"].length - 1)])})`}
+                                        color="learnVeryGood" onClick={() => handleDifficultyClick("very_good")} width={"150px"} />
                             </>
                         )}
                         {!isFlipped && (
